@@ -1,0 +1,620 @@
+======================================================================
+REFERENCE MATCH REPORT
+======================================================================
+
+Total indicators in CSV        : 307
+Matched to references          : 297
+Added for completeness (no ref): 10
+Truly unmatched                : 0
+
+──────────────────────────────────────────────────────────────────────
+MATCHED
+──────────────────────────────────────────────────────────────────────
+  Active Time (case granularity)
+    → [RN4153, RN4308]
+  Activity and Role count Ratio (case granularity)
+    → [RN4150]
+  Activity and Role count Ratio (group of cases granularity)
+    → [RN4150]
+  Activity count (case granularity)
+    → [RN4134]
+  Activity count (case granularity)
+    → [RN4134]
+  Activity count (group of cases granularity)
+    → [RN4134]
+  Activity count (group of cases granularity)
+    → [RN4134]
+  activity Instance and Human Resource count Ratio (activity granularity)
+    → [RN4150]
+  activity Instance and Human Resource count Ratio (case granularity)
+    → [RN4150]
+  activity Instance and Human Resource count Ratio (group of cases granularity)
+    → [RN4150]
+  activity Instance count (activity granularity)
+    → [RN4304, RN4134]
+  activity Instance count (case granularity)
+    → [RN4304, RN4134]
+  activity Instance count (case granularity)
+    → [RN4304, RN4134]
+  activity Instance count (group of cases granularity)
+    → [RN4304, RN4134]
+  activity Instance count (group of cases granularity)
+    → [RN4304, RN4134]
+  activity Instance count by Human Resource (activity granularity)
+    → [RN4134]
+  activity Instance count by Human Resource (case granularity)
+    → [RN4134]
+  activity Instance count by Human Resource (group of cases granularity)
+    → [RN4134]
+  activity Instance count by Role (case granularity)
+    → [RN4134]
+  activity Instance count by Role (group of cases granularity)
+    → [RN4134]
+  Automated Activity Cost (case granularity)
+    → [RN4304]
+  Automated Activity Cost (group of cases granularity)
+    → [RN4304]
+  Automated Activity count (case granularity)
+    → [RN4134]
+  Automated Activity count (case granularity)
+    → [RN4134]
+  Automated Activity count (group of cases granularity)
+    → [RN4134]
+  Automated Activity count (group of cases granularity)
+    → [RN4134]
+  Automated activity Instance count (case granularity)
+    → [RN4134]
+  Automated activity Instance count (case granularity)
+    → [RN4134]
+  Automated activity Instance count (group of cases granularity)
+    → [RN4134]
+  Automated activity Instance count (group of cases granularity)
+    → [RN4134]
+  Automated Activity Service Time (case granularity)
+    → [RN4304]
+  Automated Activity Service Time (group of cases granularity)
+    → [RN4304]
+  Case and Client count Ratio (group of cases granularity)
+    → [RN4134]
+  Case count (group of cases granularity)
+    → [RN4292, RN4301, RN4307]
+  Case Count where Activity after Time Frame (group of cases granularity)
+    → [RN4134]
+  Case Count where Activity before Time Frame (group of cases granularity)
+    → [RN4134]
+  Case Count where Activity during Time Frame (group of cases granularity)
+    → [RN4134]
+  Case Count where end activity is A (group of cases granularity)
+    → [RN4304, RN4306, RN4295, RN4297, RN4305, RN4298, RN4311, RN4309, RN4291, RN4303, RN4125, RN4299, RN4312]
+  Case Count with Rework (group of cases granularity)
+    → [RN4134]
+  Case Percentage where Activity after Time Frame (group of cases granularity)
+    → [RN4134]
+  Case Percentage where Activity before Time Frame (group of cases granularity)
+    → [RN4134]
+  Case Percentage where Activity during Time Frame (group of cases granularity)
+    → [RN4134]
+  Case Percentage where End Activity is A (group of cases granularity)
+    → [RN4304, RN4306, RN4295, RN4297, RN4305, RN4298, RN4311, RN4309, RN4291, RN4303, RN4293, RN4125, RN4299, RN4312]
+  Case Percentage with Missed Deadline (group of cases granularity)
+    → [RN4295, RN4297, RN4300, RN4305, RN4296]
+  Case Percentage with Missed Deadline (group of cases granularity)
+    → [RN4295, RN4297, RN4300, RN4305, RN4296]
+  Case Percentage with Rework (group of cases granularity)
+    → [RN4134]
+  Client count (activity granularity)
+    → [RN4134]
+  Client count (group of cases granularity)
+    → [RN4134]
+  Client count and Total Cost Ratio (activity granularity)
+    → [RN4134]
+  Client count and Total Cost Ratio (group of cases granularity)
+    → [RN4134]
+  Desired Activity count (case granularity)
+    → [RN4134]
+  Desired Activity count (case granularity)
+    → [RN4134]
+  Desired Activity count (group of cases granularity)
+    → [RN4134]
+  Desired Activity count (group of cases granularity)
+    → [RN4134]
+  Direct Cost (case granularity)
+    → [RN4146]
+  Direct Cost (group of cases granularity)
+    → [RN4146]
+  Directly-Follows Relations and Activity count Ratio (case granularity)
+    → [RN4125]
+  Directly-Follows Relations and Activity count Ratio (group of cases granularity)
+    → [RN4125]
+  Directly-Follows Relations count (activity granularity)
+    → [RN4125]
+  Directly-Follows Relations count (case granularity)
+    → [RN4125]
+  Directly-Follows Relations count (group of cases granularity)
+    → [RN4125]
+  Expected Active Time [resolved: "active time"]
+    → [RN4153, RN4308]
+  Expected Activity and Role count Ratio [resolved: "activity and role count ratio"]
+    → [RN4150]
+  Expected Activity count [resolved: "activity count"]
+    → [RN4134]
+  Expected Activity count [resolved: "activity count"]
+    → [RN4134]
+  Expected activity Instance and Human Resource count Ratio [resolved: "activity instance and human resource count ratio"]
+    → [RN4150]
+  Expected activity Instance count [resolved: "activity instance count"]
+    → [RN4304, RN4134]
+  Expected activity Instance count [resolved: "activity instance count"]
+    → [RN4304, RN4134]
+  Expected activity Instance count by Human Resource [resolved: "activity instance count by human resource"]
+    → [RN4134]
+  Expected activity Instance count by Role [resolved: "activity instance count by role"]
+    → [RN4134]
+  Expected Automated Activity Cost [resolved: "automated activity cost"]
+    → [RN4304]
+  Expected Automated Activity count [resolved: "automated activity count"]
+    → [RN4134]
+  Expected Automated Activity count [resolved: "automated activity count"]
+    → [RN4134]
+  Expected Automated activity Instance count [resolved: "automated activity instance count"]
+    → [RN4134]
+  Expected Automated activity Instance count [resolved: "automated activity instance count"]
+    → [RN4134]
+  Expected Automated Activity Service Time [resolved: "automated activity service time"]
+    → [RN4304]
+  Expected Client count [resolved: "client count"]
+    → [RN4134]
+  Expected Client count and Total Cost Ratio [resolved: "client count and total cost ratio"]
+    → [RN4134]
+  Expected Desired Activity count [resolved: "desired activity count"]
+    → [RN4134]
+  Expected Desired Activity count [resolved: "desired activity count"]
+    → [RN4134]
+  Expected Direct Cost [resolved: "direct cost"]
+    → [RN4146]
+  Expected Directly-Follows Relations and Activity count Ratio [resolved: "directly-follows relations and activity count ratio"]
+    → [RN4125]
+  Expected Directly-Follows Relations count [resolved: "directly-follows relations count"]
+    → [RN4125]
+  Expected Fixed Cost [resolved: "fixed cost"]
+    → [RN4155, RN4146]
+  Expected Handover count [resolved: "handover count"]
+    → [RN4134]
+  Expected Human Resource count [resolved: "human resource count"]
+    → [RN4125, RN4159, RN4134]
+  Expected Human Resource count [resolved: "human resource count"]
+    → [RN4125, RN4159, RN4134]
+  Expected Human Resource count [resolved: "human resource count"]
+    → [RN4125, RN4159, RN4134]
+  Expected Human Resource count [resolved: "human resource count"]
+    → [RN4125, RN4159, RN4134]
+  Expected Idle Time [resolved: "idle time"]
+    → [RN4306, RN4150, RN4298]
+  Expected Inventory Cost [resolved: "inventory cost"]
+    → [RN4311, RN4309, RN4131, RN4299]
+  Expected Labor Cost [resolved: "labor cost"]
+    → [RN4134, RN4131, RN4155, RN4159]
+  Expected Labor Cost and Total Cost Ratio [resolved: "labor and total cost ratio"]
+    → [RN4131]
+  Expected Lead Time [resolved: "lead time"]
+    → [RN4304, RN4292, RN4307, RN4308, RN4134, RN4306, RN4297, RN4305, RN4150, RN4298, RN4187, RN4311, RN4309, RN4294, RN4291, RN4303, RN4313]
+  Expected Lead Time Deviation from Expectation [resolved: "lead time deviation from expectation"]
+    → [RN4134, RN4162]
+  Expected Lead Time Deviation from time Limit [resolved: "lead time deviation from time limit"]
+    → [RN4134, RN4162]
+  Expected Lead Time from activity A to activity B [resolved: "lead time from activity a to activity b"]
+    → [RN4304, RN4292, RN4307, RN4311, RN4303, RN4293, RN4125]
+  Expected Lead Time to activity A [resolved: "lead time to activity a"]
+    → [RN4293, RN4125]
+  Expected Maintenance Cost [resolved: "maintenance cost"]
+    → [RN4300]
+  Expected Missed Deadline Cost [resolved: "missed deadline cost"]
+    → [RN4134]
+  Expected Non-Automated Activity count (group of cases granularity) [resolved: "non-automated activity count"]
+    → [RN4134]
+  Expected Non-Automated activity Instance count [resolved: "non-automated activity instance count"]
+    → [RN4134]
+  Expected Optionality [resolved: "optionality"]
+    → [RN4134, RN4150, RN4155]
+  Expected outcome Unit count [resolved: "outcome unit count"]
+    → [RN4305]
+  Expected Overall Quality [resolved: "overall quality"]
+    → [RN4304, RN4306, RN4295, RN4297, RN4305, RN4150, RN4298, RN4311, RN4309, RN4291, RN4303, RN4125, RN4131, RN4155, RN4299, RN4161, RN4312]
+  Expected Overhead Cost [resolved: "overhead cost"]
+    → [RN4309, RN4146]
+  Expected Repeatability [resolved: "repeatability"]
+    → [RN4134]
+  Expected Resource count [resolved: "resource count"]
+    → [RN4125, RN4159]
+  Expected Resource count [resolved: "resource count"]
+    → [RN4125, RN4159]
+  Expected Rework Cost [resolved: "rework cost"]
+    → [RN4162]
+  Expected Rework Count [resolved: "rework count"]
+    → [RN4134, RN4125]
+  Expected Rework Count [resolved: "rework count"]
+    → [RN4134, RN4125]
+  Expected Rework Count by Value [resolved: "rework count by value"]
+    → [RN4134]
+  Expected Rework of activities Subset [resolved: "rework of activities subset"]
+    → [RN4125]
+  Expected Rework Percentage [resolved: "rework percentage"]
+    → [RN4134, RN4125]
+  Expected Rework Percentage [resolved: "rework percentage"]
+    → [RN4134, RN4125]
+  Expected Rework Percentage by Value [resolved: "rework percentage by value"]
+    → [RN4134]
+  Expected Rework Time [resolved: "rework time"]
+    → [RN4305, RN4302, RN4310]
+  Expected Role count [resolved: "role count"]
+    → [RN4134]
+  Expected Role count [resolved: "role count"]
+    → [RN4134]
+  Expected Service and Lead Time Ratio [resolved: "service and lead time ratio"]
+    → [RN4308, RN4131]
+  Expected Service Time [resolved: "service time"]
+    → [RN4153, RN4308, RN4134, RN4306, RN4150, RN4298, RN4311, RN4313, RN4162, RN4293, RN4125, RN4155]
+  Expected Successful outcome Unit Count [resolved: "successful outcome unit count"]
+    → [RN4305]
+  Expected Successful outcome Unit Percentage [resolved: "successful outcome unit percentage"]
+    → [RN4305]
+  Expected Total Cost [resolved: "total cost"]
+    → [RN4304, RN4301, RN4153, RN4134, RN4306, RN4295, RN4297, RN4300, RN4305, RN4298, RN4294, RN4291, RN4162, RN4125, RN4299, RN4161]
+  Expected Total Cost and Client count Ratio [resolved: "total cost and client count ratio"]
+    → [RN4134]
+  Expected Total Cost and Lead Time Ratio [resolved: "total cost and lead time ratio"]
+    → [RN4297, RN4311]
+  Expected Total Cost and outcome Unit Ratio [resolved: "total cost and outcome unit ratio"]
+    → [RN4162, RN4146]
+  Expected Total Cost and Service Time Ratio [resolved: "total cost and service time ratio"]
+    → [RN4297, RN4311]
+  Expected Transportation Cost [resolved: "transportation cost"]
+    → [RN4309]
+  Expected Unwanted Activity count [resolved: "unwanted activity count"]
+    → [RN4134, RN4131]
+  Expected Unwanted activity Instance count [resolved: "unwanted activity instance count"]
+    → [RN4134, RN4131]
+  Expected Unwanted activity Instance Percentage [resolved: "unwanted activity instance percentage"]
+    → [RN4134, RN4131]
+  Expected Unwanted Activity Percentage [resolved: "unwanted activity percentage"]
+    → [RN4134, RN4131]
+  Expected Variable Cost [resolved: "variable cost"]
+    → [RN4155, RN4146]
+  Expected Waiting Time [resolved: "waiting time"]
+    → [RN4307, RN4308, RN4134, RN4306, RN4291, RN4303, RN4290]
+  Expected Waiting Time from activity A to activity B [resolved: "waiting time from activity a to activity b"]
+    → [RN4125]
+  Expected Warehousing Cost [resolved: "warehousing cost"]
+    → [RN4162]
+  Fixed Cost (activity granularity)
+    → [RN4155, RN4146]
+  Fixed Cost (case granularity)
+    → [RN4155, RN4146]
+  Fixed Cost (group of cases granularity)
+    → [RN4155, RN4146]
+  Fixed Cost considering single events of activity instances (activity instance granularity)
+    → [RN4155, RN4146]
+  Fixed Cost considering the sum of all events of activity instances (activity instance granularity)
+    → [RN4155, RN4146]
+  Handover count (case granularity)
+    → [RN4134]
+  Human Resource and Case count Ratio (group of cases granularity)
+    → [RN4304]
+  Human Resource count (activity granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (activity granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (activity granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (activity granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (case granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (case granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (case granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (case granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (group of cases granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (group of cases granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (group of cases granularity)
+    → [RN4125, RN4159, RN4134]
+  Human Resource count (group of cases granularity)
+    → [RN4125, RN4159, RN4134]
+  Idle Time (case granularity)
+    → [RN4306, RN4150, RN4298]
+  Inventory Cost (activity granularity)
+    → [RN4311, RN4309, RN4131, RN4299]
+  Inventory Cost (case granularity)
+    → [RN4311, RN4309, RN4131, RN4299]
+  Inventory Cost (group of cases granularity)
+    → [RN4311, RN4309, RN4131, RN4299]
+  Inventory Cost considering single events of activity instances (activity instance granularity)
+    → [RN4311, RN4309, RN4131, RN4299]
+  Inventory Cost considering the sum of all events of activity instances (activity instance granularity)
+    → [RN4311, RN4309, RN4131, RN4299]
+  Labor Cost (activity granularity)
+    → [RN4134, RN4131, RN4155, RN4159]
+  Labor Cost (case granularity)
+    → [RN4134, RN4131, RN4155, RN4159]
+  Labor Cost (group of cases granularity)
+    → [RN4134, RN4131, RN4155, RN4159]
+  Labor Cost and Total Cost Ratio (activity granularity) [resolved: "labor and total cost ratio"]
+    → [RN4131]
+  Labor Cost and Total Cost Ratio (activity instance granularity) [resolved: "labor and total cost ratio"]
+    → [RN4131]
+  Labor Cost and Total Cost Ratio (case granularity) [resolved: "labor and total cost ratio"]
+    → [RN4131]
+  Labor Cost and Total Cost Ratio (group of cases granularity) [resolved: "labor and total cost ratio"]
+    → [RN4131]
+  Labor Cost considering single events of activity instances (activity instance granularity)
+    → [RN4134, RN4131, RN4155, RN4159]
+  Labor Cost considering the sum of all events of activity instances (activity instance granularity)
+    → [RN4134, RN4131, RN4155, RN4159]
+  Lead Time (activity granularity)
+    → [RN4304, RN4292, RN4307, RN4308, RN4134, RN4306, RN4297, RN4305, RN4150, RN4298, RN4187, RN4311, RN4309, RN4294, RN4291, RN4303, RN4313]
+  Lead Time (activity instance granularity)
+    → [RN4304, RN4292, RN4307, RN4308, RN4134, RN4306, RN4297, RN4305, RN4150, RN4298, RN4187, RN4311, RN4309, RN4294, RN4291, RN4303, RN4313]
+  Lead Time (case granularity)
+    → [RN4304, RN4292, RN4307, RN4308, RN4134, RN4306, RN4297, RN4305, RN4150, RN4298, RN4187, RN4311, RN4309, RN4294, RN4291, RN4303, RN4313]
+  Lead Time (group of cases granularity)
+    → [RN4304, RN4292, RN4307, RN4308, RN4134, RN4306, RN4297, RN4305, RN4150, RN4298, RN4187, RN4311, RN4309, RN4294, RN4291, RN4303, RN4313]
+  Lead Time and Case count Ratio (group of cases granularity)
+    → [RN4296]
+  Lead Time Deviation from Expectation (case granularity)
+    → [RN4134, RN4162]
+  Lead Time Deviation from time Limit (case granularity)
+    → [RN4134, RN4162]
+  Lead Time from activity A to activity B (case granularity)
+    → [RN4304, RN4292, RN4307, RN4311, RN4303, RN4293, RN4125]
+  Lead Time to activity A (case granularity)
+    → [RN4293, RN4125]
+  Maintenance Cost (case granularity)
+    → [RN4300]
+  Maintenance Cost (group of cases granularity)
+    → [RN4300]
+  Missed Deadline Cost (case granularity)
+    → [RN4134]
+  Missed Deadline Cost (group of cases granularity)
+    → [RN4134]
+  Non-Automated Activity count (case granularity)
+    → [RN4134]
+  Non-Automated Activity count (group of cases granularity)
+    → [RN4134]
+  Non-Automated activity Instance count (case granularity)
+    → [RN4134]
+  Non-Automated activity Instance count (group of cases granularity)
+    → [RN4134]
+  Optionality (case granularity)
+    → [RN4134, RN4150, RN4155]
+  Optionality (group of cases granularity)
+    → [RN4134, RN4150, RN4155]
+  outcome Unit count (activity granularity)
+    → [RN4305]
+  outcome Unit count (case granularity)
+    → [RN4305]
+  outcome Unit count (group of cases granularity)
+    → [RN4305]
+  outcome Unit count considering single events of activity instances (activity instance granularity)
+    → [RN4305]
+  outcome Unit count considering the sum of all events of activity instances (activity instance granularity)
+    → [RN4305]
+  Overall Quality (case granularity)
+    → [RN4304, RN4306, RN4295, RN4297, RN4305, RN4150, RN4298, RN4311, RN4309, RN4291, RN4303, RN4125, RN4131, RN4155, RN4299, RN4161, RN4312]
+  Overhead Cost (case granularity)
+    → [RN4309, RN4146]
+  Overhead Cost (group of cases granularity)
+    → [RN4309, RN4146]
+  Repeatability (case granularity)
+    → [RN4134]
+  Repeatability (group of cases granularity)
+    → [RN4134]
+  Resource count (activity granularity)
+    → [RN4125, RN4159]
+  Resource count (activity granularity)
+    → [RN4125, RN4159]
+  Resource count (case granularity)
+    → [RN4125, RN4159]
+  Resource count (case granularity)
+    → [RN4125, RN4159]
+  Resource count (group of cases granularity)
+    → [RN4125, RN4159]
+  Resource count (group of cases granularity)
+    → [RN4125, RN4159]
+  Rework Cost (activity granularity)
+    → [RN4162]
+  Rework Cost (case granularity)
+    → [RN4162]
+  Rework Cost (group of cases granularity)
+    → [RN4162]
+  Rework Count (activity granularity)
+    → [RN4134, RN4125]
+  Rework Count (activity granularity)
+    → [RN4134, RN4125]
+  Rework Count (case granularity)
+    → [RN4134, RN4125]
+  Rework Count (case granularity)
+    → [RN4134, RN4125]
+  Rework Count (group of cases granularity)
+    → [RN4134, RN4125]
+  Rework Count (group of cases granularity)
+    → [RN4134, RN4125]
+  Rework Count by Value (activity granularity)
+    → [RN4134]
+  Rework Count by Value (case granularity)
+    → [RN4134]
+  Rework Count by Value (group of cases granularity)
+    → [RN4134]
+  Rework of activities Subset (case granularity)
+    → [RN4125]
+  Rework of activities Subset (group of cases granularity)
+    → [RN4125]
+  Rework Percentage (activity granularity)
+    → [RN4134, RN4125]
+  Rework Percentage (activity granularity)
+    → [RN4134, RN4125]
+  Rework Percentage (case granularity)
+    → [RN4134, RN4125]
+  Rework Percentage (case granularity)
+    → [RN4134, RN4125]
+  Rework Percentage (group of cases granularity)
+    → [RN4134, RN4125]
+  Rework Percentage (group of cases granularity)
+    → [RN4134, RN4125]
+  Rework Percentage by Value (activity granularity)
+    → [RN4134]
+  Rework Percentage by Value (case granularity)
+    → [RN4134]
+  Rework Percentage by Value (group of cases granularity)
+    → [RN4134]
+  Rework Time (activity granularity)
+    → [RN4305, RN4302, RN4310]
+  Rework Time (case granularity)
+    → [RN4305, RN4302, RN4310]
+  Rework Time (group of cases granularity)
+    → [RN4305, RN4302, RN4310]
+  Role and Variant count Ratio (group of cases granularity)
+    → [RN4134]
+  Role count (case granularity)
+    → [RN4134]
+  Role count (case granularity)
+    → [RN4134]
+  Role count (group of cases granularity)
+    → [RN4134]
+  Role count (group of cases granularity)
+    → [RN4134]
+  Service and Lead Time Ratio (activity granularity)
+    → [RN4308, RN4131]
+  Service and Lead Time Ratio (activity instance granularity)
+    → [RN4308, RN4131]
+  Service and Lead Time Ratio (case granularity)
+    → [RN4308, RN4131]
+  Service and Lead Time Ratio (group of cases granularity)
+    → [RN4308, RN4131]
+  Service Time (activity granularity)
+    → [RN4153, RN4308, RN4134, RN4306, RN4150, RN4298, RN4311, RN4313, RN4162, RN4293, RN4125, RN4155]
+  Service Time (activity instance granularity)
+    → [RN4153, RN4308, RN4134, RN4306, RN4150, RN4298, RN4311, RN4313, RN4162, RN4293, RN4125, RN4155]
+  Service Time (case granularity)
+    → [RN4153, RN4308, RN4134, RN4306, RN4150, RN4298, RN4311, RN4313, RN4162, RN4293, RN4125, RN4155]
+  Service Time (group of cases granularity)
+    → [RN4153, RN4308, RN4134, RN4306, RN4150, RN4298, RN4311, RN4313, RN4162, RN4293, RN4125, RN4155]
+  Successful outcome Unit Count (activity granularity)
+    → [RN4305]
+  Successful outcome Unit Count (activity instance granularity)
+    → [RN4305]
+  Successful outcome Unit Count (case granularity)
+    → [RN4305]
+  Successful outcome Unit Count (group of cases granularity)
+    → [RN4305]
+  Successful outcome Unit Percentage (activity granularity)
+    → [RN4305]
+  Successful outcome Unit Percentage (activity instance granularity)
+    → [RN4305]
+  Successful outcome Unit Percentage (case granularity)
+    → [RN4305]
+  Successful outcome Unit Percentage (group of cases granularity)
+    → [RN4305]
+  Total Cost (activity granularity)
+    → [RN4304, RN4301, RN4153, RN4134, RN4306, RN4295, RN4297, RN4300, RN4305, RN4298, RN4294, RN4291, RN4162, RN4125, RN4299, RN4161]
+  Total Cost (case granularity)
+    → [RN4304, RN4301, RN4153, RN4134, RN4306, RN4295, RN4297, RN4300, RN4305, RN4298, RN4294, RN4291, RN4162, RN4125, RN4299, RN4161]
+  Total Cost (group of cases granularity)
+    → [RN4304, RN4301, RN4153, RN4134, RN4306, RN4295, RN4297, RN4300, RN4305, RN4298, RN4294, RN4291, RN4162, RN4125, RN4299, RN4161]
+  Total Cost and Client count Ratio (activity granularity)
+    → [RN4134]
+  Total Cost and Client count Ratio (group of cases granularity)
+    → [RN4134]
+  Total Cost and Lead Time Ratio (activity granularity)
+    → [RN4297, RN4311]
+  Total Cost and Lead Time Ratio (activity instance granularity)
+    → [RN4297, RN4311]
+  Total Cost and Lead Time Ratio (case granularity)
+    → [RN4297, RN4311]
+  Total Cost and Lead Time Ratio (group of cases granularity)
+    → [RN4297, RN4311]
+  Total Cost and outcome Unit Ratio (activity granularity)
+    → [RN4162, RN4146]
+  Total Cost and outcome Unit Ratio (activity instance granularity)
+    → [RN4162, RN4146]
+  Total Cost and outcome Unit Ratio (case granularity)
+    → [RN4162, RN4146]
+  Total Cost and outcome Unit Ratio (group of cases granularity)
+    → [RN4162, RN4146]
+  Total Cost and Service Time Ratio (activity granularity)
+    → [RN4297, RN4311]
+  Total Cost and Service Time Ratio (activity instance granularity)
+    → [RN4297, RN4311]
+  Total Cost and Service Time Ratio (case granularity)
+    → [RN4297, RN4311]
+  Total Cost and Service Time Ratio (group of cases granularity)
+    → [RN4297, RN4311]
+  Total Cost considering single events of activity instances (activity instance granularity)
+    → [RN4304, RN4301, RN4153, RN4134, RN4306, RN4295, RN4297, RN4300, RN4305, RN4298, RN4294, RN4291, RN4162, RN4125, RN4299, RN4161]
+  Total Cost considering the sum of all events of activity instances (activity instance granularity)
+    → [RN4304, RN4301, RN4153, RN4134, RN4306, RN4295, RN4297, RN4300, RN4305, RN4298, RN4294, RN4291, RN4162, RN4125, RN4299, RN4161]
+  Transportation Cost (case granularity)
+    → [RN4309]
+  Transportation Cost (group of cases granularity)
+    → [RN4309]
+  Unwanted Activity count (case granularity)
+    → [RN4134, RN4131]
+  Unwanted Activity count (group of cases granularity)
+    → [RN4134, RN4131]
+  Unwanted activity Instance count (case granularity)
+    → [RN4134, RN4131]
+  Unwanted activity Instance count (group of cases granularity)
+    → [RN4134, RN4131]
+  Unwanted activity Instance Percentage (case granularity)
+    → [RN4134, RN4131]
+  Unwanted activity Instance Percentage (group of cases granularity)
+    → [RN4134, RN4131]
+  Unwanted Activity Percentage (case granularity)
+    → [RN4134, RN4131]
+  Unwanted Activity Percentage (group of cases granularity)
+    → [RN4134, RN4131]
+  Variable Cost (activity granularity)
+    → [RN4155, RN4146]
+  Variable Cost (case granularity)
+    → [RN4155, RN4146]
+  Variable Cost (group of cases granularity)
+    → [RN4155, RN4146]
+  Variable Cost considering single events of activity instances (activity instance granularity)
+    → [RN4155, RN4146]
+  Variable Cost considering the sum of all events of activity instances (activity instance granularity)
+    → [RN4155, RN4146]
+  Variant Case Coverage (case granularity)
+    → [RN4134]
+  Variant Case Coverage (group of cases granularity)
+    → [RN4134]
+  Variant count (group of cases granularity)
+    → [RN4134, RN4309, RN4125]
+  Waiting Time (activity granularity)
+    → [RN4307, RN4308, RN4134, RN4306, RN4291, RN4303, RN4290]
+  Waiting Time (activity instance granularity)
+    → [RN4307, RN4308, RN4134, RN4306, RN4291, RN4303, RN4290]
+  Waiting Time (case granularity)
+    → [RN4307, RN4308, RN4134, RN4306, RN4291, RN4303, RN4290]
+  Waiting Time from activity A to activity B (case granularity)
+    → [RN4125]
+  Warehousing Cost (case granularity)
+    → [RN4162]
+  Warehousing Cost (group of cases granularity)
+    → [RN4162]
+
+──────────────────────────────────────────────────────────────────────
+ADDED FOR COMPLETENESS (intentionally no references in paper)
+──────────────────────────────────────────────────────────────────────
+  Case Count where start activity is A (group of cases granularity)  (normalized: 'case count where start activity is a')
+  Case Percentage where Start Activity is A (group of cases granularity)  (normalized: 'case percentage where start activity is a')
+  Expected Lead Time from activity A  (normalized: 'expected lead time from activity a')  [base: "lead time from activity a"]
+  Expected Optional Activity count  (normalized: 'expected optional activity count')  [base: "optional activity count"]
+  Expected Service Time from activity A to activity B  (normalized: 'expected service time from activity a to activity b')  [base: "service time from activity a to activity b"]
+  Lead Time from activity A (case granularity)  (normalized: 'lead time from activity a')
+  Optional Activity count (case granularity)  (normalized: 'optional activity count')
+  Optional Activity count (group of cases granularity)  (normalized: 'optional activity count')
+  Service Time from activity A to activity B (case granularity)  (normalized: 'service time from activity a to activity b')
+  Service Time from activity A to activity B (group of cases granularity)  (normalized: 'service time from activity a to activity b')

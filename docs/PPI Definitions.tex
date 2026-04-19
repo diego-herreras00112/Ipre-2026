@@ -1,0 +1,916 @@
+\documentclass{article}
+
+\usepackage{url}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{caption}
+
+\usepackage{parskip}
+\usepackage{amsthm} 
+\usepackage{xcolor}
+\usepackage{pdflscape}
+\usepackage{bm}
+
+\usepackage{listings}
+
+\usepackage[shortlabels]{enumitem}
+\usepackage[margin=2cm]{geometry}
+
+\newcommand{\dgeneral}{G}
+\newcommand{\dtime}{T}
+\newcommand{\dcost}{C}
+\newcommand{\dquality}{Q}
+\newcommand{\dflexibility}{F}
+
+\newcommand{\ggroup}{G}
+\newcommand{\gcase}{C}
+\newcommand{\gact}{A}
+\newcommand{\ginst}{I}
+
+\newcommand{\universe}[2][]{U^{#1}_{#2}}
+\newcommand{\attribute}[2][]{\#^{#1}_{#2}}
+
+\newcommand{\atevent}{\mathit{event}}
+\newcommand{\atcase}{\mathit{case}}
+\newcommand{\atact}{\mathit{act}}
+\newcommand{\atres}{\mathit{res}}
+\newcommand{\athres}{\mathit{hres}}
+\newcommand{\atnhres}{\mathit{nhres}}
+\newcommand{\atrole}{\mathit{role}}
+\newcommand{\attime}{\mathit{time}}
+\newcommand{\attcost}{\mathit{tc}}
+\newcommand{\atfcost}{\mathit{fc}}
+\newcommand{\atvcost}{\mathit{vc}}
+\newcommand{\atlcost}{\mathit{lc}}
+\newcommand{\aticost}{\mathit{ic}}
+\newcommand{\atmaincost}{\mathit{mainc}}
+\newcommand{\atmdcost}{\mathit{mdc}}
+\newcommand{\attranscost}{\mathit{transc}}
+\newcommand{\atwarecost}{\mathit{warec}}
+\newcommand{\atqual}{\mathit{qual}}
+\newcommand{\atunit}{\mathit{unt}}
+\newcommand{\atunsunit}{\mathit{uns}}
+\newcommand{\atclient}{\mathit{cli}}
+\newcommand{\atatt}{\mathit{att}}
+\newcommand{\atval}{\mathit{val}}
+\newcommand{\atmap}{\mathit{map}}
+\newcommand{\attype}{\mathit{type}}
+\newcommand{\atactinst}{\mathit{actinst}}
+\newcommand{\ateventid}{\mathit{eid}}
+
+\newcommand{\fnmin}{\mathit{min}}
+\newcommand{\fnmax}{\mathit{max}}
+\newcommand{\fnmatch}{\mathit{match}}
+\newcommand{\fntoderintlog}{\mathit{\textbf{Der}}}
+\newcommand{\fntototalderintlog}{\mathit{\textbf{TotDer}}}
+\newcommand{\fntoexpintlog}{\mathit{\textbf{Expl}}}
+\newcommand{\fnmatchone}{\mathit{match1}}
+\newcommand{\fnmatchtwo}{\mathit{match2}}
+\newcommand{\fnmatchfirst}{\mathit{matchfirst}}
+\newcommand{\fnmatchlater}{\mathit{matchlater}}
+\newcommand{\fnreassign}{\mathit{reassign}}
+\newcommand{\fnseventbadness}{\mathit{sbadness}}
+\newcommand{\fnceventbadness}{\mathit{cbadness}}
+\newcommand{\fncompatible}{\mathit{cmp}}
+\newcommand{\fnactinstcompatible}{\mathit{actinstcmp}}
+\newcommand{\fnfresheventid}{\mathit{fresheventid}}
+\newcommand{\fnfreshactinst}{\mathit{freshactinst}}
+\newcommand{\fnevent}{\mathit{events}}
+\newcommand{\fncase}{\mathit{case}}
+\newcommand{\fnact}{\mathit{act}}
+\newcommand{\fnres}{\mathit{res}}
+\newcommand{\fnhres}{\mathit{hres}}
+\newcommand{\fnrole}{\mathit{role}}
+\newcommand{\fninst}{\mathit{inst}}
+\newcommand{\fndom}{\mathit{dom}}
+\newcommand{\fnleadtime}{\mathit{lt}}
+\newcommand{\fnservicetime}{\mathit{st}}
+\newcommand{\fnwaitingtime}{\mathit{wt}}
+\newcommand{\fninstbetween}{\mathit{instbetween}}
+\newcommand{\fntimewithin}{\mathit{timew}}
+\newcommand{\fnstarttime}{\mathit{startt}}
+\newcommand{\fnendtime}{\mathit{endt}}
+\newcommand{\fnstartinstance}{\mathit{strin}}
+\newcommand{\fnendinstance}{\mathit{endin}}
+\newcommand{\fnistart}{\mathit{str}}
+\newcommand{\fnicomplete}{\mathit{cpl}}
+\newcommand{\fnistarttime}{\mathit{stime}}
+\newcommand{\fnicompletetime}{\mathit{ctime}}
+\newcommand{\fnprev}{\mathit{prev}}
+\newcommand{\fnnext}{\mathit{next}}
+\newcommand{\fnprevstr}{\mathit{prevstr}}
+\newcommand{\fnconcstr}{\mathit{concstr}}
+\newcommand{\fndres}{\mathit{dres}}
+\newcommand{\fnfirst}{\mathit{fi}}
+\newcommand{\fnfirstinsttc}{\mathit{fitc}}
+\newcommand{\fnfirstinstlt}{\mathit{filt}}
+\newcommand{\fndfr}{\mathit{dfrel}}
+\newcommand{\fncount}{\mathit{count}}
+\newcommand{\fnseq}{\mathit{seq}}
+\newcommand{\fntrace}{\mathit{trace}}
+\newcommand{\fnvariants}{\mathit{variants}}
+
+\newcommand{\lsautl}{\mathit{Autl}}
+\newcommand{\lsdesl}{\mathit{Desl}}
+\newcommand{\lsdcl}{\mathit{DCl}}
+\newcommand{\lsunwl}{\mathit{Unwl}}
+
+\newcommand{\utif}{\mathit{if \ }}
+\newcommand{\utand}{\mathit{\ and \ }}
+\newcommand{\utwhere}{\mathit{\ where \ }}
+\newcommand{\utwith}{\mathit{\ with \ }}
+\newcommand{\utst}{\mid}
+\newcommand{\utsuchthat}{\mathit{\ such~that \ }}
+\newcommand{\utforall}{\mathit{for~all \ }}
+\newcommand{\utforany}{\mathit{for~any \ }}
+\newcommand{\utacta}{\mathit{a}}
+\newcommand{\utactb}{\mathit{b}}
+\newcommand{\uthres}{\mathit{hr}}
+\newcommand{\utrole}{\mathit{rl}}
+\newcommand{\utval}{\mathit{val}}
+\newcommand{\utsubset}{\mathit{sub}}
+\newcommand{\utstime}{\mathit{st}}
+\newcommand{\utetime}{\mathit{et}}
+\newcommand{\utexpected}{\mathit{e}}
+\newcommand{\utwithin}{\mathit{^{w}}}
+\newcommand{\utstarted}{\mathit{^{s}}}
+\newcommand{\utcompleted}{\mathit{^{c}}}
+\newcommand{\utstartedcompleted}{\mathit{^{sc}}}
+\newcommand{\utsingle}{\mathit{^{sgl}}}
+\newcommand{\utsummation}{\mathit{^{sum}}}
+\newcommand{\utanyvariation}{\mathit{^{\times}}}
+\newcommand{\utwithinnrm}{\mathit{w}}
+\newcommand{\utstartednrm}{\mathit{s}}
+\newcommand{\utcompletednrm}{\mathit{c}}
+\newcommand{\utstartedcompletednrm}{\mathit{sc}}
+\newcommand{\utsinglenrm}{\mathit{sgl}}
+\newcommand{\utsummationnrm}{\mathit{sum}}
+\newcommand{\utanyvariationnrm}{\mathit{\times}}
+
+\newcommand{\atomiclog}{atomic event log}
+\newcommand{\alog}{^{a}}
+\newcommand{\derintlog}{derivable-interval event log}
+\newcommand{\dilog}{^{di}}
+\newcommand{\uniquederintlog}{uniquely-matched derivable-interval event log}
+\newcommand{\totalderintlog}{totally-ordered derivable-interval event log}
+\newcommand{\tdilog}{^{tdi}}
+\newcommand{\expintlog}{explicit-interval event log}
+\newcommand{\eilog}{^{ei}}
+\newcommand{\transitlog}{transitional event log}
+\newcommand{\tlog}{^{t}}
+
+\newcommand{\inda}{\mathit{A}}
+\newcommand{\indi}{\mathit{I}}
+\newcommand{\indc}{\mathit{C}}
+\newcommand{\inde}{\mathit{E}}
+\newcommand{\indhr}{\mathit{HR}}
+\newcommand{\indr}{\mathit{R}}
+\newcommand{\indrole}{\mathit{Role}}
+
+\newcommand{\indat}{\mathit{AT}}
+\newcommand{\indauta}{\mathit{Auta}}
+\newcommand{\indauti}{\mathit{Auti}}
+\newcommand{\indautst}{\mathit{AutST}}
+\newcommand{\indcltr}{\mathit{CLTR}}
+\newcommand{\indcltvalc}{\mathit{CLTOC}}
+\newcommand{\indcltvalp}{\mathit{CLTOP}}
+\newcommand{\indcmdp}{\mathit{CMDP}}
+\newcommand{\indh}{\mathit{H}}
+\newcommand{\indit}{\mathit{IT}}
+\newcommand{\indlt}{\mathit{LT}}
+\newcommand{\indltcr}{\mathit{LTCR}}
+\newcommand{\indltdl}{\mathit{LTDL}}
+\newcommand{\indltde}{\mathit{LTDE}}
+\newcommand{\indltfa}{\mathit{LTfA}}
+\newcommand{\indltab}{\mathit{LTAB}}
+\newcommand{\indltta}{\mathit{LTtA}}
+\newcommand{\indsltr}{\mathit{SLTR}}
+\newcommand{\indst}{\mathit{ST}}
+\newcommand{\indstab}{\mathit{STAB}}
+\newcommand{\indstu}{\mathit{STU}}
+\newcommand{\indwt}{\mathit{WT}}
+\newcommand{\indwtab}{\mathit{WTAB}}
+
+\newcommand{\indautc}{\mathit{AutC}}
+\newcommand{\inddac}{\mathit{DAC}}
+\newcommand{\inddc}{\mathit{DC}}
+\newcommand{\indfc}{\mathit{FC}}
+\newcommand{\indhrcr}{\mathit{HRCR}}
+\newcommand{\indic}{\mathit{IC}}
+\newcommand{\indlctcr}{\mathit{LCTCR}}
+\newcommand{\indlc}{\mathit{LC}}
+\newcommand{\indmainc}{\mathit{MainC}}
+\newcommand{\indmdc}{\mathit{MDC}}
+\newcommand{\indoc}{\mathit{OC}}
+\newcommand{\indrc}{\mathit{RC}}
+\newcommand{\indrewc}{\mathit{RewC}}
+\newcommand{\indrewp}{\mathit{RewP}}
+\newcommand{\indtc}{\mathit{TC}}
+\newcommand{\indtcltr}{\mathit{TCLTR}}
+\newcommand{\indtcur}{\mathit{TCUR}}
+\newcommand{\indtcstr}{\mathit{TCSTR}}
+\newcommand{\indtransc}{\mathit{TransC}}
+\newcommand{\indvc}{\mathit{VC}}
+\newcommand{\indwarec}{\mathit{WareC}}
+
+\newcommand{\indibyhr}{\mathit{IbyHR}}
+\newcommand{\indibyrole}{\mathit{IbyRole}}
+\newcommand{\indcaaftfc}{\mathit{CApastTFC}}
+\newcommand{\indcabetfc}{\mathit{CAdueTFC}}
+\newcommand{\indcaintfc}{\mathit{CAinTFC}}
+\newcommand{\indcendac}{\mathit{CendAC}}
+\newcommand{\indcstartac}{\mathit{CstartAC}}
+\newcommand{\indcrewc}{\mathit{CRewC}}
+\newcommand{\indcaaftfp}{\mathit{CApastTFP}}
+\newcommand{\indcabetfp}{\mathit{CAdueTFP}}
+\newcommand{\indcaintfp}{\mathit{CAinTFP}}
+\newcommand{\indcendap}{\mathit{CendAP}}
+\newcommand{\indcstartap}{\mathit{CstartAP}}
+\newcommand{\indcrewp}{\mathit{CRewP}}
+\newcommand{\indclitcr}{\mathit{CliTCR}}
+\newcommand{\indcclir}{\mathit{CCliR}}
+\newcommand{\indnauta}{\mathit{NAutA}}
+\newcommand{\indnauti}{\mathit{NAutI}}
+\newcommand{\indu}{\mathit{U}}
+\newcommand{\indoq}{\mathit{OQ}}
+\newcommand{\indrep}{\mathit{Rep}}
+\newcommand{\indrewcv}{\mathit{RewCV}}
+\newcommand{\indrewsub}{\mathit{RewSub}}
+\newcommand{\indrewpv}{\mathit{RewPV}}
+\newcommand{\indrt}{\mathit{RT}}
+\newcommand{\indsuc}{\mathit{SUC}}
+\newcommand{\indsup}{\mathit{SUP}}
+\newcommand{\indtcclir}{\mathit{TCCliR}}
+\newcommand{\induac}{\mathit{UAC}}
+\newcommand{\induap}{\mathit{UAP}}
+\newcommand{\induic}{\mathit{UIC}}
+\newcommand{\induip}{\mathit{UIP}}
+
+\newcommand{\indaroler}{\mathit{ARoleR}}
+\newcommand{\indihrr}{\mathit{IHRR}}
+\newcommand{\indcli}{\mathit{Cli}}
+\newcommand{\indopta}{\mathit{OptA}}
+\newcommand{\indopt}{\mathit{Opt}}
+\newcommand{\inddfrar}{\mathit{DFRAR}}
+\newcommand{\inddfr}{\mathit{DFR}}
+\newcommand{\indrolevr}{\mathit{RoleVR}}
+\newcommand{\indvcc}{\mathit{VCC}}
+\newcommand{\indv}{\mathit{V}}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+
+\renewcommand{\emptyset}{\varnothing}
+
+\usepackage{listings}
+\lstset{
+  language = Python,
+  backgroundcolor = \color{lightgray!10},
+  basicstyle = \ttfamily\small,
+  keywordstyle = \color{blue}\bfseries,
+  stringstyle = \color{red},
+  commentstyle = \color{green!50!black},
+  showstringspaces = false,
+  numbers = left,
+  numberstyle = \tiny\color{gray},
+  frame = single,
+  breaklines = true,
+  captionpos = b,
+  tabsize = 4,
+  basicstyle = \footnotesize\ttfamily
+}
+
+\title{PPI Research - Definitions}
+\author{Ignacio Velásquez}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{PPIs}
+
+\footnotesize
+\setlength\tabcolsep{2pt}
+\setlength{\extrarowheight}{3pt}
+
+\begin{longtable}{>{\hspace{0pt}}m{0.14\linewidth}>{\hspace{0pt}}c>{\hspace{0pt}}c>{\hspace{0pt}}m{0.1\linewidth}>{\hspace{0pt}}m{0.19\linewidth}>{\hspace{0pt}}m{0.473\linewidth}}
+\toprule
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{F. Par.} & \textbf{Function Name} & \textbf{Formal Definition}\\
+\midrule \endfirsthead
+\toprule
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{F. Par.} & \textbf{Function Name} & \textbf{Formal Definition}\\
+\midrule \endhead
+\bottomrule \endfoot
+\captionsetup{font=small}
+\caption{General PPI definitions} \endlastfoot
+Activity count (case granularity) & \dgeneral & \gcase & \(c \in C\) & \(\inda(c)\) & \(|\fnact(c)|\) \\
+Activity count (group of cases granularity) & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\inda(g)\) & \(|\cup_{c \in g} \fnact(c)|\) \\
+Expected Activity count & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\inda(g)\) & \(\frac{\sum _{c \in g} \inda(c)}{\indc(g)}\) \\
+activity Instance count (activity granularity) & \dgeneral & \gact & \(a \in A\) & \(\indi(a)\) & \(|\fninst(a)|\) \\
+activity Instance count (case granularity) & \dgeneral & \gcase & \(c \in C\) & \(\indi(c)\) & \(|\fninst(c)|\) \\
+activity Instance count (group of cases granularity) & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indi(g)\) & \(\sum _{c \in g} \indi(c)\) \\
+Expected activity Instance count & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indi(g)\) & \(\frac{\indi(g)}{\indc(g)}\) \\
+Case count (group of cases granularity) & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indc(g)\) & \(|g|\) \\
+Human Resource count (activity granularity) & \dgeneral & \gact & \(a \in A\) & \(\indhr(a)\) & \(|\fnhres(a)|\) \\
+Human Resource count (case granularity) & \dgeneral & \gcase & \(c \in C\) & \(\indhr(c)\) & \(|\fnhres(c)|\) \\
+Human Resource count (group of cases granularity) & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indhr(g)\) & \(|\cup_{c \in g} \fnhres(c)|\) \\
+Expected Human Resource count & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indhr(g)\) & \(\frac{\sum _{c \in g} \indhr(c)}{\indc(g)}\) \\
+Resource count (activity granularity) & \dgeneral & \gact & \(a \in A\) & \(\indr(a)\) & \(|\fnres(a)|\) \\
+Resource count (case granularity) & \dgeneral & \gcase & \(c \in C\) & \(\indr(c)\) & \(|\fnres(c)|\) \\
+Resource count (group of cases granularity) & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indr(g)\) & \(|\cup_{c \in g} \fnres(c)|\) \\
+Expected Resource count & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indr(g)\) & \(\frac{\sum _{c \in g} \indr(c)}{\indc(g)}\) \\
+Role count (case granularity) & \dgeneral & \gcase & \(c \in C\) & \(\indrole(c)\) & \(|\fnrole(c)|\) \\
+Role count (group of cases granularity) & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrole(g)\) & \(|\cup_{c \in g} \fnrole(c)|\) \\
+Expected Role count & \dgeneral & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indrole(g)\) & \(\frac{\sum _{c \in g} \indrole(c)}{\indc(g)}\) \\
+\bottomrule
+\label{PPIGeneralDefinitions}
+\end{longtable}
+
+
+\begin{longtable}{>{\hspace{0pt}}m{0.14\linewidth}>{\hspace{0pt}}c>{\hspace{0pt}}c>{\hspace{0pt}}m{0.1\linewidth}>{\hspace{0pt}}m{0.19\linewidth}>{\hspace{0pt}}m{0.473\linewidth}}
+\toprule
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{F. Par.} & \textbf{Function Name} & \textbf{Formal Definition}\\
+\midrule \endfirsthead
+\toprule
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{F. Par.} & \textbf{Function Name} & \textbf{Formal Definition}\\
+\midrule \endhead
+\bottomrule \endfoot
+\captionsetup{font=small}
+\caption{Time dimension PPI definitions} \endlastfoot
+Active Time (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indat(c)\) & \(\indlt(c) - \indit(c)\) \\
+Expected Active Time & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indat(g)\) & \(\frac{\sum _{c \in g} \indat(c)}{\indc(g)}\) \\
+Activity count (case granularity) & \dtime & \gcase & \(c \in C\) & \(\inda(c)\) & \(|\fnact(c)|\) \\
+Activity count (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\inda(g)\) & \(|\cup_{c \in g} \fnact(c)|\) \\
+Expected Activity count & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\inda(g)\) & \(\frac{\sum _{c \in g} \inda(c)}{\indc(g)}\) \\
+activity Instance count (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indi(c)\) & \(|\fninst(c)|\) \\
+activity Instance count (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indi(g)\) & \(\sum _{c \in g} \indi(c)\) \\
+Expected activity Instance count & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indi(g)\) & \(\frac{\indi(g)}{\indc(g)}\) \\
+Automated Activity count (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indauta(c)\) & \(|\lsautl \cap \fnact(c)|\) \\
+Automated Activity count (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indauta(g)\) & \(|\lsautl \cap (\cup_{c \in g} \fnact(c))|\) \\
+Expected Automated Activity count & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indauta(g)\) & \(\frac{\sum _{c \in g} \indauta(c)}{\indc(g)}\) \\
+Automated activity Instance count (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indauti(c)\) & \(|\{i \in \fninst(c) \utst \fnact(i) \in \lsautl\}|\) \\
+Automated activity Instance count (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indauti(g)\) & \(\sum _{c \in g} \indauti(c)\) \\
+Expected Automated activity Instance count & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indauti(g)\) & \(\frac{\indauti(g)}{\indc(g)}\) \\
+Automated Activity Service Time (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indautst(c)\) & \(\sum _{i \in \fninst(c), \fnact(i) \in \lsautl} \indst(i)\) \\
+Automated Activity Service Time (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indautst(g)\) & \(\sum _{c \in g} \indautst(c)\) \\
+Expected Automated Activity Service Time & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indautst(g)\) & \(\frac{\indautst(g)}{\indc(g)}\) \\
+Case count and Lead Time Ratio (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indcltr(g)\) & \(\frac{\indc(g)}{\indlt(g)}\) \\
+Case Count where Lead Time Over value (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utval \in \mathbb{R}\) & \(\indcltvalc(g, \utval)\) & \(|\{c \in g \utst \indlt(c) > \utval\}|\) \\
+Case Percentage where Lead Time Over value (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utval \in \mathbb{R}\) & \(\indcltvalp(g, \utval)\) & \(\frac{\indcltvalc(g, \utval)}{\indc(g)}\) \\
+Case Percentage with Missed Deadline (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utval \in \universe{\attime}\) & \(\indcmdp(g, \utval)\) & \(\frac{|\{c \in g \utst \fnendtime(c) > \utval\}|}{\indc(g)}\) \\
+Handover count (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indh(c)\) & \(\sum _{i \in \fninst(c)} \fndres(i)\) \\
+Expected Handover count & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indh(g)\) & \(\frac{\sum _{c \in g} \indh(c)}{\indc(g)}\) \\
+Idle Time (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indit(c)\) & \(\sum _{i \in \fninst(c)} \begin{cases}
+\frac{\indwt(i)}{|\fnconcstr(i)|} & \utif \fnprevstr(i) = \emptyset \\
+0 & \utif \fnprevstr(i) \neq \emptyset
+\end{cases}\) \\
+Expected Idle Time & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indit(g)\) & \(\frac{\sum _{c \in g} \indit(c)}{\indc(g)}\) \\
+Lead Time (activity instance granularity) & \dtime & \ginst & \(i \in I\) & \(\indlt(i)\) & \(\indst(i) + \indwt(i)\) \\
+Lead Time (activity granularity) & \dtime & \gact & \(a \in A\) & \(\indlt(a)\) & \(\sum _{i \in \fninst(a)} \indlt(i)\) \\
+Lead Time (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indlt(c)\) & \(\fnendtime(c) - \fnstarttime(c)\) \\
+Lead Time (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\)& \(\indlt(g)\) & \(^{\fnmax}_{c \in g} \fnendtime(c) - ^{\fnmin}_{c \in g} \fnstarttime(c)\) \\
+Expected Lead Time & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indlt(g)\) & \(\frac{\sum _{c\in g}\indlt(c)}{\indc(g)}\) \\
+Lead Time and Case count Ratio (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indltcr(g)\) & \(\frac{\indlt(g)}{\indc(g)}\) \\
+Lead Time Deviation from time Limit (case granularity) & \dtime & \gcase & \(c \in C\) \newline \(\utval \in \mathbb{R}\) & \(\indltdl(c, \utval)\) & \(\utval - \indlt(c)\) \\
+Expected Lead Time Deviation from time Limit & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utval \in \mathbb{R}\) & \(\utexpected\indltdl(g, \utval)\) & \(\frac{\sum _{c \in g} \indltdl(c, \utval)}{\indc(g)}\) \\
+Lead Time Deviation from Expectation (case granularity) & \dtime & \gcase & \(c \in C\) \newline \(\utval \in \mathbb{R}\) & \(\indltde(c, \utval)\) & \(|\utval - \indlt(c)|\) \\
+Expected Lead Time Deviation from Expectation & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utval \in \mathbb{R}\) & \(\utexpected\indltde(g, \utval)\) & \(\frac{\sum _{c \in g} \indltde(c, \utval)}{\indc(g)}\) \\
+Lead Time from activity A (case granularity) & \dtime & \gcase & \(c \in C\) \newline \(\utacta \in A\) & \(\indltfa(c, \utacta)\) & \(\begin{cases}
+\fnleadtime(x, y) & \utforany x \in \fnfirst\utstarted(c, \utacta) \utand y \in \fnendinstance(c) \\ \bot & \utif \fnfirst\utstarted(c, \utacta) = \emptyset
+\end{cases}\) \\
+Expected Lead Time from activity A & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) & \(\utexpected\indltfa(g, \utacta)\) & \(\frac{\sum _{c \in g} \begin{cases}
+\indltfa(c, \utacta) & \utif \fnfirst\utstarted(c, \utacta) \neq \emptyset \\ 0 & \utif \fnfirst\utstarted(c, \utacta) = \emptyset
+\end{cases}}{|\{c \in g \utst \fnfirst\utstarted(c, \utacta) \neq \emptyset\}|}\) \\
+Lead Time from activity A to activity B (case granularity) & \dtime & \gcase & \(c \in C\) \newline \(\utacta, \utactb \in A \colon\) \newline \(\utacta \neq \utactb\) & \(\indltab(c, \utacta, \utactb)\) & \(\begin{cases}
+\fnleadtime(x,y) & \utforany x \in \fnfirst\utstarted(c, \utacta) \utand y \in \fnfirst\utstartedcompleted(c, \utacta, \utactb) \\
+\bot & \utif \fnfirst\utstartedcompleted(c, \utacta, \utactb) = \emptyset
+\end{cases}\) \\
+Expected Lead Time from activity A to activity B & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta, \utactb \in A \colon\) \newline \(\utacta \neq \utactb\) & \(\utexpected\indltab(g, \utacta, \utactb)\) & \(\frac{\sum _{c \in g} \begin{cases}
+\indltab(c, \utacta, \utactb) & \utif \fnfirst\utstartedcompleted(c, \utacta, \utactb) \neq \emptyset \\ 0 & \utif \fnfirst\utstartedcompleted(c, \utacta, \utactb) = \emptyset
+\end{cases}}{|\{c \in g \utst \fnfirst\utstartedcompleted(c, \utacta, \utactb) \neq \emptyset)\}|}\) \\
+Lead Time to activity A (case granularity) & \dtime & \gcase & \(c \in C\) \newline \(\utacta \in A\) & \(\indltta(c, \utacta)\) & \(\begin{cases}
+\fnleadtime(x, y) & \utforany x \in \fnstartinstance(c) \utand y \in \fnfirst\utcompleted(c, \utacta) \\ \bot & \utif \fnfirst\utcompleted(c, \utacta) = \emptyset
+\end{cases}\) \\
+Expected Lead Time to activity A & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) & \(\utexpected\indltta(g, \utacta)\) & \(\frac{\sum _{c \in g} \begin{cases}
+\indltta(c, \utacta) & \utif \fnfirst\utcompleted(c, \utacta) \neq \emptyset \\ 0 & \utif \fnfirst\utcompleted(c, \utacta) = \emptyset
+\end{cases}}{|\{c \in g \utst \utif \fnfirst\utcompleted(c, \utacta) \neq \emptyset\}|}\) \\
+Service and Lead Time Ratio (activity instance granularity) & \dtime & \ginst & \(i \in I\) & \(\indsltr(i)\) & \(\frac{\indst(i)}{\indlt(i)}\) \\
+Service and Lead Time Ratio (activity granularity) & \dtime & \gact & \(a \in A\) & \(\indsltr(a)\) & \(\frac{\indst(a)}{\indlt(a)}\) \\
+Service and Lead Time Ratio (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indsltr(c)\) & \(\frac{\indst(c)}{\indlt(c)}\) \\
+Service and Lead Time Ratio (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indsltr(g)\) & \(\frac{\indst(g)}{\indlt(g)}\) \\
+Expected Service and Lead Time Ratio & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indsltr(g)\) & \(\frac{\indst(g)}{\sum _{c \in g} \indlt(c)}\) \\
+Service Time (activity instance granularity) & \dtime & \ginst & \(i \in I\) & \(\indst(i)\) & \(\fnicompletetime(i) - \fnistarttime(i)\) \\
+Service Time (activity granularity) & \dtime & \gact & \(a \in A\) & \(\indst(a)\) & \(\sum _{i \in \fninst(a)} \indst(i)\) \\
+Service Time (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indst(c)\) & \(\sum _{i \in \fninst(c)} \indst(i)\) \\
+Service Time (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indst(g)\) & \(\sum _{c \in g} \indst(c)\) \\
+Expected Service Time & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indst(g)\) & \(\frac{\indst(g)}{\indc(g)}\) \\
+Service Time from activity A to activity B (case granularity) & \dtime & \gcase & \(c \in C\) \newline \(\utacta, \utactb \in A \colon\) \newline \(\utacta \neq \utactb\) & \(\indstab\utanyvariation(c, \utacta, \utactb)\)
+\newline \newline \(\utanyvariationnrm \in \{\utstartednrm, \utcompletednrm, \utstartedcompletednrm, \utwithinnrm\}\) & \(\begin{cases} \fnservicetime\utanyvariation(x, y) & \utforany x \in \fnfirst\utstarted(c, \utacta) \utand y \in \fnfirst\utstartedcompleted(c, \utacta, \utactb) \\
+\bot & \utif \fnfirst\utstartedcompleted(c, \utacta, \utactb) = \emptyset \end{cases}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utstartednrm, \utcompletednrm, \utstartedcompletednrm, \utwithinnrm\}$. If $\utanyvariationnrm = \utstartednrm$, then the function considers activity instances that were started within the start and end activity instances, i.e., it uses $\fnservicetime\utstarted$; if $\utanyvariationnrm = \utcompletednrm$, then the function considers activity instances that were completed within the start and end activity instances, i.e., it uses $\fnservicetime\utcompleted$; if $\utanyvariationnrm = \utstartedcompletednrm$, then the function considers activity instances that were either started or completed within the start and end activity instances, i.e., it uses $\fnservicetime\utstartedcompleted$; if $\utanyvariationnrm = \utwithin$, then the function considers all activity instances that were active within the start and end activity instances, i.e., it uses $\fnservicetime\utwithin$. \\
+Service Time from activity A to activity B (group of cases granularity) & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta, \utactb \in A \colon\) \newline \(\utacta \neq \utactb\) & \(\indstab\utanyvariation(g, \utacta, \utactb)\)
+\newline \newline \(\utanyvariationnrm \in \{\utstartednrm, \utcompletednrm, \utstartedcompletednrm, \utwithinnrm\}\) & \(\sum _{c \in g} \begin{cases}
+\indstab\utanyvariation(c, \utacta, \utactb) & \utif \fnfirst\utstartedcompleted(c, \utacta, \utactb) \neq \emptyset \\ 0 & \utif \fnfirst\utstartedcompleted(c, \utacta, \utactb) = \emptyset
+\end{cases}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utstartednrm, \utcompletednrm, \utstartedcompletednrm, \utwithinnrm\}$. If $\utanyvariationnrm = \utstartednrm$, then the function considers activity instances that were started within the start and end activity instances, i.e., it uses $\indstab\utstarted$; if $\utanyvariationnrm = \utcompletednrm$, then the function considers activity instances that were completed within the start and end activity instances, i.e., it uses $\indstab\utcompleted$; if $\utanyvariationnrm = \utstartedcompletednrm$, then the function considers activity instances that were either started or completed within the start and end activity instances, i.e., it uses $\indstab\utstartedcompleted$; if $\utanyvariationnrm = \utwithin$, then the function considers all activity instances that were active within the start and end activity instances, i.e., it uses $\indstab\utwithin$. \\
+Expected Service Time from activity A to activity B & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta, \utactb \in A \colon\) \newline \(\utacta \neq \utactb\) & \(\utexpected\indstab\utanyvariation(g, \utacta, \utactb)\)
+\newline \newline \(\utanyvariationnrm \in \{\utstartednrm, \utcompletednrm, \utstartedcompletednrm, \utwithinnrm\}\) & \(\frac{\indstab\utanyvariation(g, \utacta, \utactb)}{|\{c \in g \utst \fnfirst\utstartedcompleted(c, \utacta, \utactb) \neq \emptyset\}|}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utstartednrm, \utcompletednrm, \utstartedcompletednrm, \utwithinnrm\}$. If $\utanyvariationnrm = \utstartednrm$, then the function considers activity instances that were started within the start and end activity instances, i.e., it uses $\indstab\utstarted$; if $\utanyvariationnrm = \utcompletednrm$, then the function considers activity instances that were completed within the start and end activity instances, i.e., it uses $\indstab\utcompleted$; if $\utanyvariationnrm = \utstartedcompletednrm$, then the function considers activity instances that were either started or completed within the start and end activity instances, i.e., it uses $\indstab\utstartedcompleted$; if $\utanyvariationnrm = \utwithin$, then the function considers all activity instances that were active within the start and end activity instances, i.e., it uses $\indstab\utwithin$. \\
+Waiting Time (activity instance granularity) & \dtime & \ginst & \(i \in I\) & \(\indwt(i)\) & \(\begin{cases}
+\fnistarttime(i) - \fnicompletetime(x) & \utforany x \in \fnprev(i) \\
+0 & \utif \fnprev(i) = \emptyset
+\end{cases}\) \\
+Waiting Time (activity granularity) & \dtime & \gact & \(a \in A\) & \(\indwt(a)\) & \(\sum _{i \in \fninst(a)} \indwt(i)\) \\
+Waiting Time (case granularity) & \dtime & \gcase & \(c \in C\) & \(\indwt(c)\) & \(\sum _{i \in \fninst(c)} \indwt(i)\) \\
+Expected Waiting Time & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indwt(g)\) & \(\frac{\sum _{c \in g} \indwt(c)}{\indc(g)}\) \\
+Waiting Time from activity A to activity B (case granularity) & \dtime & \gcase & \(c \in C\) \newline \(\utacta, \utactb \in A \colon\) \newline \(\utacta \neq \utactb\) & \(\indwtab\utanyvariation(c, \utacta, \utactb)\)
+\newline \newline \(\utanyvariationnrm \in \{\utstartednrm, \utcompletednrm, \utstartedcompletednrm, \utwithinnrm\}\) & \(\begin{cases} \fnwaitingtime\utanyvariation(x, y) & \utforany x \in \fnfirst\utstarted(c, \utacta) \utand y \in \fnfirst\utstartedcompleted(c, \utacta, \utactb) \\
+\bot & \utif \fnfirst\utstartedcompleted(c, \utacta, \utactb) = \emptyset \end{cases}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utstartednrm, \utcompletednrm, \utstartedcompletednrm, \utwithinnrm\}$. If $\utanyvariationnrm = \utstartednrm$, then the function considers activity instances that were started within the start and end activity instances, i.e., it uses $\fnwaitingtime\utstarted$; if $\utanyvariationnrm = \utcompletednrm$, then the function considers activity instances that were completed within the start and end activity instances, i.e., it uses $\fnwaitingtime\utcompleted$; if $\utanyvariationnrm = \utstartedcompletednrm$, then the function considers activity instances that were either started or completed within the start and end activity instances, i.e., it uses $\fnwaitingtime\utstartedcompleted$; if $\utanyvariationnrm = \utwithin$, then the function considers all activity instances that were active within the start and end activity instances, i.e., it uses $\fnwaitingtime\utwithin$. \\
+Expected Waiting Time from activity A to activity B & \dtime & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta, \utactb \in A \colon\) \newline \(\utacta \neq \utactb\) & \(\utexpected\indwtab\utanyvariation(g, \utacta, \utactb)\)
+\newline \newline \(\utanyvariationnrm \in \{\utstartednrm, \utcompletednrm, \utstartedcompletednrm, \utwithinnrm\}\) & \(\frac{\sum _{c \in g} \begin{cases}
+\indwtab\utanyvariation(c, \utacta, \utactb) & \utif \fnfirst\utstartedcompleted(c, \utacta, \utactb) \neq \emptyset \\ 0 & \utif \fnfirst\utstartedcompleted(c, \utacta, \utactb) = \emptyset
+\end{cases}}{|\{c \in g \utst \fnfirst\utstartedcompleted(c, \utacta, \utactb) \neq \emptyset\}|}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utstartednrm, \utcompletednrm, \utstartedcompletednrm, \utwithinnrm\}$. If $\utanyvariationnrm = \utstartednrm$, then the function considers activity instances that were started within the start and end activity instances, i.e., it uses $\indwtab\utstarted$; if $\utanyvariationnrm = \utcompletednrm$, then the function considers activity instances that were completed within the start and end activity instances, i.e., it uses $\indwtab\utcompleted$; if $\utanyvariationnrm = \utstartedcompletednrm$, then the function considers activity instances that were either started or completed within the start and end activity instances, i.e., it uses $\indwtab\utstartedcompleted$; if $\utanyvariationnrm = \utwithin$, then the function considers all activity instances that were active within the start and end activity instances, i.e., it uses $\indwtab\utwithin$. \\
+\bottomrule
+\label{PPITimeDefinitions}
+\end{longtable}
+
+
+\begin{longtable}{>{\hspace{0pt}}m{0.14\linewidth}>{\hspace{0pt}}c>{\hspace{0pt}}c>{\hspace{0pt}}m{0.1\linewidth}>{\hspace{0pt}}m{0.19\linewidth}>{\hspace{0pt}}m{0.473\linewidth}}
+\toprule
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{F. Par.} & \textbf{Function Name} & \textbf{Formal Definition}\\
+\midrule \endfirsthead
+\toprule
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{F. Par.} & \textbf{Function Name} & \textbf{Formal Definition}\\
+\midrule \endhead
+\bottomrule \endfoot
+\captionsetup{font=small}
+\caption{Cost dimension PPI definitions} \endlastfoot
+Automated Activity Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indautc\utanyvariation(c)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(c), \fnact(i) \in \lsautl} \indtc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Automated Activity Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indautc\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in g} \indautc\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indautc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indautc\utsummation$. \\
+Expected Automated Activity Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indautc\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indautc\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indautc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indautc\utsummation$. \\
+Desired Activity count (case granularity) & \dcost & \gcase & \(c \in C\) & \(\inddac(c)\) & \(| \lsdesl \cap \fnact(c)|\) \\
+Desired Activity count (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\inddac(g)\) & \(|\lsdesl \cap (\cup_{c \in g} \fnact(c))|\) \\
+Expected Desired Activity count & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\inddac(g)\) & \(\frac{\sum _{c \in g} \inddac(c)}{\indc(g)}\) \\
+Direct Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\inddc\utanyvariation(c)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(c), \fnact(i) \in \lsdcl} \indtc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Direct Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\inddc\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in g} \inddc\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\inddc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\inddc\utsummation$. \\
+Expected Direct Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\inddc\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\inddc\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\inddc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\inddc\utsummation$. \\
+Fixed Cost considering single events of activity instances (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indfc\utsingle(i)\) & \(\begin{cases}
+\attribute{\atfcost}(\fnicomplete(i)) & \utif \attribute{\atfcost}(\fnicomplete(i)) \neq \bot \\
+\attribute{\atfcost}(\fnistart(i)) & \utif \attribute{\atfcost}(\fnicomplete(i)) = \bot \land \attribute{\atfcost}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\atfcost}(\fnicomplete(i)) = \bot \land \attribute{\atfcost}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+Fixed Cost considering the sum of all events of activity instances (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indfc\utsummation(i)\) & \(\begin{cases}
+\attribute{\atfcost}(\fnistart(i)) + & \\ \attribute{\atfcost}(\fnicomplete(i)) & \utif \attribute{\atfcost}(\fnicomplete(i)) \neq \bot \land \attribute{\atfcost}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\atfcost}(\fnicomplete(i)) = \bot \lor \attribute{\atfcost}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+Fixed Cost (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indfc\utanyvariation(a)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(a)} \indfc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indfc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indfc\utsummation$. \\
+Fixed Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indfc\utanyvariation(c)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(c)} \indfc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indfc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indfc\utsummation$. \\
+Fixed Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indfc\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in g} \indfc\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indfc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indfc\utsummation$. \\
+Expected Fixed Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indfc\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indfc\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indfc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indfc\utsummation$. \\
+Human Resource and Case count Ratio (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indhrcr(g)\) & \(\frac{\indhr(g)}{\indc(g)}\) \\
+Human Resource count (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indhr(a)\) & \(|\fnhres(a)|\) \\
+Human Resource count (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indhr(c)\) & \(|\fnhres(c)|\) \\
+Human Resource count (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indhr(g)\) & \(|\cup_{c \in g} \fnhres(c)|\) \\
+Expected Human Resource count & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indhr(g)\) & \(\frac{\sum _{c \in g} \indhr(c)}{\indc(g)}\) \\
+Inventory Cost considering single events of activity instances (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indic\utsingle(i)\) & \(\begin{cases}
+\attribute{\aticost}(\fnicomplete(i)) & \utif \attribute{\aticost}(\fnicomplete(i)) \neq \bot \\
+\attribute{\aticost}(\fnistart(i)) & \utif \attribute{\aticost}(\fnicomplete(i)) = \bot \land \attribute{\aticost}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\aticost}(\fnicomplete(i)) = \bot \land \attribute{\aticost}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+Inventory Cost considering the sum of all events of activity instances (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indic\utsummation(i)\) & \(\begin{cases}
+\attribute{\aticost}(\fnistart(i)) + & \\ \attribute{\aticost}(\fnicomplete(i)) & \utif \attribute{\aticost}(\fnicomplete(i)) \neq \bot \land \attribute{\aticost}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\aticost}(\fnicomplete(i)) = \bot \lor \attribute{\aticost}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+Inventory Cost (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indic\utanyvariation(a)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(a)} \indic\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indic\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indic\utsummation$. \\
+Inventory Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indic\utanyvariation(c)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(c)} \indic\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indic\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indic\utsummation$. \\
+Inventory Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indic\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in g} \indic\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indic\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indic\utsummation$. \\
+Expected Inventory Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indic\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indic\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indic\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indic\utsummation$. \\
+Labor Cost and Total Cost Ratio (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indlctcr\utanyvariation(i)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indlc\utanyvariation(i)}{\indtc\utanyvariation(i)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indlc\utsingle$ and $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indlc\utsummation$ and $\indtc\utsummation$. \\
+Labor Cost and Total Cost Ratio (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indlctcr\utanyvariation(a)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indlc\utanyvariation(a)}{\indtc\utanyvariation(a)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indlc\utsingle$ and $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indlc\utsummation$ and $\indtc\utsummation$. \\
+Labor Cost and Total Cost Ratio (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indlctcr\utanyvariation(c)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indlc\utanyvariation(c)}{\indtc\utanyvariation(c)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indlc\utsingle$ and $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indlc\utsummation$ and $\indtc\utsummation$. \\
+Labor Cost and Total Cost Ratio (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indlctcr\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indlc\utanyvariation(g)}{\indtc\utanyvariation(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indlc\utsingle$ and $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indlc\utsummation$ and $\indtc\utsummation$. \\
+Expected Labor Cost and Total Cost Ratio & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indlctcr\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indlc\utanyvariation(g)}{\indtc\utanyvariation(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indlc\utsingle$ and $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indlc\utsummation$ and $\indtc\utsummation$. \\
+Labor Cost considering single events of activity instances (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indlc\utsingle(i)\) & \(\begin{cases}
+\attribute{\atlcost}(\fnicomplete(i)) & \utif \attribute{\atlcost}(\fnicomplete(i)) \neq \bot \\
+\attribute{\atlcost}(\fnistart(i)) & \utif \attribute{\atlcost}(\fnicomplete(i)) = \bot \land \attribute{\atlcost}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\atlcost}(\fnicomplete(i)) = \bot \land \attribute{\atlcost}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+Labor Cost considering the sum of all events of activity instances (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indlc\utsummation(i)\) & \(\begin{cases}
+\attribute{\atlcost}(\fnistart(i)) + & \\ \attribute{\atlcost}(\fnicomplete(i)) & \utif \attribute{\atlcost}(\fnicomplete(i)) \neq \bot \land \attribute{\atlcost}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\atlcost}(\fnicomplete(i)) = \bot \lor \attribute{\atlcost}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+Labor Cost (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indlc\utanyvariation(a)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(a)} \indlc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indlc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indlc\utsummation$. \\
+Labor Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indlc\utanyvariation(c)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(c)} \indlc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indlc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indlc\utsummation$. \\
+Labor Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indlc\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in g} \indlc\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indlc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indlc\utsummation$. \\
+Expected Labor Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indlc\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indlc\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indlc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indlc\utsummation$. \\
+Maintenance Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indmainc(c)\) & \(\attribute{\atmaincost}(c)\) \\
+Maintenance Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indmainc(g)\) & \(\sum _{c \in g} \indmainc(c)\) \\
+Expected Maintenance Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indmainc(g)\) & \(\frac{\indmainc(g)}{\indc(g)}\) \\
+Missed Deadline Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indmdc(c)\) & \(\attribute{\atmdcost}(c)\) \\
+Missed Deadline Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indmdc(g)\) & \(\sum _{c \in g} \indmdc(c)\) \\
+Expected Missed Deadline Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indmdc(g)\) & \(\frac{\indmdc(g)}{\indc(g)}\) \\
+Overhead Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indoc\utanyvariation(c)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(c), \fnact(i) \notin \lsdcl} \indtc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Overhead Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indoc\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in g} \indoc\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indoc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indoc\utsummation$. \\
+Expected Overhead Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indoc\utanyvariation(g)\) 
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indoc\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indoc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indoc\utsummation$. \\
+Resource count (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indr(a)\) & \(|\fnres(a)|\) \\
+Resource count (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indr(c)\) & \(|\fnres(c)|\) \\
+Resource count (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indr(g)\) & \(|\cup_{c \in g} \fnres(c)|\) \\
+Expected Resource count & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indr(g)\) & \(\frac{\sum _{c \in g} \indr(c)}{\indc(g)}\) \\
+Rework Cost (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indrc\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\indtc(a) - \sum _{c \in C} \fnfirstinsttc\utanyvariation(c, a)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\fnfirstinsttc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\fnfirstinsttc\utsummation$. \\
+Rework Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indrc\utanyvariation(c)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\indtc(c) - \sum _{a \in A} \fnfirstinsttc\utanyvariation(c, a)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\fnfirstinsttc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\fnfirstinsttc\utsummation$. \\
+Rework Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrc\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in g} \indrc\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indrc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indrc\utsummation$. \\
+Expected Rework Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indrc\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indrc\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indrc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indrc\utsummation$. \\
+Rework Count (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indrewc(a)\) & \(\sum _{c \in C} \fnmax(0, \fncount(c, a) - 1)\) \\
+Rework Count (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indrewc(c)\) & \(\sum _{a \in A} \fnmax(0, \fncount(c, a) - 1)\) \\
+Rework Count (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrewc(g)\) & \(\sum _{c \in g} \indrewc(c)\) \\
+Expected Rework Count & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indrewc(g)\) & \(\frac{\indrewc(g)}{\indc(g)}\) \\
+Rework Percentage (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indrewp(a)\) & \(\frac{\indrewc(a)}{\indi(a)}\) \\
+Rework Percentage (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indrewp(c)\) & \(\frac{\indrewc(c)}{\indi(c)}\) \\
+Rework Percentage (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrewp(g)\) & \(\frac{\indrewc(g)}{\indi(g)}\) \\
+Expected Rework Percentage & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indrewp(g)\) & \(\frac{\sum _{c \in g} \indrewp(c)}{\indc(g)}\) \\
+Total Cost considering single events of activity instances (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indtc\utsingle(i)\) & \(\begin{cases}
+\attribute{\attcost}(\fnicomplete(i)) & \utif \attribute{\attcost}(\fnicomplete(i)) \neq \bot \\
+\attribute{\attcost}(\fnistart(i)) & \utif \attribute{\attcost}(\fnicomplete(i)) = \bot \land \attribute{\attcost}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\attcost}(\fnicomplete(i)) = \bot \land \attribute{\attcost}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+Total Cost considering the sum of all events of activity instances (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indtc\utsummation(i)\) & \(\begin{cases}
+\attribute{\attcost}(\fnistart(i)) + & \\ \attribute{\attcost}(\fnicomplete(i)) & \utif \attribute{\attcost}(\fnicomplete(i)) \neq \bot \land \attribute{\attcost}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\attcost}(\fnicomplete(i)) = \bot \lor \attribute{\attcost}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+Total Cost (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indtc\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(a)} \indtc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indtc\utanyvariation(c)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(c)} \indtc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indtc\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in g} \indtc\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Expected Total Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indtc\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost and Lead Time Ratio (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indtcltr\utanyvariation(i)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(i)}{\indlt(i)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost and Lead Time Ratio (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indtcltr\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(a)}{\indlt(a)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost and Lead Time Ratio (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indtcltr\utanyvariation(c)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(c)}{\indlt(c)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost and Lead Time Ratio (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indtcltr\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(g)}{\indlt(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Expected Total Cost and Lead Time Ratio & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indtcltr\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(g)}{\sum _{c \in g} \indlt(c)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost and outcome Unit Ratio (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indtcur\utanyvariation(i)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(i)}{\indu\utanyvariation(i)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost and outcome unit calculations, i.e., it uses $\indtc\utsingle$ and $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost and outcome unit calculations, i.e., it uses $\indtc\utsummation$ and $\indu\utsummation$. \\
+Total Cost and outcome Unit Ratio (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indtcur\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(a)}{\indu\utanyvariation(a)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost and outcome unit calculations, i.e., it uses $\indtc\utsingle$ and $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost and outcome unit calculations, i.e., it uses $\indtc\utsummation$ and $\indu\utsummation$. \\
+Total Cost and outcome Unit Ratio (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indtcur\utanyvariation(c)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(c)}{\indu\utanyvariation(c)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost and outcome unit calculations, i.e., it uses $\indtc\utsingle$ and $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost and outcome unit calculations, i.e., it uses $\indtc\utsummation$ and $\indu\utsummation$. \\
+Total Cost and outcome Unit Ratio (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indtcur\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(g)}{\indu\utanyvariation(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost and outcome unit calculations, i.e., it uses $\indtc\utsingle$ and $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost and outcome unit calculations, i.e., it uses $\indtc\utsummation$ and $\indu\utsummation$. \\
+Expected Total Cost and outcome Unit Ratio & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indtcur\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(g)}{\indu\utanyvariation(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost and outcome unit calculations, i.e., it uses $\indtc\utsingle$ and $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost and outcome unit calculations, i.e., it uses $\indtc\utsummation$ and $\indu\utsummation$. \\
+Total Cost and Service Time Ratio (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indtcstr\utanyvariation(i)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(i)}{\indst(i)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost and Service Time Ratio (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indtcstr\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(a)}{\indst(a)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost and Service Time Ratio (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indtcstr\utanyvariation(c)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(c)}{\indst(c)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost and Service Time Ratio (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indtcstr\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(g)}{\indst(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Expected Total Cost and Service Time Ratio & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indtcstr\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(g)}{\indst(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Transportation Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indtransc(c)\) & \(\attribute{\attranscost}(c)\) \\
+Transportation Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indtransc(g)\) & \(\sum _{c \in g} \indtransc(c)\) \\
+Expected Transportation Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indtransc(g)\) & \(\frac{\indtransc(g)}{\indc(g)}\) \\
+Variable Cost considering single events of activity instances (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indvc\utsingle(i)\) & \(\begin{cases}
+\attribute{\atvcost}(\fnicomplete(i)) & \utif \attribute{\atvcost}(\fnicomplete(i)) \neq \bot \\
+\attribute{\atvcost}(\fnistart(i)) & \utif \attribute{\atvcost}(\fnicomplete(i)) = \bot \land \attribute{\atvcost}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\atvcost}(\fnicomplete(i)) = \bot \land \attribute{\atvcost}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+Variable Cost considering the sum of all events of activity instances (activity instance granularity) & \dcost & \ginst & \(i \in I\) & \(\indvc\utsummation(i)\) & \(\begin{cases}
+\attribute{\atvcost}(\fnistart(i)) + & \\ \attribute{\atvcost}(\fnicomplete(i)) & \utif \attribute{\atvcost}(\fnicomplete(i)) \neq \bot \land \attribute{\atvcost}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\atvcost}(\fnicomplete(i)) = \bot \lor \attribute{\atvcost}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+Variable Cost (activity granularity) & \dcost & \gact & \(a \in A\) & \(\indvc\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(a)} \indvc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indvc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indvc\utsummation$. \\
+Variable Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indvc\utanyvariation(c)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(c)} \indvc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indvc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indvc\utsummation$. \\
+Variable Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indvc\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in g} \indvc\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indvc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indvc\utsummation$. \\
+Expected Variable Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indvc\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indvc\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indvc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indvc\utsummation$. \\
+Warehousing Cost (case granularity) & \dcost & \gcase & \(c \in C\) & \(\indwarec(c)\) & \(\attribute{\atwarecost}(c)\) \\
+Warehousing Cost (group of cases granularity) & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indwarec(g)\) & \(\sum _{c \in g} \indwarec(c)\) \\
+Expected Warehousing Cost & \dcost & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indwarec(g)\) & \(\frac{\indwarec(g)}{\indc(g)}\) \\
+\bottomrule
+\label{PPICostDefinitions}
+\end{longtable}
+
+
+\begin{longtable}{>{\hspace{0pt}}m{0.14\linewidth}>{\hspace{0pt}}c>{\hspace{0pt}}c>{\hspace{0pt}}m{0.1\linewidth}>{\hspace{0pt}}m{0.19\linewidth}>{\hspace{0pt}}m{0.473\linewidth}}
+\toprule
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{F. Par.} & \textbf{Function Name} & \textbf{Formal Definition}\\
+\midrule \endfirsthead
+\toprule
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{F. Par.} & \textbf{Function Name} & \textbf{Formal Definition}\\
+\midrule \endhead
+\bottomrule \endfoot
+\captionsetup{font=small}
+\caption{Quality dimension PPI definitions} \endlastfoot
+activity Instance count by Human Resource (activity granularity) & \dquality & \gact & \(a \in A\) \newline \(\uthres \in \universe{\athres}\) & \(\indibyhr(a, \uthres)\) & \(|\{i \in \fninst(a) \utst \fnhres(i) = \uthres\}|\) \\
+activity Instance count by Human Resource (case granularity) & \dquality & \gcase & \(c \in C\) \newline \(\uthres \in \universe{\athres}\) & \(\indibyhr(c, \uthres)\) & \(|\{i \in \fninst(c) \utst \fnhres(i) = \uthres\}|\) \\
+activity Instance count by Human Resource (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\uthres \in \universe{\athres}\) & \(\indibyhr(g, \uthres)\) & \(\sum _{c \in g} \indibyhr(c, \uthres)\) \\
+Expected activity Instance count by Human Resource & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\uthres \in \universe{\athres}\) & \(\utexpected\indibyhr(g, \uthres)\) & \(\frac{\indibyhr(g, \uthres)}{\indc(g)}\) \\
+activity Instance count by Role (case granularity) & \dquality & \gcase & \(c \in C\) \newline \(\utrole \in \universe{\atrole}\) & \(\indibyrole(c, \utrole)\) & \(|\{i \in \fninst(c) \utst \fnrole(i) = \utrole\}|\) \\
+activity Instance count by Role (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utrole \in \universe{\atrole}\) & \(\indibyrole(g, \utrole)\) & \(\sum _{c \in g} \indibyrole(c, \utrole)\) \\
+Expected activity Instance count by Role & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utrole \in \universe{\atrole}\) & \(\utexpected\indibyrole(g, \utrole)\) & \(\frac{\indibyrole(g, \utrole)}{\indc(g)}\) \\
+Automated Activity count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indauta(c)\) & \(|\lsautl \cap \fnact(c)|\) \\
+Automated Activity count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indauta(g)\) & \(|\lsautl \cap (\cup_{c \in g} \fnact(c))|\) \\
+Expected Automated Activity count & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indauta(g)\) & \(\frac{\sum _{c \in g} \indauta(c)}{\indc(g)}\) \\
+Automated activity Instance count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indauti(c)\) & \(|\{i \in \fninst(c) \utst \fnact(i) \in \lsautl\}|\) \\
+Automated activity Instance count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indauti(g)\) & \(\sum _{c \in g} \indauti(c)\) \\
+Expected Automated activity Instance count & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indauti(g)\) & \(\frac{\indauti(g)}{\indc(g)}\) \\
+Case and Client count Ratio (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indcclir(g)\) & \(\frac{\indc(g)}{\indcli(g)}\) \\
+Case Count where Activity after Time Frame (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) \newline \(\utetime \in \universe{\attime}\) & \(\indcaaftfc(g, \utacta, \utetime)\) & \(|\{c \in g \utst \exists i \in \fninst(c, \utacta)[\fnistarttime(i) \geq \utetime]\}|\) \\
+Case Count where Activity before Time Frame (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) \newline \(\utstime \in \universe{\attime}\) & \(\indcabetfc(g, \utacta, \utstime)\) & \(|\{c \in g \utst \exists i \in \fninst(c, \utacta)[\fnistarttime(i) \leq \utstime]\}|\) \\
+Case Count where Activity during Time Frame (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) \newline \(\utstime, \utetime \in \universe{\attime} \colon\) \newline \(\utstime < \utetime\) & \(\indcaintfc(g, \utacta, \utstime, \utetime)\) & \(|\{c \in g \utst \exists i \in \fninst(c, \utacta)[\utstime \leq \fnistarttime(i) \land \fnistarttime(i) \leq \utetime]\}|\) \\
+Case Count where end activity is A (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) & \(\indcendac(g, \utacta)\) & \(|\{c \in g \utst \exists i \in \fnendinstance(c)[\fnact(i) = \utacta]\}|\) \\
+Case Count where start activity is A (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) & \(\indcstartac(g, \utacta)\) & \(|\{c \in g \utst \exists i \in \fnstartinstance(c)[\fnact(i) = \utacta]\}|\) \\
+Case Count with Rework (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indcrewc(g)\) & \(|\{c \in g \utst \indrewc(c) > 0\}|\) \\
+Case Percentage where Activity after Time Frame (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) \newline \(\utetime \in \universe{\attime}\) & \(\indcaaftfp(g, \utacta, \utetime)\) & \(\frac{\indcaaftfc(g, \utacta, \utetime)}{\indc(g)}\) \\
+Case Percentage where Activity before Time Frame (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) \newline \(\utstime \in \universe{\attime}\) & \(\indcabetfp(g, \utacta, \utstime)\) & \(\frac{\indcabetfc(g, \utacta, \utstime)}{\indc(g)}\) \\
+Case Percentage where Activity during Time Frame (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) \newline \(\utstime, \utetime \in \universe{\attime} \colon\) \newline \(\utstime < \utetime\) & \(\indcaintfp(g, \utacta, \utstime, \utetime)\) & \(\frac{\indcaintfc(g, \utacta, \utstime, \utetime)}{\indc(g)}\) \\
+Case Percentage where End Activity is A (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) & \(\indcendap(g, \utacta)\) & \(\frac{\indcendac(g, \utacta)}{\indc(g)}\) \\
+Case Percentage where Start Activity is A (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utacta \in A\) & \(\indcstartap(g, \utacta)\) & \(\frac{\indcstartac(g, \utacta)}{\indc(g)}\) \\
+Case Percentage with Missed Deadline (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utval \in \universe{\attime}\) & \(\indcmdp(g, \utval)\) & \(\frac{|\{c \in g \utst \fnendtime(c) > \utval\}|}{\indc(g)}\) \\
+Case Percentage with Rework (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indcrewp(g)\) & \(\frac{\indcrewc(g)}{\indc(g)}\) \\
+Client count and Total Cost Ratio (activity granularity) & \dquality & \gact & \(a \in A\) & \(\indclitcr\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indcli(a)}{\indtc\utanyvariation(a)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Client count and Total Cost Ratio (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indclitcr\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indcli(g)}{\indtc\utanyvariation(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Expected Client count and Total Cost Ratio & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indclitcr\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indcli(g)}{\indtc\utanyvariation(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Desired Activity count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\inddac(c)\) & \(| \lsdesl \cap \fnact(c)|\) \\
+Desired Activity count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\inddac(g)\) & \(|\lsdesl \cap (\cup_{c \in g} \fnact(c))|\) \\
+Expected Desired Activity count & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\inddac(g)\) & \(\frac{\sum _{c \in g} \inddac(c)}{\indc(g)}\) \\
+Human Resource count (activity granularity) & \dquality & \gact & \(a \in A\) & \(\indhr(a)\) & \(|\fnhres(a)|\) \\
+Human Resource count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indhr(c)\) & \(|\fnhres(c)|\) \\
+Human Resource count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indhr(g)\) & \(|\cup_{c \in g} \fnhres(c)|\) \\
+Expected Human Resource count & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indhr(g)\) & \(\frac{\sum _{c \in g} \indhr(c)}{\indc(g)}\) \\
+Non-Automated Activity count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indnauta(c)\) & \(|\fnact(c) \backslash \lsautl|\) \\
+Non-Automated Activity count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indnauta(g)\) & \(|(\cup _{c \in g} \fnact(c)) \backslash \lsautl|\) \\
+Expected Non-Automated Activity count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indnauta(g)\) & \(\frac{\sum _{c \in g} \indnauta(c)}{\indc(g)}\) \\
+Non-Automated activity Instance count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indnauti(c)\) & \(|\{i \in \fninst(c) \utst \fnact(i) \notin \lsautl\}|\) \\
+Non-Automated activity Instance count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indnauti(g)\) & \(\sum _{c \in g} \indnauti(c)\) \\
+Expected Non-Automated activity Instance count & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indnauti(g)\) & \(\frac{\indnauti(g)}{\indc(g)}\) \\
+outcome Unit count considering single events of activity instances (activity instance granularity) & \dquality & \ginst & \(i \in I\) & \(\indu\utsingle(i)\) & \(\begin{cases}
+\attribute{\atunit}(\fnicomplete(i)) & \utif \attribute{\atunit}(\fnicomplete(i)) \neq \bot \\
+\attribute{\atunit}(\fnistart(i)) & \utif \attribute{\atunit}(\fnicomplete(i)) = \bot \land \\ & \attribute{\atunit}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\atunit}(\fnicomplete(i)) = \bot \land \\ & \attribute{\atunit}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+outcome Unit count considering the sum of all events of activity instances (activity instance granularity) & \dquality & \ginst & \(i \in I\) & \(\indu\utsummation(i)\) & \(\begin{cases}
+\attribute{\atunit}(\fnistart(i)) + & \utif \attribute{\atunit}(\fnicomplete(i)) \neq \bot \land \\ \attribute{\atunit}(\fnicomplete(i)) & \attribute{\atunit}(\fnistart(i)) \neq \bot \\
+\bot & \utif \attribute{\atunit}(\fnicomplete(i)) = \bot \lor \\ & \attribute{\atunit}(\fnistart(i)) = \bot \\
+\end{cases}\) \\
+outcome Unit count (activity granularity) & \dquality & \gact & \(a \in A\) & \(\indu\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(a)} \indu\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indu\utsummation$. \\
+outcome Unit count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indu\utanyvariation(c)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{e \in \fninst(c)} \indu\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indu\utsummation$. \\
+outcome Unit count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indu\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in g} \indu\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indu\utsummation$. \\
+Expected outcome Unit count & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indu\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indu\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indu\utsummation$. \\
+Overall Quality (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indoq(c)\) & \(\attribute{\atqual}(c)\) \\
+Expected Overall Quality & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indoq(g)\) & \(\frac{\sum _{c \in g} \indoq(c)}{\indc(g)}\) \\
+Repeatability (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indrep(c)\) & \(1 - \frac{\inda(c)}{\indi(c)}\) \\
+Repeatability (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrep(g)\) & \(1 - \frac{\inda(g)}{\indi(g)}\) \\
+Expected Repeatability & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indrep(g)\) & \(1 - \frac{\sum _{c \in g} \inda(c)}{\indi(g)}\) \\
+Rework Count (activity granularity) & \dquality & \gact & \(a \in A\) & \(\indrewc(a)\) & \(\sum _{c \in C} \fnmax(0, \fncount(c, a) - 1)\) \\
+Rework Count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indrewc(c)\) & \(\sum _{a \in A} \fnmax(0, \fncount(c, a) - 1)\) \\
+Rework Count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrewc(g)\) & \(\sum _{c \in g} \indrewc(c)\) \\
+Expected Rework Count & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indrewc(g)\) & \(\frac{\indrewc(g)}{\indc(g)}\) \\
+Rework Count by Value (activity granularity) & \dquality & \gact & \(a \in A\) \newline \(\utval \in \mathbb{N}\) & \(\indrewcv(a, \utval)\) & \(\sum _{c \in C} \fnmax(0, \fncount(c, a) - \utval)\) \\
+Rework Count by Value (case granularity) & \dquality & \gcase & \(c \in C\) \newline \(\utval \in \mathbb{N}\) & \(\indrewcv(c, \utval)\) & \(\sum _{a \in A} \fnmax(0, \fncount(c, a) - \utval)\) \\
+Rework Count by Value (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utval \in \mathbb{N}\) & \(\indrewcv(g, \utval)\) & \(\sum _{c \in g} \indrewcv(c, \utval)\) \\
+Expected Rework Count by Value & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utval \in \mathbb{N}\) & \(\utexpected\indrewcv(g, \utval)\) & \(\frac{\indrewcv(g, \utval)}{\indc(g)}\) \\
+Rework of activities Subset (case granularity) & \dquality & \gcase & \(c \in C\) \newline \(\utsubset \subseteq A \colon\) \newline \(\utsubset \neq \emptyset\) & \(\indrewsub(c, \utsubset)\) & \(\sum _{a \in \utsubset} \fnmax(0, \fncount(c, a) - 1)\) \\
+Rework of activities Subset (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utsubset \subseteq A \colon\) \newline \(\utsubset \neq \emptyset\) & \(\indrewsub(g, \utsubset)\) & \(\sum _{c \in g} \indrewsub(c, \utsubset)\) \\
+Expected Rework of activities Subset & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utsubset \subseteq A \colon\) \newline \(\utsubset \neq \emptyset\) & \(\utexpected\indrewsub(g, \utsubset)\) & \(\frac{\indrewsub(g, \utsubset)}{\indc(g)}\) \\
+Rework Percentage (activity granularity) & \dquality & \gact & \(a \in A\) & \(\indrewp(a)\) & \(\frac{\indrewc(a)}{\indi(a)}\) \\
+Rework Percentage (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indrewp(c)\) & \(\frac{\indrewc(c)}{\indi(c)}\) \\
+Rework Percentage (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrewp(g)\) & \(\frac{\indrewc(g)}{\indi(g)}\) \\
+Expected Rework Percentage & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indrewp(g)\) & \(\frac{\sum _{c \in g} \indrewp(c)}{\indc(g)}\) \\
+Rework Percentage by Value (activity granularity) & \dquality & \gact & \(a \in A\) \newline \(\utval \in \mathbb{N}\) & \(\indrewpv(a, \utval)\) & \(\frac{\indrewcv(a, \utval)}{\indi(a)}\) \\
+Rework Percentage by Value (case granularity) & \dquality & \gcase & \(c \in C\) \newline \(\utval \in \mathbb{N}\) & \(\indrewpv(c, \utval)\) & \(\frac{\indrewcv(c, \utval)}{\indi(c)}\) \\
+Rework Percentage by Value (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utval \in \mathbb{N}\) & \(\indrewpv(g, \utval)\) & \(\frac{\indrewcv(g, \utval)}{\indi(g)}\) \\
+Expected Rework Percentage by Value & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) \newline \(\utval \in \mathbb{N}\) & \(\utexpected\indrewpv(g)\) & \(\frac{\sum _{c \in g} \indrewpv(c, \utval)}{\indc(g)}\) \\
+Rework Time (activity granularity) & \dquality & \gact & \(a \in A\) & \(\indrt(a)\) & \(\indlt(a) - \sum _{c \in C} \fnfirstinstlt(c, a)\) \\
+Rework Time (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indrt(c)\) & \(\indlt(c) - \sum _{a \in A} \fnfirstinstlt(c, a)\) \\
+Rework Time (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrt(g)\) & \(\sum _{c \in g} \indrt(c)\) \\
+Expected Rework Time & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indrt(g)\) & \(\frac{\indrt(g)}{\indc(g)}\) \\
+Successful outcome Unit Count (activity instance granularity) & \dquality & \ginst & \(i \in I\) & \(\indsuc\utanyvariation(i)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\begin{cases}
+\indu\utanyvariation(i) - \attribute{\atunsunit}(\fnicomplete(i)) & \utif \attribute{\atunsunit}(\fnicomplete(i)) \neq \bot \\
+\indu\utanyvariation(i) & \utif \attribute{\atunsunit}(\fnicomplete(i)) = \bot \\
+\end{cases}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indu\utsummation$. \\
+Successful outcome Unit Count (activity granularity) & \dquality & \gact & \(a \in A\) & \(\indsuc\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(a)} \indsuc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsummation$. \\
+Successful outcome Unit Count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indsuc\utanyvariation(c)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{i \in \fninst(c)} \indsuc\utanyvariation(i)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsummation$. \\
+Successful outcome Unit Count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indsuc\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\sum _{c \in G} \indsuc\utanyvariation(c)\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsummation$. \\
+Expected Successful outcome Unit Count & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indsuc\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indsuc\utanyvariation(g)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsummation$. \\
+Successful outcome Unit Percentage (activity instance granularity) & \dquality & \ginst & \(i \in I\) & \(\indsup\utanyvariation(i)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indsuc\utanyvariation(i)}{\indu\utanyvariation(i)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsingle$ and $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsummation$ and $\indu\utsummation$. \\
+Successful outcome Unit Percentage (activity granularity) & \dquality & \gact & \(a \in A\) & \(\indsup\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indsuc\utanyvariation(a)}{\indu\utanyvariation(a)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsingle$ and $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsummation$ and $\indu\utsummation$. \\
+Successful outcome Unit Percentage (case granularity) & \dquality & \gcase & \(c \in C\) & \(\indsup\utanyvariation(c)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indsuc\utanyvariation(c)}{\indu\utanyvariation(c)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsingle$ and $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsummation$ and $\indu\utsummation$. \\
+Successful outcome Unit Percentage (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indsup\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indsuc\utanyvariation(g)}{\indu\utanyvariation(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsingle$ and $\indu\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indsuc\utsummation$ and $\indu\utsummation$. \\
+Expected Successful outcome Unit Percentage & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indsup\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\sum _{c \in g} \indsup\utanyvariation(c)}{\indc(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for outcome unit calculations, i.e., it uses $\indsup\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for outcome unit calculations, i.e., it uses $\indsup\utsummation$. \\
+Total Cost and Client count Ratio (activity granularity) & \dquality & \gact & \(a \in A\) & \(\indtcclir\utanyvariation(a)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(a)}{\indcli(a)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Total Cost and Client count Ratio (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indtcclir\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(g)}{\indcli(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Expected Total Cost and Client count Ratio & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indtcclir\utanyvariation(g)\)
+\newline \newline \(\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}\) & \(\frac{\indtc\utanyvariation(g)}{\indcli(g)}\)
+\newline \newline The $\utanyvariationnrm$ indicates that the PPI can take multiple forms, in this case, $\utanyvariationnrm \in \{\utsinglenrm, \utsummationnrm\}$. If $\utanyvariationnrm = \utsinglenrm$, then the function considers single events of activity instances for cost calculations, i.e., it uses $\indtc\utsingle$; if $\utanyvariationnrm = \utsummationnrm$, then the function considers the sum of all events of activity instances for cost calculations, i.e., it uses $\indtc\utsummation$. \\
+Unwanted Activity count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\induac(c)\) & \(|\lsunwl \cap \fnact(c)|\) \\
+Unwanted Activity count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\induac(g)\) & \(|\lsunwl \cap (\cup_{c \in g} \fnact(c))|\) \\
+Expected Unwanted Activity count & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\induac(g)\) & \(\frac{\sum _{c \in g} \induac(c)}{\indc(g)}\) \\
+Unwanted Activity Percentage (case granularity) & \dquality & \gcase & \(c \in C\) & \(\induap(c)\) & \(\frac{\induac(c)}{\inda(c)}\) \\
+Unwanted Activity Percentage (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\induap(g)\) & \(\frac{\induac(g)}{\inda(g)}\) \\
+Expected Unwanted Activity Percentage & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\induap(g)\) & \(\frac{\sum _{c \in g} \induap(c)}{\indc(g)}\) \\
+Unwanted activity Instance count (case granularity) & \dquality & \gcase & \(c \in C\) & \(\induic(c)\) & \(|\{i \in \fninst(c) \utst \fnact(i) \in \lsunwl\}|\) \\
+Unwanted activity Instance count (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\induic(g)\) & \(\sum _{c \in g} \induic(c)\) \\
+Expected Unwanted activity Instance count & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\induic(g)\) & \(\frac{\induic(g)}{\indc(g)}\) \\
+Unwanted activity Instance Percentage (case granularity) & \dquality & \gcase & \(c \in C\) & \(\induip(c)\) & \(\frac{\induic(c)}{\indi(c)}\) \\
+Unwanted activity Instance Percentage (group of cases granularity) & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\induip(g)\) & \(\frac{\induic(g)}{\indi(g)}\) \\
+Expected Unwanted activity Instance Percentage & \dquality & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\induip(g)\) & \(\frac{\sum _{c \in g} \induip(c)}{\indc(g)}\) \\
+\bottomrule
+\label{PPIQualityDefinitions}
+\end{longtable}
+
+
+\begin{longtable}{>{\hspace{0pt}}m{0.14\linewidth}>{\hspace{0pt}}c>{\hspace{0pt}}c>{\hspace{0pt}}m{0.1\linewidth}>{\hspace{0pt}}m{0.19\linewidth}>{\hspace{0pt}}m{0.473\linewidth}}
+\toprule
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{F. Par.} & \textbf{Function Name} & \textbf{Formal Definition}\\
+\midrule \endfirsthead
+\toprule
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{F. Par.} & \textbf{Function Name} & \textbf{Formal Definition}\\
+\midrule \endhead
+\bottomrule \endfoot
+\captionsetup{font=small}
+\caption{Flexibility dimension PPI definitions} \endlastfoot
+Activity and Role count Ratio (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\indaroler(c)\) & \(\frac{\inda(c)}{\indrole(c)}\) \\
+Activity and Role count Ratio (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indaroler(g)\) & \(\frac{\inda(g)}{\indrole(g)}\) \\
+Expected Activity and Role count Ratio & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indaroler(g)\) & \(\frac{\sum _{c \in g} \inda(c)}{\sum _{c \in g} \indrole(c)}\) \\
+activity Instance and Human Resource count Ratio (activity granularity) & \dflexibility & \gact & \(a \in A\) & \(\indihrr(a)\) & \(\frac{\indi(a)}{\indhr(a)}\) \\
+activity Instance and Human Resource count Ratio (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\indihrr(c)\) & \(\frac{\indi(c)}{\indhr(c)}\) \\
+activity Instance and Human Resource count Ratio (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indihrr(g)\) & \(\frac{\indi(g)}{\indhr(g)}\) \\
+Expected activity Instance and Human Resource count Ratio & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indihrr(g)\) & \(\frac{\indi(g)}{\sum _{c \in g} \indhr(c)}\) \\
+Client count (activity granularity) & \dflexibility & \gact & \(a \in A\) & \(\indcli(a)\) & \(|\{\attribute{\atclient}(c) \utst c \in C[a \in \fnact(c)]\}|\) \\
+Client count (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indcli(g)\) & \(|\{\attribute{\atclient}(c) \utst c \in g\}|\) \\
+Expected Client count & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indcli(g)\) & \(\frac{\indcli(g)}{\indc(g)}\) \\
+Directly-Follows Relations and Activity count Ratio (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\inddfrar(c)\) & \(\frac{\inddfr(c)}{\inda(c)}\) \\
+Directly-Follows Relations and Activity count Ratio (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\inddfrar(g)\) & \(\frac{\inddfr(g)}{\inda(g)}\) \\
+Expected Directly-Follows Relations and Activity count Ratio & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\inddfrar(g)\) & \(\frac{\sum _{c \in g} \inddfr(c)}{\sum _{c \in g} \inda(c)}\) \\
+Directly-Follows Relations count (activity granularity) & \dflexibility & \gact & \(a \in A\) & \(\inddfr(a)\) & \(\cup_{i \in \fninst(a)} \{\fnact(i') \utst i' \in \fnnext(i))\}|\) \\
+Directly-Follows Relations count (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\inddfr(c)\) & \(|\fndfr(c)|\) \\
+Directly-Follows Relations count (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\inddfr(g)\) & \(|\cup_{c \in g} \fndfr(c)|\) \\
+Expected Directly-Follows Relations count & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\inddfr(g)\) & \(\frac{\sum _{c \in g} \inddfr(c)}{\indc(g)}\) \\
+Human Resource count (activity granularity) & \dflexibility & \gact & \(a \in A\) & \(\indhr(a)\) & \(|\fnhres(a)|\) \\
+Human Resource count (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\indhr(c)\) & \(|\fnhres(c)|\) \\
+Human Resource count (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indhr(g)\) & \(|\cup_{c \in g} \fnhres(c)|\) \\
+Expected Human Resource count & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indhr(g)\) & \(\frac{\sum _{c \in g} \indhr(c)}{\indc(g)}\) \\
+Optional Activity count (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\indopta(c)\) & \(|\{a \in \fnact(c) \utst \exists c' \in C[a \notin \fnact(c')]\}|\) \\
+Optional Activity count (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indopta(g)\) & \(|\{a \in \fnact(c) \utst c \in g \land \exists c' \in C[a \notin \fnact(c')]\}|\) \\
+Expected Optional Activity count & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indopta(g)\) & \(\frac{\sum _{c \in g} \indopta(c)}{\indc(g)}\) \\
+Optionality (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\indopt(c)\) & \(\frac{\indopta(c)}{\inda(c)}\) \\
+Optionality (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indopt(g)\) & \(\frac{\indopta(g)}{\inda(g)}\) \\
+Expected Optionality & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indopt(g)\) & \(\frac{\sum _{c \in g} \indopta(c)}{\sum _{c \in g} \inda(c)}\) \\
+Role and Variant count Ratio (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrolevr(g)\) & \(\frac{\indrole(g)}{\indv(g)}\) \\
+Role count (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\indrole(c)\) & \(|\fnrole(c)|\) \\
+Role count (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrole(g)\) & \(|\cup_{c \in g} \fnrole(c)|\) \\
+Expected Role count & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indrole(g)\) & \(\frac{\sum _{c \in g} \indrole(c)}{\indc(g)}\) \\
+Variant Case Coverage (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\indvcc(c)\) & \(\frac{|\{c' \in C \utst \exists tr \in \fntrace(c')[tr \in \fntrace(c)]\}|}{|C|}\) \\
+Variant Case Coverage (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indvcc(g)\) & \(\frac{|\{c \in C \utst \exists tr \in \fntrace(c)[tr \in \fnvariants(g)]|}{|C|}\) \\
+Variant count (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indv(g)\) & \(|\fnvariants(g)|\) \\
+\bottomrule
+\label{PPIFlexibilityDefinitions}
+\end{longtable}
+
+\end{document}

@@ -1,0 +1,482 @@
+\documentclass{article}
+
+\usepackage{url}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{natbib}
+
+\usepackage{parskip}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{pdflscape}
+\usepackage{bm}
+
+\usepackage{listings}
+
+\usepackage[shortlabels]{enumitem}
+\usepackage[margin=2cm]{geometry}
+
+\newcommand{\dgeneral}{G}
+\newcommand{\dtime}{T}
+\newcommand{\dcost}{C}
+\newcommand{\dquality}{Q}
+\newcommand{\dflexibility}{F}
+
+\newcommand{\ggroup}{G}
+\newcommand{\gcase}{C}
+\newcommand{\gact}{A}
+\newcommand{\ginst}{I}
+
+\newcommand{\universe}[2][]{U^{#1}_{#2}}
+\newcommand{\attribute}[2][]{\#^{#1}_{#2}}
+
+\newcommand{\atevent}{\mathit{event}}
+\newcommand{\atcase}{\mathit{case}}
+\newcommand{\atact}{\mathit{act}}
+\newcommand{\atres}{\mathit{res}}
+\newcommand{\athres}{\mathit{hres}}
+\newcommand{\atnhres}{\mathit{nhres}}
+\newcommand{\atrole}{\mathit{role}}
+\newcommand{\attime}{\mathit{time}}
+\newcommand{\attcost}{\mathit{tc}}
+\newcommand{\atfcost}{\mathit{fc}}
+\newcommand{\atvcost}{\mathit{vc}}
+\newcommand{\atlcost}{\mathit{lc}}
+\newcommand{\aticost}{\mathit{ic}}
+\newcommand{\atmaincost}{\mathit{mainc}}
+\newcommand{\atmdcost}{\mathit{mdc}}
+\newcommand{\attranscost}{\mathit{transc}}
+\newcommand{\atwarecost}{\mathit{warec}}
+\newcommand{\atqual}{\mathit{qual}}
+\newcommand{\atunit}{\mathit{unt}}
+\newcommand{\atunsunit}{\mathit{uns}}
+\newcommand{\atclient}{\mathit{cli}}
+\newcommand{\atatt}{\mathit{att}}
+\newcommand{\atval}{\mathit{val}}
+\newcommand{\atmap}{\mathit{map}}
+\newcommand{\attype}{\mathit{type}}
+\newcommand{\atactinst}{\mathit{actinst}}
+\newcommand{\ateventid}{\mathit{eid}}
+
+\newcommand{\fnmin}{\mathit{min}}
+\newcommand{\fnmax}{\mathit{max}}
+\newcommand{\fnmatch}{\mathit{match}}
+\newcommand{\fntoderintlog}{\mathit{\textbf{Der}}}
+\newcommand{\fntototalderintlog}{\mathit{\textbf{TotDer}}}
+\newcommand{\fntoexpintlog}{\mathit{\textbf{Expl}}}
+\newcommand{\fnmatchone}{\mathit{match1}}
+\newcommand{\fnmatchtwo}{\mathit{match2}}
+\newcommand{\fnmatchfirst}{\mathit{matchfirst}}
+\newcommand{\fnmatchlater}{\mathit{matchlater}}
+\newcommand{\fnreassign}{\mathit{reassign}}
+\newcommand{\fnseventbadness}{\mathit{sbadness}}
+\newcommand{\fnceventbadness}{\mathit{cbadness}}
+\newcommand{\fncompatible}{\mathit{cmp}}
+\newcommand{\fnactinstcompatible}{\mathit{actinstcmp}}
+\newcommand{\fnfresheventid}{\mathit{fresheventid}}
+\newcommand{\fnfreshactinst}{\mathit{freshactinst}}
+\newcommand{\fnevent}{\mathit{events}}
+\newcommand{\fncase}{\mathit{case}}
+\newcommand{\fnact}{\mathit{act}}
+\newcommand{\fnres}{\mathit{res}}
+\newcommand{\fnhres}{\mathit{hres}}
+\newcommand{\fnrole}{\mathit{role}}
+\newcommand{\fninst}{\mathit{inst}}
+\newcommand{\fndom}{\mathit{dom}}
+\newcommand{\fnleadtime}{\mathit{lt}}
+\newcommand{\fnservicetime}{\mathit{st}}
+\newcommand{\fnwaitingtime}{\mathit{wt}}
+\newcommand{\fninstbetween}{\mathit{instbetween}}
+\newcommand{\fntimewithin}{\mathit{timew}}
+\newcommand{\fnstarttime}{\mathit{startt}}
+\newcommand{\fnendtime}{\mathit{endt}}
+\newcommand{\fnstartinstance}{\mathit{strin}}
+\newcommand{\fnendinstance}{\mathit{endin}}
+\newcommand{\fnistart}{\mathit{str}}
+\newcommand{\fnicomplete}{\mathit{cpl}}
+\newcommand{\fnistarttime}{\mathit{stime}}
+\newcommand{\fnicompletetime}{\mathit{ctime}}
+\newcommand{\fnprev}{\mathit{prev}}
+\newcommand{\fnnext}{\mathit{next}}
+\newcommand{\fnprevstr}{\mathit{prevstr}}
+\newcommand{\fnconcstr}{\mathit{concstr}}
+\newcommand{\fndres}{\mathit{dres}}
+\newcommand{\fnfirst}{\mathit{fi}}
+\newcommand{\fnfirstinsttc}{\mathit{fitc}}
+\newcommand{\fnfirstinstlt}{\mathit{filt}}
+\newcommand{\fndfr}{\mathit{dfrel}}
+\newcommand{\fncount}{\mathit{count}}
+\newcommand{\fnseq}{\mathit{seq}}
+\newcommand{\fntrace}{\mathit{trace}}
+\newcommand{\fnvariants}{\mathit{variants}}
+
+\newcommand{\lsautl}{\mathit{Autl}}
+\newcommand{\lsdesl}{\mathit{Desl}}
+\newcommand{\lsdcl}{\mathit{DCl}}
+\newcommand{\lsunwl}{\mathit{Unwl}}
+
+\newcommand{\utif}{\mathit{if \ }}
+\newcommand{\utand}{\mathit{\ and \ }}
+\newcommand{\utwhere}{\mathit{\ where \ }}
+\newcommand{\utwith}{\mathit{\ with \ }}
+\newcommand{\utst}{\mid}
+\newcommand{\utsuchthat}{\mathit{\ such~that \ }}
+\newcommand{\utforall}{\mathit{for~all \ }}
+\newcommand{\utforany}{\mathit{for~any \ }}
+\newcommand{\utacta}{\mathit{a}}
+\newcommand{\utactb}{\mathit{b}}
+\newcommand{\uthres}{\mathit{hr}}
+\newcommand{\utrole}{\mathit{rl}}
+\newcommand{\utval}{\mathit{val}}
+\newcommand{\utsubset}{\mathit{sub}}
+\newcommand{\utstime}{\mathit{st}}
+\newcommand{\utetime}{\mathit{et}}
+\newcommand{\utexpected}{\mathit{e}}
+\newcommand{\utwithin}{\mathit{^{w}}}
+\newcommand{\utstarted}{\mathit{^{s}}}
+\newcommand{\utcompleted}{\mathit{^{c}}}
+\newcommand{\utstartedcompleted}{\mathit{^{sc}}}
+\newcommand{\utsingle}{\mathit{^{sgl}}}
+\newcommand{\utsummation}{\mathit{^{sum}}}
+\newcommand{\utanyvariation}{\mathit{^{\times}}}
+\newcommand{\utwithinnrm}{\mathit{w}}
+\newcommand{\utstartednrm}{\mathit{s}}
+\newcommand{\utcompletednrm}{\mathit{c}}
+\newcommand{\utstartedcompletednrm}{\mathit{sc}}
+\newcommand{\utsinglenrm}{\mathit{sgl}}
+\newcommand{\utsummationnrm}{\mathit{sum}}
+\newcommand{\utanyvariationnrm}{\mathit{\times}}
+
+\newcommand{\atomiclog}{atomic event log}
+\newcommand{\alog}{^{a}}
+\newcommand{\derintlog}{derivable-interval event log}
+\newcommand{\dilog}{^{di}}
+\newcommand{\uniquederintlog}{uniquely-matched derivable-interval event log}
+\newcommand{\totalderintlog}{totally-ordered derivable-interval event log}
+\newcommand{\tdilog}{^{tdi}}
+\newcommand{\expintlog}{explicit-interval event log}
+\newcommand{\eilog}{^{ei}}
+\newcommand{\transitlog}{transitional event log}
+\newcommand{\tlog}{^{t}}
+
+\newcommand{\inda}{\mathit{A}}
+\newcommand{\indi}{\mathit{I}}
+\newcommand{\indc}{\mathit{C}}
+\newcommand{\inde}{\mathit{E}}
+\newcommand{\indhr}{\mathit{HR}}
+\newcommand{\indr}{\mathit{R}}
+\newcommand{\indrole}{\mathit{Role}}
+
+\newcommand{\indat}{\mathit{AT}}
+\newcommand{\indauta}{\mathit{Auta}}
+\newcommand{\indauti}{\mathit{Auti}}
+\newcommand{\indautst}{\mathit{AutST}}
+\newcommand{\indcltr}{\mathit{CLTR}}
+\newcommand{\indcltvalc}{\mathit{CLTOC}}
+\newcommand{\indcltvalp}{\mathit{CLTOP}}
+\newcommand{\indcmdp}{\mathit{CMDP}}
+\newcommand{\indh}{\mathit{H}}
+\newcommand{\indit}{\mathit{IT}}
+\newcommand{\indlt}{\mathit{LT}}
+\newcommand{\indltcr}{\mathit{LTCR}}
+\newcommand{\indltdl}{\mathit{LTDL}}
+\newcommand{\indltde}{\mathit{LTDE}}
+\newcommand{\indltfa}{\mathit{LTfA}}
+\newcommand{\indltab}{\mathit{LTAB}}
+\newcommand{\indltta}{\mathit{LTtA}}
+\newcommand{\indsltr}{\mathit{SLTR}}
+\newcommand{\indst}{\mathit{ST}}
+\newcommand{\indstab}{\mathit{STAB}}
+\newcommand{\indstu}{\mathit{STU}}
+\newcommand{\indwt}{\mathit{WT}}
+\newcommand{\indwtab}{\mathit{WTAB}}
+
+\newcommand{\indautc}{\mathit{AutC}}
+\newcommand{\inddac}{\mathit{DAC}}
+\newcommand{\inddc}{\mathit{DC}}
+\newcommand{\indfc}{\mathit{FC}}
+\newcommand{\indhrcr}{\mathit{HRCR}}
+\newcommand{\indic}{\mathit{IC}}
+\newcommand{\indlctcr}{\mathit{LCTCR}}
+\newcommand{\indlc}{\mathit{LC}}
+\newcommand{\indmainc}{\mathit{MainC}}
+\newcommand{\indmdc}{\mathit{MDC}}
+\newcommand{\indoc}{\mathit{OC}}
+\newcommand{\indrc}{\mathit{RC}}
+\newcommand{\indrewc}{\mathit{RewC}}
+\newcommand{\indrewp}{\mathit{RewP}}
+\newcommand{\indtc}{\mathit{TC}}
+\newcommand{\indtcltr}{\mathit{TCLTR}}
+\newcommand{\indtcur}{\mathit{TCUR}}
+\newcommand{\indtcstr}{\mathit{TCSTR}}
+\newcommand{\indtransc}{\mathit{TransC}}
+\newcommand{\indvc}{\mathit{VC}}
+\newcommand{\indwarec}{\mathit{WareC}}
+
+\newcommand{\indibyhr}{\mathit{IbyHR}}
+\newcommand{\indibyrole}{\mathit{IbyRole}}
+\newcommand{\indcaaftfc}{\mathit{CApastTFC}}
+\newcommand{\indcabetfc}{\mathit{CAdueTFC}}
+\newcommand{\indcaintfc}{\mathit{CAinTFC}}
+\newcommand{\indcendac}{\mathit{CendAC}}
+\newcommand{\indcstartac}{\mathit{CstartAC}}
+\newcommand{\indcrewc}{\mathit{CRewC}}
+\newcommand{\indcaaftfp}{\mathit{CApastTFP}}
+\newcommand{\indcabetfp}{\mathit{CAdueTFP}}
+\newcommand{\indcaintfp}{\mathit{CAinTFP}}
+\newcommand{\indcendap}{\mathit{CendAP}}
+\newcommand{\indcstartap}{\mathit{CstartAP}}
+\newcommand{\indcrewp}{\mathit{CRewP}}
+\newcommand{\indclitcr}{\mathit{CliTCR}}
+\newcommand{\indcclir}{\mathit{CCliR}}
+\newcommand{\indnauta}{\mathit{NAutA}}
+\newcommand{\indnauti}{\mathit{NAutI}}
+\newcommand{\indu}{\mathit{U}}
+\newcommand{\indoq}{\mathit{OQ}}
+\newcommand{\indrep}{\mathit{Rep}}
+\newcommand{\indrewcv}{\mathit{RewCV}}
+\newcommand{\indrewsub}{\mathit{RewSub}}
+\newcommand{\indrewpv}{\mathit{RewPV}}
+\newcommand{\indrt}{\mathit{RT}}
+\newcommand{\indsuc}{\mathit{SUC}}
+\newcommand{\indsup}{\mathit{SUP}}
+\newcommand{\indtcclir}{\mathit{TCCliR}}
+\newcommand{\induac}{\mathit{UAC}}
+\newcommand{\induap}{\mathit{UAP}}
+\newcommand{\induic}{\mathit{UIC}}
+\newcommand{\induip}{\mathit{UIP}}
+
+\newcommand{\indaroler}{\mathit{ARoleR}}
+\newcommand{\indihrr}{\mathit{IHRR}}
+\newcommand{\indcli}{\mathit{Cli}}
+\newcommand{\indopta}{\mathit{OptA}}
+\newcommand{\indopt}{\mathit{Opt}}
+\newcommand{\inddfrar}{\mathit{DFRAR}}
+\newcommand{\inddfr}{\mathit{DFR}}
+\newcommand{\indrolevr}{\mathit{RoleVR}}
+\newcommand{\indvcc}{\mathit{VCC}}
+\newcommand{\indv}{\mathit{V}}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+
+\renewcommand{\emptyset}{\varnothing}
+
+\usepackage{listings}
+\lstset{
+  language = Python,
+  backgroundcolor = \color{lightgray!10},
+  basicstyle = \ttfamily\small,
+  keywordstyle = \color{blue}\bfseries,
+  stringstyle = \color{red},
+  commentstyle = \color{green!50!black},
+  showstringspaces = false,
+  numbers = left,
+  numberstyle = \tiny\color{gray},
+  frame = single,
+  breaklines = true,
+  captionpos = b,
+  tabsize = 4,
+  basicstyle = \footnotesize\ttfamily
+}
+
+\title{PPI Research - References}
+\author{Ignacio Velásquez}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\footnotesize
+\begin{longtable}{m{0.17\linewidth}cccccm{0.32\linewidth}}
+\toprule
+PPI & \makecell[cc]{Activity\\Instance} & Activity & Case & \makecell[cc]{Group\\of Cases} & \makecell[cc]{Expected\\Value} & References \\
+\midrule \endfirsthead
+\toprule
+PPI & \makecell[cc]{Activity\\Instance} & Activity & Case & \makecell[cc]{Group\\of Cases} & \makecell[cc]{Expected\\Value} & References \\
+\midrule \endhead
+\bottomrule \endfoot
+\captionsetup{font=small}
+\caption{List of general PPIs} \endlastfoot
+Activity count &  &  & \checkmark & \checkmark & \checkmark & Added for completeness. \\
+Activity Instance count &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4304} \\
+Case count &  &  &  & \checkmark &  & \citep{RN4292,RN4301,RN4307} \\
+Human Resource count &  & \checkmark & \checkmark & \checkmark & \checkmark & Added for completeness. \\
+Resource count &  & \checkmark & \checkmark & \checkmark & \checkmark & Added for completeness. \\
+Role count &  &  & \checkmark & \checkmark & \checkmark & Added for completeness. \\
+\bottomrule
+\label{Table3}
+\end{longtable}
+
+\begin{longtable}{m{0.17\linewidth}cccccm{0.32\linewidth}}
+\toprule
+PPI & \makecell[cc]{Activity\\Instance} & Activity & Case & \makecell[cc]{Group\\of Cases} & \makecell[cc]{Expected\\Value} & References \\
+\midrule \endfirsthead
+\toprule
+PPI & \makecell[cc]{Activity\\Instance} & Activity & Case & \makecell[cc]{Group\\of Cases} & \makecell[cc]{Expected\\Value} & References \\
+\midrule \endhead
+\bottomrule \endfoot
+\captionsetup{font=small}
+\caption{List of time dimension PPIs} \endlastfoot
+Active time &  &  & \checkmark &  & \checkmark & \citep{RN4153,RN4308} \\
+Activity count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+activity Instance count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Automated Activity count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Automated activity Instance count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Automated Activity Service Time &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4304} \\
+Case count and Lead Time Ratio &  &  &  & \checkmark &  & \citep{RN4306} \\
+Case Count where Lead Time over Value &  &  &  & \checkmark &  & \citep{RN4134} \\
+Case Percentage where Lead Time over Value &  &  &  & \checkmark &  & \citep{RN4134} \\
+Case Percentage with Missed Deadline &  &  &  & \checkmark &  & \citep{RN4295,RN4297,RN4300,RN4305,RN4296} \\
+Handover count &  &  & \checkmark &  & \checkmark & \citep{RN4134} \\
+Idle Time &  &  & \checkmark &  & \checkmark & \citep{RN4306,RN4150,RN4298} \\
+Lead Time & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4304,RN4292,RN4307,RN4308,RN4134,RN4306,RN4297,RN4305,RN4150,RN4298,RN4187,RN4311,RN4309,RN4294,RN4291,RN4303,RN4313} \\
+Lead Time and Case count Ratio &  &  &  & \checkmark &  & \citep{RN4296} \\
+Lead Time Deviation from time Limit &  &  & \checkmark &  & \checkmark & \citep{RN4134,RN4162} \\
+Lead Time Deviation from Expectation &  &  & \checkmark &  & \checkmark & \citep{RN4134,RN4162} \\
+Lead Time from activity A &  &  & \checkmark &  & \checkmark & Added for completeness. \\
+Lead Time from activity A to activity B &  &  & \checkmark &  & \checkmark & \citep{RN4304,RN4292,RN4307,RN4311,RN4303,RN4293,RN4125} \\
+Lead Time to activity A &  &  & \checkmark &  & \checkmark & \citep{RN4293,RN4125} \\
+Service and Lead Time Ratio & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4308,RN4131} \\
+Service Time & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4153,RN4308,RN4134,RN4306,RN4150,RN4298,RN4311,RN4313,RN4162,RN4293,RN4125,RN4155} \\
+Service Time from activity A to activity B &  &  & \checkmark & \checkmark & \checkmark & Added for completeness. \\
+Waiting Time & \checkmark & \checkmark & \checkmark &  & \checkmark & \citep{RN4307,RN4308,RN4134,RN4306,RN4291,RN4303,RN4290} \\
+Waiting Time from activity A to activity B &  &  & \checkmark &  & \checkmark & \citep{RN4125} \\
+\bottomrule
+\label{Table4}
+\end{longtable}
+
+\begin{longtable}{m{0.17\linewidth}cccccm{0.32\linewidth}}
+\toprule
+PPI & \makecell[cc]{Activity\\Instance} & Activity & Case & \makecell[cc]{Group\\of Cases} & \makecell[cc]{Expected\\Value} & References \\
+\midrule \endfirsthead
+\toprule
+PPI & \makecell[cc]{Activity\\Instance} & Activity & Case & \makecell[cc]{Group\\of Cases} & \makecell[cc]{Expected\\Value} & References \\
+\midrule \endhead
+\bottomrule \endfoot
+\captionsetup{font=small}
+\caption{List of cost dimension PPIs} \endlastfoot
+Automated Activity Cost &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4304} \\
+Desired Activity Count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Direct Cost &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4146} \\
+Fixed Cost & \phantom{*}\checkmark* & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4155,RN4146} \\
+Human Resource and Case count Ratio &  &  &  & \checkmark &  & \citep{RN4304} \\
+Human Resource count &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4125,RN4159} \\
+Inventory Cost & \phantom{*}\checkmark* & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4311,RN4309,RN4131,RN4299} \\
+Labor and Total Cost Ratio & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4131} \\
+Labor Cost & \phantom{*}\checkmark* & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4134,RN4131,RN4155,RN4159} \\
+Maintenance Cost &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4300} \\
+Missed Deadline Cost &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Overhead Cost &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4309,RN4146} \\
+Resource count &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4125,RN4159} \\
+Rework Cost &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4162} \\
+Rework Count &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Rework Percentage &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Total Cost & \phantom{*}\checkmark* & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4304,RN4301,RN4153,RN4134,RN4306,RN4295,RN4297,RN4300,RN4305,RN4298,RN4294,RN4291,RN4162,RN4125,RN4299,RN4161} \\
+Total Cost and Lead Time ratio & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4297,RN4311} \\
+Total Cost and outcome Unit Ratio & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4162,RN4146} \\
+Total Cost and Service Time ratio & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4297,RN4311} \\
+Transportation Cost &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4309} \\
+Variable Cost & \phantom{*}\checkmark* & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4155,RN4146} \\
+Warehousing Cost &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4162} \\
+\bottomrule
+\label{Table5}
+\end{longtable}
+
+\begin{longtable}{m{0.17\linewidth}cccccm{0.32\linewidth}}
+\toprule
+PPI & \makecell[cc]{Activity\\Instance} & Activity & Case & \makecell[cc]{Group\\of Cases} & \makecell[cc]{Expected\\Value} & References \\
+\midrule \endfirsthead
+\toprule
+PPI & \makecell[cc]{Activity\\Instance} & Activity & Case & \makecell[cc]{Group\\of Cases} & \makecell[cc]{Expected\\Value} & References \\
+\midrule \endhead
+\bottomrule \endfoot
+\captionsetup{font=small}
+\caption{List of quality dimension PPIs} \endlastfoot
+activity Instance count by Human Resource &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+activity Instance count by Role &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Automated Activity count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Automated activity Instance count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Case and Client count Ratio &  &  &  & \checkmark &  & \citep{RN4134} \\
+Case Count where Activity After Time Frame &  &  &  & \checkmark &  & \citep{RN4134} \\
+Case Count where Activity Before Time Frame &  &  &  & \checkmark &  & \citep{RN4134} \\
+Case Count where Activity During Time Frame &  &  &  & \checkmark &  & \citep{RN4134} \\
+Case Count where End Activity is A &  &  &  & \checkmark &  & \citep{RN4304,RN4306,RN4295,RN4297,RN4305,RN4298,RN4311,RN4309,RN4291,RN4303,RN4125,RN4299,RN4312} \\
+Case Count where Start Activity is A &  &  &  & \checkmark &  & Added for completeness. \\
+Case Count with Rework &  &  &  & \checkmark &  & \citep{RN4134} \\
+Case Percentage where Activity After Time Frame &  &  &  & \checkmark &  & \citep{RN4134} \\
+Case Percentage where Activity Before Time Frame &  &  &  & \checkmark &  & \citep{RN4134} \\
+Case Percentage where Activity During Time Frame &  &  &  & \checkmark &  & \citep{RN4134} \\
+Case Percentage where End Activity is A &  &  &  & \checkmark &  & \citep{RN4304,RN4306,RN4295,RN4297,RN4305,RN4298,RN4311,RN4309,RN4291,RN4303,RN4293,RN4125,RN4299,RN4312} \\
+Case Percentage where Start Activity is A &  &  &  & \checkmark &  & Added for completeness. \\
+Case percentage with Missed Deadline &  &  &  & \checkmark &  & \citep{RN4295,RN4297,RN4300,RN4305,RN4296} \\
+Case Percentage with rework &  &  &  & \checkmark &  & \citep{RN4134} \\
+Client count and Total Cost Ratio &  & \checkmark &  & \checkmark & \checkmark & \citep{RN4134} \\
+Desired Activity Count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Human Resource count &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Non-Automated Activity count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Non-Automated Activity instance count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+outcome Unit count & \phantom{*}\checkmark* & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4305} \\
+Overall Quality &  &  & \checkmark &  & \checkmark & \citep{RN4304,RN4306,RN4295,RN4297,RN4305,RN4150,RN4298,RN4311,RN4309,RN4291,RN4303,RN4125,RN4131,RN4155,RN4299,RN4161,RN4312} \\
+Repeatability &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Rework Count &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4125} \\
+Rework Count by Value &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Rework of activities Subset &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4125} \\
+Rework Percentage &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4125} \\
+Rework Percentage by Value &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Rework Time &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4305,RN4302,RN4310} \\
+Successful outcome Unit Count & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4305} \\
+Successful outcome Unit Percentage & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4305} \\
+Total Cost and Client count Ratio &  & \checkmark &  & \checkmark & \checkmark & \citep{RN4134} \\
+Unwanted Activity Count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134,RN4131} \\
+Unwanted Activity instance Count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134,RN4131} \\
+Unwanted Activity instance Percentage &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134,RN4131} \\
+Unwanted Activity Percentage &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134,RN4131} \\
+\bottomrule
+\label{Table6}
+\end{longtable}
+
+\begin{longtable}{m{0.17\linewidth}cccccm{0.32\linewidth}}
+\toprule
+PPI & \makecell[cc]{Activity\\Instance} & Activity & Case & \makecell[cc]{Group\\of Cases} & \makecell[cc]{Expected\\Value} & References \\
+\midrule \endfirsthead
+\toprule
+PPI & \makecell[cc]{Activity\\Instance} & Activity & Case & \makecell[cc]{Group\\of Cases} & \makecell[cc]{Expected\\Value} & References \\
+\midrule \endhead
+\bottomrule \endfoot
+\captionsetup{font=small}
+\caption{List of flexibility dimension PPIs} \endlastfoot
+Activity and Role count Ratio &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4150} \\
+Activity instance and Human Resource count Ratio &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4150} \\
+Client count &  & \checkmark &  & \checkmark & \checkmark & \citep{RN4134} \\
+Directly-Follows Relations and Activity count Ratio &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4125} \\
+Directly-Follows Relations count &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4125} \\
+Human Resource count &  & \checkmark & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Optional Activity count &  &  & \checkmark & \checkmark & \checkmark & Added for completeness. \\
+Optionality &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134,RN4150,RN4155} \\
+Role and Variant count Ratio &  &  &  & \checkmark &  & \citep{RN4134} \\
+Role count &  &  & \checkmark & \checkmark & \checkmark & \citep{RN4134} \\
+Variant Case Coverage &  &  & \checkmark & \checkmark &  & \citep{RN4134} \\
+Variant count &  &  &  & \checkmark &  & \citep{RN4134,RN4309,RN4125} \\
+\bottomrule
+\label{Table7}
+\end{longtable}
+\small
+
+\bibliographystyle{apalike}
+\bibliography{ref}
+
+\end{document}

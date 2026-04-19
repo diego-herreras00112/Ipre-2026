@@ -1,0 +1,2128 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\usepackage{cite}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+
+\usepackage{parskip}
+\usepackage{amsthm}
+\usepackage{xcolor}
+
+\usepackage[shortlabels]{enumitem}
+\usepackage[margin=2cm]{geometry}
+
+\PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks=true, citecolor=black, filecolor=black, linkcolor=black, urlcolor=blue]{hyperref}
+
+\newcommand{\dgeneral}{G}
+\newcommand{\dtime}{T}
+\newcommand{\dcost}{C}
+\newcommand{\dquality}{Q}
+\newcommand{\dflexibility}{F}
+
+\newcommand{\ggroup}{G}
+\newcommand{\gcase}{C}
+\newcommand{\gact}{A}
+\newcommand{\ginst}{I}
+
+\newcommand{\universe}[2][]{U^{#1}_{#2}}
+\newcommand{\attribute}[2][]{\#^{#1}_{#2}}
+
+\newcommand{\atevent}{\mathit{event}}
+\newcommand{\atcase}{\mathit{case}}
+\newcommand{\atact}{\mathit{act}}
+\newcommand{\atres}{\mathit{res}}
+\newcommand{\athres}{\mathit{hres}}
+\newcommand{\atnhres}{\mathit{nhres}}
+\newcommand{\atrole}{\mathit{role}}
+\newcommand{\attime}{\mathit{time}}
+\newcommand{\attcost}{\mathit{tc}}
+\newcommand{\atfcost}{\mathit{fc}}
+\newcommand{\atvcost}{\mathit{vc}}
+\newcommand{\atlcost}{\mathit{lc}}
+\newcommand{\aticost}{\mathit{ic}}
+\newcommand{\atmaincost}{\mathit{mainc}}
+\newcommand{\atmdcost}{\mathit{mdc}}
+\newcommand{\attranscost}{\mathit{transc}}
+\newcommand{\atwarecost}{\mathit{warec}}
+\newcommand{\atqual}{\mathit{qual}}
+\newcommand{\atunit}{\mathit{unt}}
+\newcommand{\atunsunit}{\mathit{uns}}
+\newcommand{\atclient}{\mathit{cli}}
+\newcommand{\atatt}{\mathit{att}}
+\newcommand{\atval}{\mathit{val}}
+\newcommand{\atmap}{\mathit{map}}
+\newcommand{\attype}{\mathit{type}}
+\newcommand{\atactinst}{\mathit{actinst}}
+
+%\newcommand{\fnany}[1]{\overline{#1}}
+\newcommand{\fnmin}{\mathit{min}}
+\newcommand{\fnmax}{\mathit{max}}
+\newcommand{\fnmatch}{\mathit{match}}
+\newcommand{\fntoderintlog}{\mathit{\textbf{Der}}}
+\newcommand{\fntoexpintlog}{\mathit{\textbf{Expl}}}
+\newcommand{\fnfreshactinst}{\mathit{freshactinst}}
+\newcommand{\fnanyvariation}{^{x}}
+\newcommand{\fnevent}{\mathit{events}}
+\newcommand{\fncase}{\mathit{case}}
+\newcommand{\fncases}{\mathit{cases}}
+\newcommand{\fnact}{\mathit{act}}
+\newcommand{\fnres}{\mathit{res}}
+\newcommand{\fnhres}{\mathit{hres}}
+\newcommand{\fnrole}{\mathit{role}}
+\newcommand{\fninst}{\mathit{inst}}
+\newcommand{\fndom}{\mathit{dom}}
+\newcommand{\fnleadtime}{\mathit{lt}}
+\newcommand{\fnservicetime}{\mathit{st}}
+\newcommand{\fnwaitingtime}{\mathit{wt}}
+\newcommand{\fntimewithin}{\mathit{timew}}
+\newcommand{\fnwithin}{\mathit{within}}
+\newcommand{\fnstarted}{\mathit{started}}
+\newcommand{\fncompleted}{\mathit{completed}}
+\newcommand{\fnstarttime}{\mathit{startt}}
+\newcommand{\fnendtime}{\mathit{endt}}
+\newcommand{\fnstartinstance}{\mathit{strin}}
+\newcommand{\fnendinstance}{\mathit{endin}}
+\newcommand{\fnistart}{\mathit{str}}
+\newcommand{\fnicomplete}{\mathit{cpl}}
+\newcommand{\fnistarttime}{\mathit{stime}}
+\newcommand{\fnicompletetime}{\mathit{ctime}}
+\newcommand{\fnprev}{\mathit{prev}}
+\newcommand{\fnnext}{\mathit{next}}
+\newcommand{\fnprevstr}{\mathit{prevstr}}
+\newcommand{\fnconcstr}{\mathit{concstr}}
+\newcommand{\fndres}{\mathit{dres}}
+\newcommand{\fnfirst}{\mathit{fi}}
+\newcommand{\fnfirstinsttc}{\mathit{fitc}}
+\newcommand{\fnfirstinstlt}{\mathit{filt}}
+\newcommand{\fndfr}{\mathit{dfrel}}
+\newcommand{\fncount}{\mathit{count}}
+\newcommand{\fnseq}{\mathit{seq}}
+\newcommand{\fntrace}{\mathit{trace}}
+\newcommand{\fnvariants}{\mathit{variants}}
+\newcommand{\fnopt}{\mathit{opt}}
+
+\newcommand{\lsautl}{\mathit{Autl}}
+\newcommand{\lsdesl}{\mathit{Desl}}
+\newcommand{\lsdcl}{\mathit{DCl}}
+\newcommand{\lsunwl}{\mathit{Unwl}}
+
+\newcommand{\utif}{\mathit{if \ }}
+\newcommand{\utin}{\mathit{\ in \ }}
+\newcommand{\utotherwise}{\mathit{otherwise \ }}
+\newcommand{\utand}{\mathit{\ and \ }}
+\newcommand{\utwhere}{\mathit{\ where \ }}
+\newcommand{\utwith}{\mathit{\ with \ }}
+\newcommand{\utst}{\mid}
+\newcommand{\utsuchthat}{\mathit{\ such~that \ }}
+\newcommand{\utforall}{\mathit{for~all \ }}
+\newcommand{\utforany}{\mathit{for~any \ }}
+\newcommand{\utacta}{\mathit{a}}
+\newcommand{\utactb}{\mathit{b}}
+\newcommand{\uthres}{\mathit{hr}}
+\newcommand{\utrole}{\mathit{rl}}
+\newcommand{\utval}{\mathit{val}}
+\newcommand{\utsubset}{\mathit{sub}}
+\newcommand{\utstime}{\mathit{st}}
+\newcommand{\utetime}{\mathit{et}}
+\newcommand{\utexpected}{\mathit{e}}
+
+\newcommand{\utwithin}{\mathit{^{w}}}
+\newcommand{\utstarted}{\mathit{^{s}}}
+\newcommand{\utcompleted}{\mathit{^{c}}}
+\newcommand{\utsingle}{\mathit{^{sgl}}}
+\newcommand{\utsummation}{\mathit{^{sum}}}
+\newcommand{\utsinglenrm}{\mathit{sgl}}
+\newcommand{\utsummationnrm}{\mathit{sum}}
+%\newcommand{nrm}{\mathit{\times}}
+
+\newcommand{\atomiclog}{atomic event log}
+\newcommand{\alog}{^{a}}
+\newcommand{\derintlog}{derivable-interval event log}
+\newcommand{\dilog}{^{di}}
+\newcommand{\expintlog}{explicit-interval event log}
+\newcommand{\eilog}{^{ei}}
+\newcommand{\transitlog}{transitional event log}
+\newcommand{\tlog}{^{t}}
+
+\newcommand{\inda}{\mathit{A}}
+\newcommand{\indi}{\mathit{I}}
+\newcommand{\indc}{\mathit{C}}
+\newcommand{\inde}{\mathit{E}}
+\newcommand{\indhr}{\mathit{HR}}
+\newcommand{\indr}{\mathit{R}}
+\newcommand{\indrole}{\mathit{Role}}
+
+\newcommand{\indat}{\mathit{AT}}
+\newcommand{\indaltr}{\mathit{ALTR}}
+\newcommand{\indiltr}{\mathit{ILTR}}
+\newcommand{\indauta}{\mathit{Auta}}
+\newcommand{\indauti}{\mathit{Auti}}
+\newcommand{\indautst}{\mathit{AutST}}
+\newcommand{\indaute}{\mathit{Aute}}
+\newcommand{\indcltvalc}{\mathit{CLTOC}}
+\newcommand{\indcmdc}{\mathit{CMDC}}
+\newcommand{\indcltvalp}{\mathit{CLTOP}}
+\newcommand{\indcmdp}{\mathit{CMDP}}
+\newcommand{\indeltr}{\mathit{ELTR}}
+\newcommand{\indh}{\mathit{H}}
+\newcommand{\indit}{\mathit{IT}}
+\newcommand{\indlt}{\mathit{LT}}
+\newcommand{\indltar}{\mathit{LTAR}}
+\newcommand{\indltir}{\mathit{LTIR}}
+\newcommand{\indlter}{\mathit{LTER}}
+\newcommand{\indltdl}{\mathit{LTDL}}
+\newcommand{\indltde}{\mathit{LTDE}}
+\newcommand{\indltfa}{\mathit{LTfA}}
+\newcommand{\indltab}{\mathit{LTAB}}
+\newcommand{\indltu}{\mathit{LTU}}
+\newcommand{\indltta}{\mathit{LTtA}}
+\newcommand{\indlttafb}{\mathit{LTtAfB}}
+\newcommand{\indsltr}{\mathit{SLTR}}
+\newcommand{\indst}{\mathit{ST}}
+\newcommand{\indstltur}{\mathit{STLTUR}}
+\newcommand{\indstab}{\mathit{STAB}}
+\newcommand{\indstu}{\mathit{STU}}
+\newcommand{\indstultr}{\mathit{STULTR}}
+\newcommand{\indsojt}{\mathit{SojT}}
+\newcommand{\indwt}{\mathit{WT}}
+\newcommand{\indwtab}{\mathit{WTAB}}
+
+\newcommand{\indautc}{\mathit{AutC}}
+\newcommand{\inddac}{\mathit{DAC}}
+\newcommand{\inddc}{\mathit{DC}}
+\newcommand{\indfc}{\mathit{FC}}
+\newcommand{\indhrcr}{\mathit{HRCR}}
+\newcommand{\indic}{\mathit{IC}}
+\newcommand{\indlctcr}{\mathit{LCTCR}}
+\newcommand{\indltcr}{\mathit{LTCR}}
+\newcommand{\indlc}{\mathit{LC}}
+\newcommand{\indmainc}{\mathit{MainC}}
+\newcommand{\indmdc}{\mathit{MDC}}
+\newcommand{\indoc}{\mathit{OC}}
+\newcommand{\indrcr}{\mathit{RCR}}
+\newcommand{\indrc}{\mathit{RC}}
+\newcommand{\indrewc}{\mathit{RewC}}
+\newcommand{\indrewp}{\mathit{RewP}}
+\newcommand{\indtc}{\mathit{TC}}
+\newcommand{\indtcltr}{\mathit{TCLTR}}
+\newcommand{\indtcur}{\mathit{TCUR}}
+\newcommand{\indtcstr}{\mathit{TCSTR}}
+\newcommand{\indtransc}{\mathit{TransC}}
+\newcommand{\indvc}{\mathit{VC}}
+\newcommand{\indwarec}{\mathit{WareC}}
+
+\newcommand{\indibyhr}{\mathit{IbyHR}}
+\newcommand{\indibyrole}{\mathit{IbyRole}}
+\newcommand{\indconbr}{\mathit{BRCon}}
+\newcommand{\indcaaftfc}{\mathit{CApastTFC}}
+\newcommand{\indcabetfc}{\mathit{CAdueTFC}}
+\newcommand{\indcaintfc}{\mathit{CAinTFC}}
+\newcommand{\indcendac}{\mathit{CendAC}}
+\newcommand{\indcstartac}{\mathit{CstartAC}}
+\newcommand{\indcrewc}{\mathit{CRewC}}
+\newcommand{\indcaaftfp}{\mathit{CApastTFP}}
+\newcommand{\indcabetfp}{\mathit{CAdueTFP}}
+\newcommand{\indcaintfp}{\mathit{CAinTFP}}
+\newcommand{\indcendap}{\mathit{CendAP}}
+\newcommand{\indcstartap}{\mathit{CstartAP}}
+\newcommand{\indcrewp}{\mathit{CRewP}}
+\newcommand{\indclitcr}{\mathit{CliTCR}}
+\newcommand{\indconcf}{\mathit{CFCon}}
+\newcommand{\indebyhr}{\mathit{EbyHR}}
+\newcommand{\indebyrole}{\mathit{EbyRole}}
+\newcommand{\indcclir}{\mathit{CCliR}}
+\newcommand{\indltabsd}{\mathit{LTABsd}}
+\newcommand{\indnauta}{\mathit{NAutA}}
+\newcommand{\indnauti}{\mathit{NAutI}}
+\newcommand{\indnaute}{\mathit{NAutE}}
+\newcommand{\indu}{\mathit{U}}
+\newcommand{\indoq}{\mathit{OQ}}
+\newcommand{\indrep}{\mathit{Rep}}
+\newcommand{\indrewcv}{\mathit{RewCV}}
+\newcommand{\indrewsub}{\mathit{RewSub}}
+\newcommand{\indrewpv}{\mathit{RewPV}}
+\newcommand{\indrt}{\mathit{RT}}
+\newcommand{\indsuc}{\mathit{SUC}}
+\newcommand{\indsup}{\mathit{SUP}}
+\newcommand{\indtcclir}{\mathit{TCCliR}}
+\newcommand{\induac}{\mathit{UAC}}
+\newcommand{\induap}{\mathit{UAP}}
+\newcommand{\induic}{\mathit{UIC}}
+\newcommand{\induip}{\mathit{UIP}}
+\newcommand{\induec}{\mathit{UEC}}
+\newcommand{\induep}{\mathit{UEP}}
+
+\newcommand{\indaroler}{\mathit{ARoleR}}
+\newcommand{\indihrr}{\mathit{IHRR}}
+\newcommand{\indcatt}{\mathit{CAtt}}
+\newcommand{\indcli}{\mathit{Cli}}
+\newcommand{\indehrr}{\mathit{EHRR}}
+\newcommand{\indopta}{\mathit{OptA}}
+\newcommand{\indopt}{\mathit{Opt}}
+\newcommand{\inddfrar}{\mathit{DFRAR}}
+\newcommand{\inddfr}{\mathit{DFR}}
+\newcommand{\indof}{\mathit{OF}}
+\newcommand{\indabltr}{\mathit{ABLTR}}
+\newcommand{\indrolevr}{\mathit{RoleVR}}
+\newcommand{\indvcc}{\mathit{VCC}}
+\newcommand{\indv}{\mathit{V}}
+
+\newcommand{\fnactidef}{$\fnact(i)$ returns the activity associated to activity instance $i$.}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+
+\renewcommand{\emptyset}{\varnothing}
+
+\title{PPI List for engineers}
+\author{-}
+\date{2025}
+
+\begin{document}
+
+\maketitle
+
+\small
+\setlength\tabcolsep{2pt}
+\setlength{\extrarowheight}{2pt}
+\begin{longtable}{|>{\hspace{0pt}}m{0.165\linewidth}|>{\hspace{0pt}}m{0.025\linewidth}|>{\hspace{0pt}}m{0.025\linewidth}|>{\hspace{0pt}}m{0.18\linewidth}|>{\hspace{0pt}}m{0.55\linewidth}|}
+\caption{General PPIs}
+\label{PPIGeneral} \\
+\hline
+\textbf{Indicator} & \textbf{D.} & \textbf{G.} & \textbf{Function Name} & \textbf{Formula and justification}\\ \endhead
+\hline
+Activity count (case granularity) & \dgeneral & \gcase & \(\inda(c)\) & \(\fncount(\fnact(c))\)
+\newline $\fnact(c)$ returns the set of unique activities that occur in case $c$. \\
+\hline
+Activity count (group of cases granularity) & \dgeneral & \ggroup & \(\inda(g)\) & \(\fncount(\fnact(g))\)
+\newline $\fnact(g)$ returns the set of unique activities that occur in group of cases $g$. \\
+\hline
+Expected Activity count & \dgeneral & \ggroup & \(\utexpected\inda(g)\) & \(\frac{\sum _{c \in \fncases(g)} \inda(c)}{\indc(g)}\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\inda(c)$ returns the activity count of case $c$.
+\newline $\indc(g)$ returns the case count of group of cases $g$. \\
+\hline
+activity Instance count (activity granularity) & \dgeneral & \gact & \(\indi(a)\) & \(\fncount(\fninst(a))\)
+\newline $\fninst(a)$ returns the set of instances of activity $a$ that occur in the event log. \\
+\hline
+
+activity Instance count (case granularity) & \dgeneral & \gcase & \(\indi(c)\) & \(\fncount(\fninst(c))\)
+\newline $\fninst(c)$ returns the set of activity instances that occur in case $c$.\\
+
+\hline
+activity Instance count (group of cases granularity) & \dgeneral & \ggroup & \(\indi(g)\) & \(\sum _{c \in \fncases(g)} \indi(c)\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\indi(c)$ returns the activity instance count of case $c$. \\
+
+\hline
+Expected activity Instance count & \dgeneral & \ggroup & \(\utexpected\indi(g)\) & \(\frac{\indi(g)}{\indc(g)}\)
+\newline $\indi(g)$ returns the activity instance count of group of cases $g$.
+\newline $\indc(g)$ returns the case count of group of cases $g$.\\
+
+\hline
+Case count (group of cases granularity) & \dgeneral & \ggroup & \(\indc(g)\) & \(\fncount(\fncases(g))\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$. \\
+
+\hline
+Human Resource count (activity granularity) & \dgeneral & \gact & \(\indhr(a)\) & \(\fncount(\fnhres(a))\)
+\newline $\fnhres(a)$ returns the set of human resources that perform activity $a$ in the event log. \\
+\hline
+Human Resource count (case granularity) & \dgeneral & \gcase & \(\indhr(c)\) & \(\fncount(\fnhres(c))\)
+\newline $\fnhres(c)$ returns the set of human resources that work in case $c$. \\
+\hline
+Human Resource count (group of cases granularity) & \dgeneral & \ggroup & \(\indhr(g)\) & \(\fncount(\fnhres(g))\)
+\newline $\fnhres(g)$ returns the set of human resources that work in group of cases $g$. \\
+\hline
+Expected Human Resource count & \dgeneral & \ggroup & $e$\(\indhr(g)\) & \(\frac{\sum _{c \in \fncases(g)} \indhr(c)}{\indc(g)}\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\indhr(c)$ returns the human resource count of case $c$.
+\newline $\indc(g)$ returns the case count of group of cases $g$. \\
+\hline
+Resource count (activity granularity)  & \dgeneral & \gact & \(\indr(a)\) & \(\fncount(\fnres(a))\)
+\newline $\fnres(a)$ returns the set of resources used for activity $a$ in the event log. \\
+\hline
+Resource count (case granularity) & \dgeneral & \gcase & \(\indr(c)\) & \(\fncount(\fnres(c))\)
+\newline $\fnres(c)$ returns the set of resources used in case $c$. \\
+\hline
+Resource count (group of cases granularity) & \dgeneral & \ggroup & \(\indr(g)\) &\(\fncount(\fnres(g))\)
+\newline $\fnres(g)$ returns the set of resources used in group of cases $g$. \\
+\hline
+Expected Resource count  & \dgeneral & \ggroup & $e$\(\indr(g)\) & \(\frac{\sum _{c \in \fncases(g)} \indr(c)}{\indc(g)}\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\indr(c)$ returns the resource count of case $c$.
+\newline $\indc(g)$ returns the case count of group of cases $g$. \\
+\hline
+Role count (case granularity)  & \dgeneral & \gcase & \(\indrole(c)\) & \(\fncount(\fnrole(c))\)
+\newline $\fnrole(c)$ returns all roles involved in case $c$. \\
+\hline
+Role count (group of cases granularity) & \dgeneral & \ggroup & \(\indrole(g)\) & \(\fncount(\fnrole(g))\)
+\newline $\fnrole(g)$ returns the set of roles involved in group of cases \(g\). \\
+\hline
+Expected Role count & \dgeneral & \ggroup & \(\utexpected\indrole(g)\) & \(\frac{\sum_{c \in \fncases(g)} \indrole(c)}{\indc(g)}\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\indrole(c)$ returns the role count of case $c$.
+\newline$\indc(g)$ returns the case count of group of cases $g$. \\
+\hline
+\end{longtable}
+
+
+\begin{longtable}{|>{\hspace{0pt}}m{0.165\linewidth}|>{\hspace{0pt}}m{0.025\linewidth}|>{\hspace{0pt}}m{0.025\linewidth}|>{\hspace{0pt}}m{0.18\linewidth}|>{\hspace{0pt}}m{0.55\linewidth}|}
+\caption{Time dimension PPIs}
+\label{PPITime} \\
+\hline
+
+Active Time (case granularity) & \dtime & \gcase & \(\indat(c)\) & \(\indlt(c) - \indit(c)\)
+\newline \(\indlt(c)\) returns the Lead Time (time from case start to completion) of case \(c\).
+\newline \(\indit(c)\) returns the Idle Time (total time spent waiting or idle) of case \(c\). \\
+\hline
+
+Expected Active Time (group of cases granularity) & \dtime & \ggroup & \(\utexpected\indat(g)\) & \(\frac{\sum _{c \in g} \indat(c)}{\indc(g)}\)
+\newline \(\indat(c)\) returns the Active Time of case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Activity count (case granularity) & \dtime & \gcase & \(\inda(c)\) & \(\fncount(\fnact(c))\) 
+\newline $\fnact(c)$ returns the set of unique activities that occur in case $c$.
+\\
+\hline
+
+Activity count (group of cases granularity) & \dtime & \ggroup & \(\inda(g)\) & \(\fncount(\fnact(g))\)
+\newline $\fnact(g)$ returns the set of unique activities that occur in group of cases $g$.
+\\
+\hline
+
+Expected Activity count & \dtime & \ggroup & \(\utexpected\inda(g)\) & \(\frac{\sum _{c \in \fncases(g)} \inda(c)}{\indc(g)}\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\inda(c)$ returns the activity count of case $c$.
+\newline $\indc(g)$ returns the case count of group of cases $g$.
+\\
+\hline
+
+
+activity Instance count (case granularity) & \dtime & \gcase & \(\indi(c)\) & \(\fncount(\fninst(c))\)
+\newline $\fninst(c)$ returns the set of activity instances that occur in case $c$.
+\\
+\hline
+
+Activity Instance count (group of cases granularity) & \dtime & \ggroup & \(\indi(g)\) & 
+\(\sum_{c \in \fncases(g)} \indi(c)\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\indi(c)$ returns the activity instance count of case $c$.
+\\
+\hline
+
+Expected Activity Instance count & \dtime & \ggroup & \(\utexpected\indi(g)\) & \(\frac{\indi(g)}{\indc(g)}\)
+\newline $\indi(g)$ returns the activity instance count of group of cases $g$.
+\newline $\indc(g)$ returns the case count of group of cases $g$.
+\\
+\hline
+
+Automated Activity count (case granularity) & \dtime & \gcase & \(\indauta(c)\) &
+\(\sum_{a \in \fnact(c)} 
+\begin{cases}
+1 & \text{if } a \text{ is automated} \\
+0 & \text{otherwise}
+\end{cases}\)
+\newline $\fnact(c)$ returns the set of unique activities that occur in case $c$.\\
+\hline
+
+Automated Activity count (group of cases granularity) & \dtime & \ggroup & \(\indauta(g)\) & 
+\(\sum_{a \in \fnact(g)} 
+\begin{cases}
+1 & \text{if } a \text{ is automated} \\
+0 & \text{otherwise}
+\end{cases}\)
+\newline $\fnact(g)$ returns the set of unique activities that occur in group of cases $g$.\\
+\hline
+
+Expected Automated Activity count & \dtime & \ggroup & \(\utexpected\indauta(g)\) &
+\(\frac{\sum_{c \in \fncases(g)} \indauta(c)}{\indc(g)}\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\indauta(c)$ returns the automated activity count of case $c$.
+\newline $\indc(g)$ returns the case count of group of cases $g$.\\
+\hline
+
+Automated activity Instance count (case granularity) & \dtime & \gcase & \(\indauti(c)\) & 
+\(\sum_{i \in \fninst(c)}
+\begin{cases}
+1 & \text{if } \fnact(i) \text{ is automated} \\
+0 & \text{otherwise}
+\end{cases}\)
+\newline $\fninst(c)$ returns the set of activity instances that occur in case $c$.
+\newline $\fnact(i)$ returns the activity associated to activity instance $i$.\\
+\hline  
+
+Automated activity Instance count (group of cases granularity) & \dtime & \ggroup & \(\indauti(g)\) &
+\(\sum_{c \in \fncases(g)} \indauti(c)\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\indauti(c)$ returns the automated activity instance count of case $c$.\\
+\hline  
+
+Expected Automated Activity Instance Count (group of cases granularity) & \dtime & \ggroup & \(\utexpected\indauti(g)\) &
+\(\frac{\indauti(g)}{\indc(g)}\)
+\newline $\indauti(g)$ returns the automated activity instance count of group of cases $g$.
+\newline $\indc(g)$ returns the case count of group of cases $g$.\\
+\hline
+
+Automated Activity Service Time (case granularity) & \dtime & \gcase & \(\indautst(c)\) & 
+\(\sum_{i \in \fninst(c),\, \fnact(i) \in \lsautl} \indst(i)\)
+\newline $\fninst(c)$ returns the set of activity instances that occur in case $c$.
+\newline $\fnact(i)$ returns the activity associated with activity instance $i$.
+\newline $\lsautl$ denotes the set of automated activities.
+\newline $\indst(i)$ returns the service time of activity instance $i$.\\
+\hline
+
+Automated Activity Service Time (group of cases granularity) & \dtime & \ggroup & \(\indautst(g)\) & 
+\(\sum_{c \in \fncases(g)} \indautst(c)\)
+\newline$\fncases(g)$ returns the set of cases that belong to group of cases $g$.
+\newline$\indautst(c)$ returns the automated activity service time of case $c$.\\
+\hline
+
+Expected Automated Activity Service Time & \dtime & \ggroup & \(\utexpected\indautst(g)\) &
+\(\frac{\indautst(g)}{\indc(g)}\)
+\newline $\indautst(g)$ returns the automated activity service time of group of cases $g$.
+\newline $\indc(g)$ returns the case count of group of cases $g$.\\
+\hline
+
+Case Percentage with Missed Deadline (group of cases granularity) & \dtime & \ggroup & \(\indcmdp(g, \utval)\) &
+\(\displaystyle \frac{
+\sum_{c \in g}
+\begin{cases}
+1 & \text{if } \fnendtime(c) > \utval \\
+0 & \text{otherwise}
+\end{cases}
+}{\indc(g)}\)
+\newline \(\fnendtime(c)\) returns the completion timestamp of case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Handover count (case granularity) & \dtime & \gcase & \(\indh(c)\) & \(\sum_{i \in \fninst(c)} \fndres(i)\)
+\newline
+Here, \(\fninst(c)\) is the set of activity instances in case \(c\), \newline \(\fndres(i)\) returns the number of distinct resources involved in the execution of activity instance \(i\). 
+\newline The formula sums these values to obtain the total handovers in case \(c\). \\
+\hline
+
+Expected Handover count (group of cases granularity) & \dtime & \ggroup & \(\utexpected\indh(g)\) &
+\(\frac{\sum_{c \in g} \indh(c)}{\indc(g)}\)
+\newline $g$ represents the group of cases under analysis.
+\newline $\indh(c)$ returns the handover count of case $c$.
+\newline $\indc(g)$ returns the case count of group of cases $g$.\\
+\hline
+
+Idle Time (case granularity) & \dtime & \gcase & \(\indit(c)\) &
+\(\sum_{i \in \fninst(c)} 
+\begin{cases}
+\frac{\indwt(i)}{|\fnconcstr(i)|} & \text{if } \fnprevstr(i) = \emptyset \\
+0 & \text{if } \fnprevstr(i) \neq \emptyset
+\end{cases}\)
+\newline $\fninst(c)$ returns the set of activity instances that occur in case $c$.
+\newline $\indwt(i)$ returns the waiting time of activity instance $i$.
+\newline $\fnconcstr(i)$ returns the set of concurrent structures (parallel branches) related to instance $i$.
+\newline $\fnprevstr(i)$ returns the preceding structure of activity instance $i$.\\
+\hline
+
+Expected Idle Time (group of cases granularity) & \dtime & \ggroup & \(\utexpected\indit(g)\) &
+\(\frac{\sum_{c \in g} \indit(c)}{\indc(g)}\)
+\newline $g$ represents the group of cases under analysis.
+\newline $\indit(c)$ returns the idle time of case $c$.
+\newline $\indc(g)$ returns the case count of group of cases $g$.\\
+\hline
+
+Lead Time (activity instance granularity) & \dtime & \ginst & \(\indlt(i)\) &
+\(\indst(i) + \indwt(i)\)
+\newline $\indst(i)$ returns the service time of activity instance $i$, representing the time between its start and completion.
+\newline $\indwt(i)$ returns the waiting time of activity instance $i$, representing the idle period before the instance starts execution.\\
+\hline
+
+Lead Time (activity granularity) & \dtime & \gact & \(\indlt(a)\) &
+\(\sum_{i \in \fninst(a)} \indlt(i)\)
+\newline $\fninst(a)$ returns the set of activity instances that belong to activity $a$.
+\newline $\indlt(i)$ returns the lead time of activity instance $i$.\\
+\hline
+
+Lead Time (case granularity) & \dtime & \gcase & \(\indlt(c)\) & 
+\(\fnendtime(c) - \fnstarttime(c)\)
+\newline $\fnendtime(c)$ returns the end timestamp of case $c$.
+\newline $\fnstarttime(c)$ returns the start timestamp of case $c$.\\
+\hline
+
+%aqui definir los max?
+Lead Time (group of cases granularity) & \dtime & \ggroup & \(\indlt(g)\) & \(^{\fnmax}_{c \in g} \fnendtime(c) - ^{\fnmin}_{c \in g} \fnstarttime(c)\)
+\newline $\fnendtime(c)$ returns the end timestamp of case $c$.
+\newline $\fnstarttime(c)$ returns the start timestamp of case $c$.
+\newline  $^{\fnmax}_{c \in g}$ and $^{\fnmin}_{c \in g}$ indicate that the maximum end time and minimum start time are taken across all cases in the group $g$.\\
+\hline
+
+Expected Lead Time & \dtime & \ggroup & \(\utexpected\indlt(g)\) & 
+\(\frac{\sum_{c \in g} \indlt(c)}{\indc(g)}\)
+\newline $\indlt(c)$ returns the lead time of case $c$.
+\newline $\indc(g)$ returns the total number of cases in group $g$.
+\newline The numerator $\sum_{c \in g} \indlt(c)$ sums the lead times of all cases in $g$.\\
+\hline
+
+Lead Time and Case Count Ratio (group of cases granularity) & \dtime & \ggroup & \(\indltcr(g)\) & \(\frac{\indlt(g)}{\indc(g)}\)
+\newline $\indlt(g)$ returns the total lead time of group $g$.
+\newline $\indc(g)$ returns the total number of cases in group $g$.\\
+\hline
+
+Lead Time Deviation from time Limit (case granularity) & \dtime & \gcase & \(\indltdl(c, val)\) & \(val - \indlt(c)\)
+\newline $\indlt(c)$ returns the lead time of case $c$.
+\newline $val$ represents the predefined time Limit for the case.
+\newline The expression $|val - \indlt(c)|$ measures the absolute deviation of the case lead time from its deadline.\\
+\hline
+
+Expected Lead Time Deviation from time Limit & \dtime & \ggroup & \(\utexpected\indltdl(g, val)\) & \(\frac{\sum _{c \in g} \indltdl(c, \utval)}{\indc(g)}\)
+\newline $\indltdl(c, \utval)$ returns the lead time deviation from time Limit for case $c$.
+\newline $\utval$ represents the predefined time Limit.
+\newline $\indc(g)$ returns the number of cases in group $g$.\\
+\hline
+
+Lead Time Deviation from Expectation (case granularity) & \dtime & \gcase &  \(\indltde(c, val)\) &  \(|val - \indlt(c)|\)
+\newline\ $val$ represents the expected time value.
+\newline $\indlt(c)$ returns the lead time of case $c$.\\
+\hline
+
+Expected Lead Time Deviation from Expectation & \dtime & \ggroup & \(\utexpected\indltde(g, val)\) & \(\frac{\sum _{c \in g} \indltde(c, \utval)}{\indc(g)}\)
+\newline $\indltde(c, \utval)$ returns the lead time deviation from expectation of case $c$.
+\newline $\indc(g)$ returns the number of cases in group $g$.\\
+\hline
+
+Lead Time from activity A (case granularity) & \dtime & \gcase & \(\indltfa(c, \utacta)\) & 
+\(\begin{cases}
+\fnleadtime(any (\fnfirst\utstarted(c, \utacta), any (\fnendinstance(c))) & \utif \fnfirst\utstarted(c, \utacta) \neq \emptyset \\
+undefined & \utif \fnfirst\utstarted(c, \utacta) = \emptyset
+\end{cases}\)
+\newline $\fnfirst\utstarted(c, \utacta)$ returns the set of first started instances of activity $\utacta$ in case $c$.
+\newline $\fnendinstance(c)$ returns the final activity instance of case $c$.
+\newline $\fnleadtime(x, y)$ returns the lead time from activity instance $x$ to $y$.\\
+\hline
+
+Expected Lead Time from activity A & \dtime & \ggroup & \(\utexpected\indltfa(g, \utacta)\) & 
+\(\frac{\sum _{c \in g} \begin{cases}
+\indltfa(c, \utacta) & \utif \fnfirst\utstarted(c, \utacta) \neq \emptyset \\
+0 & \utif \fnfirst\utstarted(c, \utacta) = \emptyset
+\end{cases}}{
+\sum_{c \in \fncases(g)} 
+\begin{cases}
+1 & \text{if } \fnfirst\utstarted(c, \utacta) \neq \emptyset \\
+0 & \text{otherwise}
+\end{cases}
+}\)
+\newline $\fnfirst\utstarted(c, \utacta)$ returns the set of first started instances of activity $\utacta$ in case $c$.
+\newline $\indltfa(c, \utacta)$ returns the lead time from the first started instance of activity $\utacta$ in case $c$ to the end of case $c$.
+\\
+\hline
+
+Lead Time from activity A to activity B (case granularity) & \dtime & \gcase & \(\indltab(c, \utacta, \utactb)\) &
+\(\begin{cases}
+\fnleadtime(x,y) & \utforany x \in \fnfirst\utstarted(c, \utacta) \utand y \in \fnfirst(c, \utacta, \utactb) \\
+undefined & \utif \fnfirst(c, \utacta, \utactb) = \emptyset
+\end{cases}\)
+\newline $\fnfirst\utstarted(c, \utacta)$ returns the set of first started instances of activity $\utacta$ in case $c$.
+\newline $\fnfirst(c, \utacta, \utactb)$ returns the first instance of activity $\utactb$ occurring after the first started instance of activity $\utacta$ in case $c$.
+\newline $\fnleadtime(x,y)$ returns the lead time between activity instances $x$ and $y$.\\
+\hline
+
+Expected Lead Time from activity A to activity B & \dtime & \ggroup & \(\utexpected\indltab(g, a, b)\) & 
+\[
+\frac{
+\sum_{c \in \fncases(g)} 
+\begin{cases}
+\indltab(c, a, b) & \text{if } \fnfirst(c, \utacta, \utactb) \neq \emptyset \\
+0 & \text{otherwise}
+\end{cases}
+}{
+\sum_{c \in \fncases(g)} 
+\begin{cases}
+1 & \text{if } \fnfirst(c, \utacta, \utactb)  \neq \emptyset \\
+0 & \text{otherwise}
+\end{cases}
+}
+\]
+
+\(\fncases(g)\): Set of all cases belonging to group \(g\).
+\newline
+\(\indltab(c, a, b)\): Lead time between activity \(a\) and activity \(b\) within case \(c\).
+\newline
+\(\fnfirst(c, \utacta, \utactb)\): Function that returns the flow instance between \(a\) and \(b\) in case \(c\). If empty, the pair \((a, b)\) does not occur in \(c\). \\
+\hline
+
+Lead Time to activity A (case granularity) & \dtime & \gcase & \(\indltta(c, \utacta)\) &
+\(\begin{cases}
+\fnleadtime(x, y) & \utforany x \in \fnstartinstance(c) \utand y \in \fnfirst\utcompleted(c, \utacta) \\
+undefined & \utif \fnfirst\utcompleted(c, \utacta) = \emptyset
+\end{cases}\)
+\newline $\fnstartinstance(c)$ returns the activity instance that starts case $c$.
+\newline $\fnfirst\utcompleted(c, \utacta)$ returns the first completed instance of activity $\utacta$ in case $c$.
+\newline $\fnleadtime(x, y)$ returns the lead time between activity instances $x$ and $y$.\\
+\hline
+
+
+Expected Lead Time to activity A & \dtime & \ggroup & \(\utexpected\indltta(g, \utacta)\) & 
+\(\displaystyle \frac{\sum_{c \in g} 
+\begin{cases} 
+\indltta(c, \utacta) & \utif \fnfirst\utcompleted(c, \utacta) \neq \emptyset \\ 
+0 & \utif \fnfirst\utcompleted(c, \utacta) = \emptyset 
+\end{cases}}
+{
+\sum_{c \in \fncases(g)} 
+\begin{cases}
+1 & \text{if } \fnfirst\utcompleted(c, \utacta) \neq \emptyset \\
+0 & \text{otherwise}
+\end{cases}
+}\)
+\newline \(\indltta(c, \utacta)\) returns the lead time from the start of case \(c\) to the first completed instance of activity \(\utacta\) in case \(c\).
+\newline \(\fnfirst\utcompleted(c, \utacta)\) returns the set of first completed instances of activity \(\utacta\) in case \(c\).
+\newline \(\left| \{ c \in g \utst \fnfirst\utcompleted(c, \utacta) \neq \emptyset \} \right|\) returns the number of cases in group \(g\) where activity \(\utacta\) occurs at least once (i.e., cases with a non-empty \(\fnfirst\utcompleted(c, \utacta)\)).\\
+\hline
+
+
+
+Service and Lead Time Ratio (activity instance granularity) & \dtime & \ginst & \(\indsltr(i)\) & 
+\(\frac{\indst(i)}{\indlt(i)}\)
+\newline \(\indst(i)\) returns the service time of activity instance \(i\).
+\newline \(\indlt(i)\) returns the lead time of activity instance \(i\). \\
+\hline
+
+Service and Lead Time Ratio (activity instance granularity) & \dtime & \ginst & \(\indsltr(i)\) & 
+\(\frac{\indst(i)}{\indlt(i)}\)
+\newline \(\indst(i)\) returns the service time of activity instance \(i\).
+\newline \(\indlt(i)\) returns the lead time of activity instance \(i\). \\
+\hline
+
+Service and Lead Time Ratio (activity granularity) & \dtime & \gact & \(\indsltr(a)\) & 
+\(\frac{\indst(a)}{\indlt(a)}\)
+\newline \(\indst(a)\) returns the total service time accumulated across all instances of activity \(a\).
+\newline \(\indlt(a)\) returns the total lead time of activity \(a\). \\
+\hline
+
+Service and Lead Time Ratio (case granularity) & \dtime & \gcase & \(\indsltr(c)\) & 
+\(\frac{\indst(c)}{\indlt(c)}\)
+\newline \(\indst(c)\) returns the total service time of case \(c\).
+\newline \(\indlt(c)\) returns the total lead time of case \(c\). \\
+\hline
+
+Service and Lead Time Ratio (group of cases granularity) & \dtime & \ggroup & \(\indsltr(g)\) & 
+\(\frac{\indst(g)}{\indlt(g)}\)
+\newline \(\indst(g)\) returns the total service time accumulated across all cases in group \(g\).
+\newline \(\indlt(g)\) returns the total lead time accumulated across all cases in group \(g\). \\
+\hline
+
+Expected Service and Lead Time Ratio & \dtime & \ggroup & \(\utexpected\indsltr(g)\) & \(\frac{\indst(g)}{\sum _{c \in g} \indlt(c)}\)
+\newline \(\indst(g)\) returns the total service time accumulated across all cases in group \(g\).
+\newline \(\indlt(c)\) returns the total lead time of case \(c\). \\
+\hline
+
+Service Time (activity instance granularity) & \dtime & \ginst & \(\indst(i)\) & \(\fnicompletetime(i) - \fnistarttime(i)\)
+\newline \(\fnicompletetime(i)\) returns the completion timestamp of activity instance \(i\).
+\newline \(\fnistarttime(i)\) returns the start timestamp of activity instance \(i\). \\
+\hline
+
+Service Time (activity granularity) & \dtime & \gact & \(\indst(a)\) & \(\sum _{i \in \fninst(a)} \indst(i)\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\indst(i)\) returns the service time of activity instance \(i\). \\
+\hline
+
+Service Time (case granularity) & \dtime & \gcase & \(\indst(c)\) & \(\sum _{i \in \fninst(c)} \indst(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\indst(i)\) returns the service time of activity instance \(i\). \\
+\hline
+
+Service Time (group of cases granularity) & \dtime & \ggroup & \(\indst(g)\) & \(\sum _{c \in g} \indst(c)\)
+\newline \(\indst(c)\) returns the total service time of case \(c\). \\
+\hline
+
+Expected Service Time & \dtime & \ggroup & \(\utexpected\indst(g)\) & \(\frac{\indst(g)}{\indc(g)}\)
+\newline \(\indst(g)\) returns the total service time accumulated across all cases in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Service Time from activity A to activity B (case granularity) & \dtime & \gcase & \(\indstab(c, \utacta, \utactb)\) & \(\begin{cases} \fnservicetime(x, y) & \utforany x \in \fnfirst\utstarted(c, \utacta) \utand y \in \fnfirst(c, \utacta, \utactb) \\ undefined & \utif \fnfirst(c, \utacta, \utactb) = \emptyset \end{cases}\)
+\newline \(\fnservicetime\) returns the service time between activity instance \(x\) and activity instance \(y\).
+\newline \(\fnfirst\utstarted\) returns the set of first started instances of activity \(\utacta\) in case \(c\).
+\newline \(\fnfirst\) returns the set of first instances of activity \(\utactb\) that occur after the first instance of \(\utacta\) in case \(c\). \\
+\hline
+
+Service Time from activity A to activity B (group of cases granularity) & \dtime & \ggroup & \(\indstab(g, \utacta, \utactb)\) & \(\sum _{c \in g} \begin{cases} \indstab(c, \utacta, \utactb) & \utif \fnfirst(c, \utacta, \utactb) \neq \emptyset \\ 0 & \utif \fnfirst(c, \utacta, \utactb) = \emptyset \end{cases}\)
+\newline \(\indstab\) returns the service time from activity \(\utacta\) to activity \(\utactb\) in case \(c\).
+\newline \(\fnfirst\) returns the set of first instances of activity \(\utactb\) that occur after the first instance of \(\utacta\) in case \(c\). \\
+\hline
+%%% Duda definición (en Formalizations esta muy extensa)
+Expected Service Time from activity A to activity B & \dtime & \ggroup & \(\utexpected\indstab(g, \utacta, \utactb)\) & \(\frac{\indstab(g, \utacta, \utactb)}{|\{c \in g \utst \fnfirst(c, \utacta, \utactb) \neq \emptyset\}|}\)
+\newline \(\indstab\) returns the total service time from activity \(\utacta\) to activity \(\utactb\) accumulated across all cases in group \(g\).
+\newline \(\fnfirst\) returns the set of first instances of activity \(\utactb\) that occur after the first instance of \(\utacta\) in case \(c\). \\
+\hline
+
+Waiting Time (activity instance granularity) & \dtime & \ginst & \(\indwt(i)\) & \(\begin{cases} \fnistarttime(i) - \fnicompletetime(x) & \utforany x \in \fnprev(i) \\ 0 & \utif \fnprev(i) = \emptyset \end{cases}\)
+\newline \(\fnistarttime(i)\) returns the start timestamp of activity instance \(i\).
+\newline \(\fnicompletetime(x)\) returns the completion timestamp of activity instance \(x\).
+\newline \(\fnprev(i)\) returns the set of preceding activity instances to instance \(i\). \\
+\hline
+
+Waiting Time (activity granularity) & \dtime & \gact & \(\indwt(a)\) & \(\sum _{i \in \fninst(a)} \indwt(i)\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\indwt(i)\) returns the waiting time of activity instance \(i\). \\
+\hline
+
+Waiting Time (case granularity) & \dtime & \gcase & \(\indwt(c)\) & \(\sum _{i \in \fninst(c)} \indwt(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\indwt(i)\) returns the waiting time of activity instance \(i\). \\
+\hline
+
+Expected Waiting Time & \dtime & \ggroup & \(\utexpected\indwt(g)\) & \(\frac{\sum _{c \in g} \indwt(c)}{\indc(g)}\)
+\newline \(\indwt(c)\) returns the total waiting time of case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Waiting Time from activity A to activity B (case granularity) & \dtime & \gcase & \(\indwtab(c, \utacta, \utactb)\) & \(\begin{cases} \fnwaitingtime(x, y) & \utforany x \in \fnfirst\utstarted(c, \utacta) \utand y \in \fnfirst(c, \utacta, \utactb) \\ undefined & \utif \fnfirst(c, \utacta, \utactb) = \emptyset \end{cases}\)
+\newline \(\fnwaitingtime\) returns the waiting time between activity instance \(x\) and activity instance \(y\).
+\newline \(\fnfirst\utstarted\) returns the set of first started instances of activity \(\utacta\) in case \(c\).
+\newline \(\fnfirst\) returns the set of first instances of activity \(\utactb\) that occur after the first instance of \(\utacta\) in case \(c\). \\
+\hline
+
+Expected Waiting Time from activity A to activity B & \dtime & \ggroup & \(\utexpected\indwtab(g, \utacta, \utactb)\) &
+\(\displaystyle \frac{\sum _{c \in g} \begin{cases}
+\indwtab(c, \utacta, \utactb) & \utif \fnfirst(c, \utacta, \utactb) \neq \emptyset \\
+0 & \utif \fnfirst(c, \utacta, \utactb) = \emptyset
+\end{cases}}{
+\sum_{c \in g}
+\begin{cases}
+1 & \text{if } \fnfirst(c, \utacta, \utactb) \neq \emptyset \\
+0 & \text{otherwise}
+\end{cases}
+}\)
+\newline \(\indwtab\) returns the waiting time from activity \(\utacta\) to activity \(\utactb\) in case \(c\).
+\newline \(\fnfirst\) returns the set of first instances of activity \(\utactb\) that occur after the first instance of \(\utacta\) in case \(c\). \\
+\hline
+
+\end{longtable}
+
+\begin{longtable}{|>{\hspace{0pt}}m{0.165\linewidth}|>{\hspace{0pt}}m{0.025\linewidth}|>{\hspace{0pt}}m{0.025\linewidth}|>{\hspace{0pt}}m{0.18\linewidth}|>{\hspace{0pt}}m{0.55\linewidth}|}
+\caption{Cost dimension PPIs}
+\label{PPICost} \\
+\hline
+
+Automated Activity Cost (case granularity) & \dcost & \gcase & \(\indautc(c)\) & \(\sum _{i \in \fninst(c), \fnact(i) \in \lsautl} \indtc(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\fnact(i)\) returns the activity of activity instance \(i\).
+\newline \(\lsautl\) returns the set of automated activities.
+\newline \(\indtc(i)\) returns the cost of activity instance \(i\). \\
+\hline
+
+Automated Activity Cost (group of cases granularity) & \dcost & \ggroup & \(\indautc(g)\) & \(\sum _{c \in g} \indautc(c)\)
+\newline \(\indautc(c)\) returns the automated activity cost for case \(c\). \\
+\hline
+
+Expected Automated Activity Cost & \dcost & \ggroup & \(\utexpected\indautc(g)\) & \(\frac{\indautc(g)}{\indc(g)}\)
+\newline \(\indautc(g)\) returns the total automated activity cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Desired Activity count (case granularity) & \dcost & \gcase & \(\inddac(c)\) & \(\fncount( \lsdesl \cap \fnact(c))\)
+\newline \(\lsdesl\) returns the set of desired activities.
+\newline \(\fnact(c)\) returns the set of activities that occurred in case \(c\). \\
+\hline
+
+Desired Activity count (group of cases granularity) & \dcost & \ggroup & \(\inddac(g)\) & \(\fncount(\lsdesl \cap (\cup_{c \in g} \fnact(c)))\)
+\newline \(\lsdesl\) returns the set of desired activities.
+\newline \(\fnact(c)\) returns the set of activities that occurred in case \(c\). \\
+\hline
+
+Expected Desired Activity count & \dcost & \ggroup & \(\utexpected\inddac(g)\) & \(\frac{\sum _{c \in g} \inddac(c)}{\indc(g)}\)
+\newline \(\inddac(c)\) returns the desired activity count for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Direct Cost (case granularity) & \dcost & \gcase & \(\inddc(c)\) & \(\sum _{i \in \fninst(c), \fnact(i) \in \lsdcl} \indtc(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\fnact(i)\) returns the activity of activity instance \(i\).
+\newline \(\lsdcl\) returns the set of direct cost activities.
+\newline \(\indtc(i)\) returns the cost of activity instance \(i\). \\
+\hline
+
+Direct Cost (group of cases granularity) & \dcost & \ggroup & \(\inddc(g)\) & \(\sum _{c \in g} \inddc(c)\)
+\newline \(\inddc(c)\) returns the direct cost for case \(c\). \\
+\hline
+
+Expected Direct Cost & \dcost & \ggroup & \(\utexpected\inddc(g)\) & \(\frac{\inddc(g)}{\indc(g)}\)
+\newline \(\inddc(g)\) returns the total direct cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Fixed Cost considering single events of activity instances (activity instance granularity) & \dcost & \ginst & \(\indfc\utsingle(i)\) & \(\begin{cases} \attribute{\atfcost}(\fnicomplete(i)) & \utif \attribute{\atfcost}(\fnicomplete(i)) \neq undefined \\ \attribute{\atfcost}(\fnistart(i)) & \utif \attribute{\atfcost}(\fnicomplete(i)) = undefined \land \attribute{\atfcost}(\fnistart(i)) \neq undefined \\ undefined & \utif \attribute{\atfcost}(\fnicomplete(i)) = undefined \land \attribute{\atfcost}(\fnistart(i)) = undefined \\ \end{cases}\)
+\newline \(\attribute{\atfcost}\) returns the fixed cost associated with an event.
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\).
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\). \\
+\hline
+
+Fixed Cost considering the sum of all events of activity instances (activity instance granularity) & \dcost & \ginst & \(\indfc\utsummation(i)\) & \(\begin{cases} \attribute{\atfcost}(\fnistart(i)) + & \\ \attribute{\atfcost}(\fnicomplete(i)) & \utif \attribute{\atfcost}(\fnicomplete(i)) \neq undefined \land \attribute{\atfcost}(\fnistart(i)) \neq undefined \\ undefined & \utif \attribute{\atfcost}(\fnicomplete(i)) = undefined \lor \attribute{\atfcost}(\fnistart(i)) = undefined \\ \end{cases}\)
+\newline \(\attribute{\atfcost}\) returns the fixed cost associated with an event.
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\).
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\). \\
+\hline
+
+Fixed Cost (activity granularity) & \dcost & \gact & \(\indfc(a)\) & \(\sum _{i \in \fninst(a)} \indfc(i)\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\indfc(i)\) returns the fixed cost of activity instance \(i\). \\
+\hline
+
+Fixed Cost (case granularity) & \dcost & \gcase & \(\indfc(c)\) & \(\sum _{i \in \fninst(c)} \indfc(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\indfc(i)\) returns the fixed cost of activity instance \(i\). \\
+\hline
+
+Fixed Cost (group of cases granularity) & \dcost & \ggroup & \(\indfc(g)\) & \(\sum _{c \in g} \indfc(c)\)
+\newline \(\indfc(c)\) returns the fixed cost for case \(c\). \\
+\hline
+
+Expected Fixed Cost & \dcost & \ggroup & \(\utexpected\indfc(g)\) & \(\frac{\indfc(g)}{\indc(g)}\)
+\newline \(\indfc(g)\) returns the total fixed cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Human Resource and Case count Ratio (group of cases granularity) & \dcost & \ggroup & \(\indhrcr(g)\) & \(\frac{\indhr(g)}{\indc(g)}\)
+\newline \(\indhr(g)\) returns the number of unique human resources involved in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Human Resource count (activity granularity) & \dcost & \gact & \(\indhr(a)\) & \(\fncount(\fnhres(a))\)
+\newline $\fnhres(a)$ returns the set of human resources that perform activity $a$ in the event log. \\
+\hline
+
+Human Resource count (case granularity) & \dcost & \gcase & \(\indhr(c)\) & \(\fncount(\fnhres(c))\)
+\newline $\fnhres(c)$ returns the set of human resources that work in case $c$. \\
+\hline
+
+Human Resource count (group of cases granularity) & \dcost & \ggroup & \(\indhr(g)\) & \(\fncount(\fnhres(g))\)
+\newline $\fnhres(g)$ returns the set of human resources that work in group of cases $g$. \\
+\hline
+
+Expected Human Resource count & \dcost & \ggroup & $e$\(\indhr(g)\) & \(\frac{\sum _{c \in \fncases(g)} \indhr(c)}{\indc(g)}\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\indhr(c)$ returns the human resource count of case $c$.
+\newline $\indc(g)$ returns the case count of group of cases $g$. \\
+\hline
+
+Inventory Cost considering single events of activity instances (activity instance granularity) & \dcost & \ginst & \(\indic\utsingle(i)\) & \(\begin{cases} \attribute{\aticost}(\fnicomplete(i)) & \utif \attribute{\aticost}(\fnicomplete(i)) \neq undefined \\ \attribute{\aticost}(\fnistart(i)) & \utif \attribute{\aticost}(\fnicomplete(i)) = undefined \land \attribute{\aticost}(\fnistart(i)) \neq undefined \\ undefined & \utif \attribute{\aticost}(\fnicomplete(i)) = undefined \land \attribute{\aticost}(\fnistart(i)) = undefined \\ \end{cases}\)
+\newline \(\attribute{\aticost}\) returns the inventory cost associated with an event.
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\).
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\). \\
+\hline
+
+Inventory Cost considering the sum of all events of activity instances (activity instance granularity) & \dcost & \ginst & \(\indic\utsummation(i)\) & \(\begin{cases} \attribute{\aticost}(\fnistart(i)) + & \\ \attribute{\aticost}(\fnicomplete(i)) & \utif \attribute{\aticost}(\fnicomplete(i)) \neq undefined \land \attribute{\aticost}(\fnistart(i)) \neq undefined \\ undefined & \utif \attribute{\aticost}(\fnicomplete(i)) = undefined \lor \attribute{\aticost}(\fnistart(i)) = undefined \\ \end{cases}\)
+\newline \(\attribute{\aticost}\) returns the inventory cost associated with an event.
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\).
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\). \\
+\hline
+
+Inventory Cost (activity granularity) & \dcost & \gact & \(\indic(a)\) & \(\sum _{i \in \fninst(a)} \indic(i)\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\indic(i)\) returns the inventory cost of activity instance \(i\). \\
+\hline
+
+Inventory Cost (case granularity) & \dcost & \gcase & \(\indic(c)\) & \(\sum _{i \in \fninst(c)} \indic(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\indic(i)\) returns the inventory cost of activity instance \(i\). \\
+\hline
+
+Inventory Cost (group of cases granularity) & \dcost & \ggroup & \(\indic(g)\) & \(\sum _{c \in g} \indic(c)\)
+\newline \(\indic(c)\) returns the inventory cost for case \(c\). \\
+\hline
+
+Expected Inventory Cost & \dcost & \ggroup & \(\utexpected\indic(g)\) & \(\frac{\indic(g)}{\indc(g)}\)
+\newline \(\indic(g)\) returns the total inventory cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Labor Cost and Total Cost Ratio (activity instance granularity) & \dcost & \ginst & \(\indlctcr(i)\) & \(\frac{\indlc(i)}{\indtc(i)}\)
+\newline \(\indlc(i)\) returns the labor cost of activity instance \(i\).
+\newline \(\indtc(i)\) returns the total cost of activity instance \(i\). \\
+\hline
+
+Labor Cost and Total Cost Ratio (activity granularity) & \dcost & \gact & \(\indlctcr(a)\) & \(\frac{\indlc(a)}{\indtc(a)}\)
+\newline \(\indlc(a)\) returns the total labor cost of activity \(a\).
+\newline \(\indtc(a)\) returns the total cost of activity \(a\). \\
+\hline
+
+Labor Cost and Total Cost Ratio (case granularity) & \dcost & \gcase & \(\indlctcr(c)\) & \(\frac{\indlc(c)}{\indtc(c)}\)
+\newline \(\indlc(c)\) returns the total labor cost of case \(c\).
+\newline \(\indtc(c)\) returns the total cost of case \(c\). \\
+\hline
+
+Labor Cost and Total Cost Ratio (group of cases granularity) & \dcost & \ggroup & \(\indlctcr(g)\) & \(\frac{\indlc(g)}{\indtc(g)}\)
+\newline \(\indlc(g)\) returns the total labor cost of case group \(g\).
+\newline \(\indtc(g)\) returns the total cost of case group \(g\). \\
+\hline
+Expected Labor Cost and Total Cost Ratio & \dcost & \ggroup & \(\utexpected\indlctcr(g)\) & \(\frac{\indlc(g)}{\indtc(g)}\)
+\newline \(\indlc(g)\) returns the total labor cost of case group \(g\).
+\newline \(\indtc(g)\) returns the total cost of case group \(g\). \\
+\hline
+
+Labor Cost considering single events of activity instances (activity instance granularity) & \dcost & \ginst & \(\indlc\utsingle(i)\) & \(\begin{cases}
+\attribute{\atlcost}(\fnicomplete(i)) & \utif \attribute{\atlcost}(\fnicomplete(i)) \neq undefined \\
+\attribute{\atlcost}(\fnistart(i)) & \utif \attribute{\atlcost}(\fnicomplete(i)) = undefined \land \attribute{\atlcost}(\fnistart(i)) \neq undefined \\
+undefined & \utif \attribute{\atlcost}(\fnicomplete(i)) = undefined \land \attribute{\atlcost}(\fnistart(i)) = undefined \\
+\end{cases}\)
+\newline \(\attribute{\atlcost}\) returns the labor cost associated with an event.
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\).
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\). \\
+\hline
+
+Labor Cost considering the sum of all events of activity instances (activity instance granularity) & \dcost & \ginst & \(\indlc\utsummation(i)\) & \(\begin{cases}
+\attribute{\atlcost}(\fnistart(i)) + & \\ \attribute{\atlcost}(\fnicomplete(i)) & \utif \attribute{\atlcost}(\fnicomplete(i)) \neq undefined \land \attribute{\atlcost}(\fnistart(i)) \neq undefined \\
+undefined & \utif \attribute{\atlcost}(\fnicomplete(i)) = undefined \lor \attribute{\atlcost}(\fnistart(i)) = undefined \\
+\end{cases}\)
+\newline \(\attribute{\atlcost}\) returns the labor cost associated with an event.
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\).
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\). \\
+\hline
+
+Labor Cost (activity granularity) & \dcost & \gact & \(\indlc(a)\) & \(\sum _{i \in \fninst(a)} \indlc(i)\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\indlc(i)\) returns the labor cost of activity instance \(i\). \\
+\hline
+
+Labor Cost (case granularity) & \dcost & \gcase & \(\indlc(c)\) & \(\sum _{i \in \fninst(c)} \indlc(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\indlc(i)\) returns the labor cost of activity instance \(i\). \\
+\hline
+
+Labor Cost (group of cases granularity) & \dcost & \ggroup & \(\indlc(g)\) & \(\sum _{c \in g} \indlc(c)\)
+\newline \(\indlc(c)\) returns the labor cost for case \(c\). \\
+\hline
+
+Expected Labor Cost & \dcost & \ggroup & \(\utexpected\indlc(g)\) & \(\frac{\indlc(g)}{\indc(g)}\)
+\newline \(\indlc(g)\) returns the total labor cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Maintenance Cost (case granularity) & \dcost & \gcase & \(\indmainc(c)\) & \(\attribute{\atmaincost}(c)\)
+\newline \(\attribute{\atmaincost}\) returns the maintenance cost associated with case \(c\). \\
+\hline
+
+Maintenance Cost (group of cases granularity) & \dcost & \ggroup & \(\indmainc(g)\) & \(\sum _{c \in g} \indmainc(c)\)
+\newline \(\indmainc(c)\) returns the maintenance cost for case \(c\). \\
+\hline
+
+Expected Maintenance Cost & \dcost & \ggroup & \(\utexpected\indmainc(g)\) & \(\frac{\indmainc(g)}{\indc(g)}\)
+\newline \(\indmainc(g)\) returns the total maintenance cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Missed Deadline Cost (case granularity) & \dcost & \gcase & \(\indmdc(c)\) & \(\attribute{\atmdcost}(c)\)
+\newline \(\attribute{\atmdcost}\) returns the missed deadline cost associated with case \(c\). \\
+\hline
+
+Missed Deadline Cost (group of cases granularity) & \dcost & \ggroup & \(\indmdc(g)\) & \(\sum _{c \in g} \indmdc(c)\)
+\newline \(\indmdc(c)\) returns the missed deadline cost for case \(c\). \\
+\hline
+
+Expected Missed Deadline Cost & \dcost & \ggroup & \(\utexpected\indmdc(g)\) & \(\frac{\indmdc(g)}{\indc(g)}\)
+\newline \(\indmdc(g)\) returns the total missed deadline cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Overhead Cost (case granularity) & \dcost & \gcase & \(\indoc(c)\) & \(\sum _{i \in \fninst(c), \fnact(i) \notin \lsdcl} \indtc(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\fnact(i)\) returns the activity of activity instance \(i\).
+\newline \(\lsdcl\) returns the set of direct cost activities.
+\newline \(\indtc(i)\) returns the total cost of activity instance \(i\). \\
+\hline
+
+Overhead Cost (group of cases granularity) & \dcost & \ggroup & \(\indoc(g)\) & \(\sum _{c \in g} \indoc(c)\)
+\newline \(\indoc(c)\) returns the overhead cost for case \(c\). \\
+\hline
+
+Expected Overhead Cost & \dcost & \ggroup & \(\utexpected\indoc(g)\) & \(\frac{\indoc(g)}{\indc(g)}\)
+\newline \(\indoc(g)\) returns the total overhead cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Resource count (activity granularity)  & \dcost & \gact & \(\indr(a)\) & \(\fncount(\fnres(a))\)
+\newline $\fnres(a)$ returns the set of resources used for activity $a$ in the event log. \\
+\hline
+
+Resource count (case granularity) & \dcost & \gcase & \(\indr(c)\) & \(\fncount(\fnres(c))\)
+\newline $\fnres(c)$ returns the set of resources used in case $c$. \\
+\hline
+
+Resource count (group of cases granularity) & \dcost & \ggroup & \(\indr(g)\) & \(\fncount(\cup_{c \in g} \fnres(c))\)
+\newline \(\fnres(c)\) returns the set of unique resources involved in case \(c\). \\
+\hline
+
+Expected Resource count & \dcost & \ggroup & \(\utexpected\indr(g)\) & \(\frac{\sum _{c \in g} \indr(c)}{\indc(g)}\)
+\newline \(\indr(c)\) returns the resource count for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Rework Cost (activity granularity) & \dcost & \gact & \(\indrc(a)\) & \(\indtc(a) - \sum _{c \in C} \fnfirstinsttc(c, a)\)
+\newline \(\indtc(a)\) returns the total cost of activity \(a\).
+\newline \(\fnfirstinsttc\) returns the cost of the first instance of activity \(a\) in case \(c\). \\
+\hline
+
+Rework Cost (case granularity) & \dcost & \gcase & \(\indrc(c)\) & \(\indtc(c) - \sum _{a \in A} \fnfirstinsttc(c, a)\)
+\newline \(\indtc(c)\) returns the total cost of case \(c\).
+\newline \(\fnfirstinsttc\) returns the cost of the first instance of activity \(a\) in case \(c\). \\
+\hline
+
+Rework Cost (group of cases granularity) & \dcost & \ggroup & \(\indrc(g)\) & \(\sum _{c \in g} \indrc(c)\)
+\newline \(\indrc(c)\) returns the rework cost for case \(c\). \\
+\hline
+
+Expected Rework Cost & \dcost & \ggroup & \(\utexpected\indrc(g)\) & \(\frac{\indrc(g)}{\indc(g)}\)
+\newline \(\indrc(g)\) returns the total rework cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Rework Count (activity granularity) & \dcost & \gact & \(\indrewc(a)\) & \(\sum _{c \in C} \fnmax(0, \fncount(c, a) - 1)\)
+\newline \(\fncount(c, a)\) returns the number of instances of activity \(a\) in case \(c\). \\
+\hline
+
+Rework Count (case granularity) & \dcost & \gcase & \(\indrewc(c)\) & \(\sum _{a \in A} \fnmax(0, \fncount(c, a) - 1)\)
+\newline \(\fncount(c, a)\) returns the number of instances of activity \(a\) in case \(c\). \\
+\hline
+
+Rework Count (group of cases granularity) & \dcost & \ggroup & \(\indrewc(g)\) & \(\sum _{c \in g} \indrewc(c)\)
+\newline \(\indrewc(c)\) returns the rework count for case \(c\). \\
+\hline
+
+Expected Rework Count & \dcost & \ggroup & \(\utexpected\indrewc(g)\) & \(\frac{\indrewc(g)}{\indc(g)}\)
+\newline \(\indrewc(g)\) returns the total rework count for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Rework Percentage (activity granularity) & \dcost & \gact & \(\indrewp(a)\) & \(\frac{\indrewc(a)}{\indi(a)}\)
+\newline \(\indrewc(a)\) returns the rework count for activity \(a\).
+\newline \(\indi(a)\) returns the number of instances of activity \(a\). \\
+\hline
+
+Rework Percentage (case granularity) & \dcost & \gcase & \(\indrewp(c)\) & \(\frac{\indrewc(c)}{\indi(c)}\)
+\newline \(\indrewc(c)\) returns the rework count for case \(c\).
+\newline \(\indi(c)\) returns the total number of activity instances in case \(c\). \\
+\hline
+
+Rework Percentage (group of cases granularity) & \dcost & \ggroup & \(\indrewp(g)\) & \(\frac{\indrewc(g)}{\indi(g)}\)
+\newline \(\indrewc(g)\) returns the rework count for group \(g\).
+\newline \(\indi(g)\) returns the total number of activity instances in group \(g\). \\
+\hline
+
+Expected Rework Percentage & \dcost & \ggroup & \(\utexpected\indrewp(g)\) & \(\frac{\sum _{c \in g} \indrewp(c)}{\indc(g)}\)
+\newline \(\indrewp(c)\) returns the rework percentage for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Total Cost considering single events of activity instances (activity instance granularity) & \dcost & \ginst & \(\indtc\utsingle(i)\) & \(\begin{cases}
+\attribute{\attcost}(\fnicomplete(i)) & \utif \attribute{\attcost}(\fnicomplete(i)) \neq undefined \\
+\attribute{\attcost}(\fnistart(i)) & \utif \attribute{\attcost}(\fnicomplete(i)) = undefined \land \attribute{\attcost}(\fnistart(i)) \neq undefined \\
+undefined & \utif \attribute{\attcost}(\fnicomplete(i)) = undefined \land \attribute{\attcost}(\fnistart(i)) = undefined \\
+\end{cases}\)
+\newline \(\attribute{\attcost}\) returns the total cost associated with an event.
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\).
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\). \\
+\hline
+
+Total Cost considering the sum of all events of activity instances (activity instance granularity) & \dcost & \ginst & \(\indtc\utsummation(i)\) & \(\begin{cases}
+\attribute{\attcost}(\fnistart(i)) + & \\ \attribute{\attcost}(\fnicomplete(i)) & \utif \attribute{\attcost}(\fnicomplete(i)) \neq undefined \land \attribute{\attcost}(\fnistart(i)) \neq undefined \\
+undefined & \utif \attribute{\attcost}(\fnicomplete(i)) = undefined \lor \attribute{\attcost}(\fnistart(i)) = undefined \\
+\end{cases}\)
+\newline \(\attribute{\attcost}\) returns the total cost associated with an event.
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\).
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\). \\
+\hline
+
+Total Cost (activity granularity) & \dcost & \gact & \(\indtc(a)\) & \(\sum _{i \in \fninst(a)} \indtc(i)\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\indtc(i)\) returns the total cost of activity instance \(i\). \\
+\hline
+
+Total Cost (case granularity) & \dcost & \gcase & \(\indtc(c)\) & \(\sum _{i \in \fninst(c)} \indtc(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\indtc(i)\) returns the total cost of activity instance \(i\). \\
+\hline
+
+Total Cost (group of cases granularity) & \dcost & \ggroup & \(\indtc(g)\) & \(\sum _{c \in g} \indtc(c)\)
+\newline \(\indtc(c)\) returns the total cost of case \(c\). \\
+\hline
+
+Expected Total Cost & \dcost & \ggroup & \(\utexpected\indtc(g)\) & \(\frac{\indtc(g)}{\indc(g)}\)
+\newline \(\indtc(g)\) returns the total cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Total Cost and Lead Time Ratio (activity instance granularity) & \dcost & \ginst & \(\indtcltr(i)\) & \(\frac{\indtc(i)}{\indlt(i)}\)
+\newline \(\indtc(i)\) returns the total cost of activity instance \(i\).
+\newline \(\indlt(i)\) returns the lead time of activity instance \(i\). \\
+\hline
+
+Total Cost and Lead Time Ratio (activity granularity) & \dcost & \gact & \(\indtcltr(a)\) & \(\frac{\indtc(a)}{\indlt(a)}\)
+\newline \(\indtc(a)\) returns the total cost of activity \(a\).
+\newline \(\indlt(a)\) returns the total lead time of activity \(a\). \\
+\hline
+
+Total Cost and Lead Time Ratio (case granularity) & \dcost & \gcase & \(\indtcltr(c)\) & \(\frac{\indtc(c)}{\indlt(c)}\)
+\newline \(\indtc(c)\) returns the total cost of case \(c\).
+\newline \(\indlt(c)\) returns the total lead time of case \(c\). \\
+\hline
+
+Total Cost and Lead Time Ratio (group of cases granularity) & \dcost & \ggroup & \(\indtcltr(g)\) & \(\frac{\indtc(g)}{\indlt(g)}\)
+\newline \(\indtc(g)\) returns the total cost of case group \(g\).
+\newline \(\indlt(g)\) returns the total lead time of case group \(g\). \\
+\hline
+
+Expected Total Cost and Lead Time Ratio & \dcost & \ggroup & \(\utexpected\indtcltr(g)\) & \(\frac{\indtc(g)}{\sum _{c \in g} \indlt(c)}\)
+\newline \(\indtc(g)\) returns the total cost of case group \(g\).
+\newline \(\indlt(c)\) returns the total lead time of case \(c\). \\
+\hline
+
+Total Cost and outcome Unit Ratio (activity instance granularity) & \dcost & \ginst & \(\indtcur(i)\) & \(\frac{\indtc(i)}{\indu(i)}\)
+\newline \(\indtc(i)\) returns the total cost of activity instance \(i\).
+\newline \(\indu(i)\) returns the outcome unit count of activity instance \(i\). \\
+\hline
+
+Total Cost and outcome Unit Ratio (activity granularity) & \dcost & \gact & \(\indtcur(a)\) & \(\frac{\indtc(a)}{\indu(a)}\)
+\newline \(\indtc(a)\) returns the total cost of activity \(a\).
+\newline \(\indu(a)\) returns the total outcome unit count of activity \(a\). \\
+\hline
+
+Total Cost and outcome Unit Ratio (case granularity) & \dcost & \gcase & \(\indtcur(c)\) & \(\frac{\indtc(c)}{\indu(c)}\)
+\newline \(\indtc(c)\) returns the total cost of case \(c\).
+\newline \(\indu(c)\) returns the total outcome unit count of case \(c\). \\
+\hline
+
+Total Cost and outcome Unit Ratio (group of cases granularity) & \dcost & \ggroup & \(\indtcur(g)\) & \(\frac{\indtc(g)}{\indu(g)}\)
+\newline \(\indtc(g)\) returns the total cost of case group \(g\).
+\newline \(\indu(g)\) returns the total outcome unit count of case group \(g\). \\
+\hline
+
+Expected Total Cost and outcome Unit Ratio & \dcost & \ggroup & \(\utexpected\indtcur(g)\) & \(\frac{\indtc(g)}{\indu(g)}\)
+\newline \(\indtc(g)\) returns the total cost of case group \(g\).
+\newline \(\indu(g)\) returns the total outcome unit count of case group \(g\). \\
+\hline
+
+Total Cost and Service Time Ratio (activity instance granularity) & \dcost & \ginst & \(\indtcstr(i)\) & \(\frac{\indtc(i)}{\indst(i)}\)
+\newline \(\indtc(i)\) returns the total cost of activity instance \(i\).
+\newline \(\indst(i)\) returns the service time of activity instance \(i\). \\
+\hline
+
+Total Cost and Service Time Ratio (activity granularity) & \dcost & \gact & \(\indtcstr(a)\) & \(\frac{\indtc(a)}{\indst(a)}\)
+\newline \(\indtc(a)\) returns the total cost of activity \(a\).
+\newline \(\indst(a)\) returns the total service time of activity \(a\). \\
+\hline
+
+Total Cost and Service Time Ratio (case granularity) & \dcost & \gcase & \(\indtcstr(c)\) & \(\frac{\indtc(c)}{\indst(c)}\)
+\newline \(\indtc(c)\) returns the total cost of case \(c\).
+\newline \(\indst(c)\) returns the total service time of case \(c\). \\
+\hline
+
+Total Cost and Service Time Ratio (group of cases granularity) & \dcost & \ggroup & \(\indtcstr(g)\) & \(\frac{\indtc(g)}{\indst(g)}\)
+\newline \(\indtc(g)\) returns the total cost of case group \(g\).
+\newline \(\indst(g)\) returns the total service time of case group \(g\). \\
+\hline
+
+Expected Total Cost and Service Time Ratio & \dcost & \ggroup & \(\utexpected\indtcstr(g)\) & \(\frac{\indtc(g)}{\indst(g)}\)
+\newline \(\indtc(g)\) returns the total cost of case group \(g\).
+\newline \(\indst(g)\) returns the total service time of case group \(g\). \\
+\hline
+
+Transportation Cost (case granularity) & \dcost & \gcase & \(\indtransc(c)\) & \(\attribute{\attranscost}(c)\)
+\newline \(\attribute{\attranscost}\) returns the transportation cost associated with case \(c\). \\
+\hline
+
+Transportation Cost (group of cases granularity) & \dcost & \ggroup & \(\indtransc(g)\) & \(\sum _{c \in g} \indtransc(c)\)
+\newline \(\indtransc(c)\) returns the transportation cost for case \(c\). \\
+\hline
+
+Expected Transportation Cost & \dcost & \ggroup & \(\utexpected\indtransc(g)\) & \(\frac{\indtransc(g)}{\indc(g)}\)
+\newline \(\indtransc(g)\) returns the total transportation cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Variable Cost considering single events of activity instances (activity instance granularity) & \dcost & \ginst & \(\indvc\utsingle(i)\) & \(\begin{cases}
+\attribute{\atvcost}(\fnicomplete(i)) & \utif \attribute{\atvcost}(\fnicomplete(i)) \neq undefined \\
+\attribute{\atvcost}(\fnistart(i)) & \utif \attribute{\atvcost}(\fnicomplete(i)) = undefined \land \attribute{\atvcost}(\fnistart(i)) \neq undefined \\
+undefined & \utif \attribute{\atvcost}(\fnicomplete(i)) = undefined \land \attribute{\atvcost}(\fnistart(i)) = undefined \\
+\end{cases}\)
+\newline \(\attribute{\atvcost}\) returns the variable cost associated with an event.
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\).
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\). \\
+\hline
+
+Variable Cost considering the sum of all events of activity instances (activity instance granularity) & \dcost & \ginst & \(\indvc\utsummation(i)\) & \(\begin{cases}
+\attribute{\atvcost}(\fnistart(i)) + & \\ \attribute{\atvcost}(\fnicomplete(i)) & \utif \attribute{\atvcost}(\fnicomplete(i)) \neq undefined \land \attribute{\atvcost}(\fnistart(i)) \neq undefined \\
+undefined & \utif \attribute{\atvcost}(\fnicomplete(i)) = undefined \lor \attribute{\atvcost}(\fnistart(i)) = undefined \\
+\end{cases}\)
+\newline \(\attribute{\atvcost}\) returns the variable cost associated with an event.
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\).
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\). \\
+\hline
+
+Variable Cost (activity granularity) & \dcost & \gact & \(\indvc(a)\) & \(\sum _{i \in \fninst(a)} \indvc(i)\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\indvc(i)\) returns the variable cost of activity instance \(i\). \\
+\hline
+
+Variable Cost (case granularity) & \dcost & \gcase & \(\indvc(c)\) & \(\sum _{i \in \fninst(c)} \indvc(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\indvc(i)\) returns the variable cost of activity instance \(i\). \\
+\hline
+
+Variable Cost (group of cases granularity) & \dcost & \ggroup & \(\indvc(g)\) & \(\sum _{c \in g} \indvc(c)\)
+\newline \(\indvc(c)\) returns the variable cost for case \(c\). \\
+\hline
+
+Expected Variable Cost & \dcost & \ggroup & \(\utexpected\indvc(g)\) & \(\frac{\indvc(g)}{\indc(g)}\)
+\newline \(\indvc(g)\) returns the total variable cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Warehousing Cost (case granularity) & \dcost & \gcase & \(\indwarec(c)\) & \(\attribute{\atwarecost}(c)\)
+\newline \(\attribute{\atwarecost}\) returns the warehousing cost associated with case \(c\). \\
+\hline
+
+Warehousing Cost (group of cases granularity) & \dcost & \ggroup & \(\indwarec(g)\) & \(\sum _{c \in g} \indwarec(c)\)
+\newline \(\indwarec(c)\) returns the warehousing cost for case \(c\). \\
+\hline
+
+Expected Warehousing Cost & \dcost & \ggroup & \(\utexpected\indwarec(g)\) & \(\frac{\indwarec(g)}{\indc(g)}\)
+\newline \(\indwarec(g)\) returns the total warehousing cost for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+\end{longtable}
+
+\begin{longtable}{|>{\hspace{0pt}}m{0.165\linewidth}|>{\hspace{0pt}}m{0.025\linewidth}|>{\hspace{0pt}}m{0.025\linewidth}|>{\hspace{0pt}}m{0.18\linewidth}|>{\hspace{0pt}}m{0.55\linewidth}|}
+\caption{Quality dimension PPIs}
+\label{PPIQuality} \\
+\hline
+activity Instance count by Human Resource (activity granularity) & \dquality & \gact & \(\indibyhr(a, \uthres)\) &
+\(\displaystyle \sum_{i \in \fninst(a)}
+\begin{cases}
+1 & \text{if } \fnhres(i) = \uthres \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\fnhres(i)\) returns the human resource associated with activity instance \(i\). \\
+\hline
+
+activity Instance count by Human Resource (case granularity) & \dquality & \gcase & \(\indibyhr(c, \uthres)\) &
+\(\displaystyle \sum_{i \in \fninst(c)}
+\begin{cases}
+1 & \text{if } \fnhres(i) = \uthres \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\fnhres(i)\) returns the human resource associated with activity instance \(i\). \\
+\hline
+
+activity Instance count by Human Resource (group of cases granularity) & \dquality & \ggroup & \(\indibyhr(g, \uthres)\) & \(\sum _{c \in g} \indibyhr(c, \uthres)\)
+\newline \(\indibyhr(c, \uthres)\) returns the activity instance count by human resource \(\uthres\) in case \(c\). \\
+\hline
+
+Expected activity Instance count by Human Resource & \dquality & \ggroup & \(\utexpected\indibyhr(g, \uthres)\) & \(\frac{\indibyhr(g, \uthres)}{\indc(g)}\)
+\newline \(\indibyhr(g, \uthres)\) returns the total activity instance count by human resource \(\uthres\) in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+activity Instance count by Role (case granularity) & \dquality & \gcase & \(\indibyrole(c, \utrole)\) &
+\(\displaystyle \sum_{i \in \fninst(c)}
+\begin{cases}
+1 & \text{if } \fnrole(i) = \utrole \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\fnrole(i)\) returns the role associated with activity instance \(i\). \\
+\hline
+
+activity Instance count by Role (group of cases granularity) & \dquality & \ggroup & \(\indibyrole(g, \utrole)\) & \(\sum _{c \in g} \indibyrole(c, \utrole)\)
+\newline \(\indibyrole(c, \utrole)\) returns the activity instance count by role \(\utrole\) in case \(c\). \\
+\hline
+
+Expected activity Instance count by Role & \dquality & \ggroup & \(\utexpected\indibyrole(g, \utrole)\) & \(\frac{\indibyrole(g, \utrole)}{\indc(g)}\)
+\newline \(\indibyrole(g, \utrole)\) returns the total activity instance count by role \(\utrole\) in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+ Automated Activity count (case granularity) & \dquality & \gcase & \(\indauta(c)\) &
+\(\sum_{a \in \fnact(c)} 
+\begin{cases}
+1 & \text{if } a \text{ is automated} \\
+0 & \text{otherwise}
+\end{cases}\)
+\newline $\fnact(c)$ returns the set of unique activities that occur in case $c$.\\
+\hline
+
+Automated Activity count (group of cases granularity) & \dquality & \ggroup & \(\indauta(g)\) & 
+\(\sum_{a \in \fnact(g)} 
+\begin{cases}
+1 & \text{if } a \text{ is automated} \\
+0 & \text{otherwise}
+\end{cases}\)
+\newline $\fnact(g)$ returns the set of unique activities that occur in group of cases $g$.\\
+\hline
+
+Expected Automated Activity count & \dquality & \ggroup & \(\utexpected\indauta(g)\) & \(\frac{\sum _{c \in g} \indauta(c)}{\indc(g)}\)
+\newline \(\indauta(c)\) returns the automated activity count for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Automated activity Instance count (case granularity) & \dquality & \gcase & \(\indauti(c)\) & 
+\(\sum_{i \in \fninst(c)}
+\begin{cases}
+1 & \text{if } \fnact(i) \text{ is automated} \\
+0 & \text{otherwise}
+\end{cases}\)
+\newline $\fninst(c)$ returns the set of activity instances that occur in case $c$.
+\newline $\fnact(i)$ returns the activity associated to activity instance $i$.\\
+\hline  
+
+Automated activity Instance count (group of cases granularity) & \dquality & \ggroup & \(\indauti(g)\) & \(\sum _{c \in g} \indauti(c)\)
+\newline \(\indauti(c)\) returns the automated activity instance count for case \(c\). \\
+\hline
+
+Expected Automated activity Instance count & \dquality & \ggroup & \(\utexpected\indauti(g)\) & \(\frac{\indauti(g)}{\indc(g)}\)
+\newline \(\indauti(g)\) returns the total automated activity instance count for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Case and Client count Ratio (group of cases granularity) & \dquality & \ggroup & \(\indcclir(g)\) & \(\frac{\indc(g)}{\indcli(g)}\)
+\newline \(\indc(g)\) returns the number of cases in group \(g\).
+\newline \(\indcli(g)\) returns the number of clients associated with group \(g\). \\
+\hline
+
+Case Count where Activity after Time Frame (group of cases granularity) & \dquality & \ggroup & \(\indcaaftfc(g, \utacta, \utetime)\) &
+\(\displaystyle \sum_{c \in g}
+\begin{cases}
+1 & \text{if } \exists i \in \fninst(c, \utacta)[\fnistarttime(i) \geq \utetime] \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fninst(c, \utacta)\) returns the set of all instances of activity \(\utacta\) in case \(c\).
+\newline \(\fnistarttime(i)\) returns the start timestamp of activity instance \(i\). \\
+\hline
+Case Count where Activity before Time Frame (group of cases granularity) & \dquality & \ggroup & \(\indcabetfc(g, \utacta, \utstime)\) &
+\(\displaystyle \sum_{c \in g}
+\begin{cases}
+1 & \text{if } \exists i \in \fninst(c, \utacta)[\fnistarttime(i) \leq \utstime] \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fninst(c, \utacta)\) returns the set of all instances of activity \(\utacta\) in case \(c\).
+\newline \(\fnistarttime(i)\) returns the start timestamp of activity instance \(i\). \\
+\hline
+
+Case Count where Activity during Time Frame (group of cases granularity) & \dquality & \ggroup & \(\indcaintfc(g, \utacta, \utstime, \utetime)\) &
+\(\displaystyle \sum_{c \in g}
+\begin{cases}
+1 & \text{if } \exists i \in \fninst(c, \utacta)[\utstime \leq \fnistarttime(i) \land \fnistarttime(i) \leq \utetime] \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fninst(c, \utacta)\) returns the set of all instances of activity \(\utacta\) in case \(c\).
+\newline \(\fnistarttime(i)\) returns the start timestamp of activity instance \(i\). \\
+\hline
+
+Case Count where end activity is A (group of cases granularity) & \dquality & \ggroup & \(\indcendac(g, \utacta)\) &
+\(\displaystyle \sum_{c \in g}
+\begin{cases}
+1 & \text{if } \exists i \in \fnendinstance(c)[\fnact(i) = \utacta] \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fnendinstance(c)\) returns the set of last activity instances in case \(c\).
+\newline \(\fnact(i)\) returns the activity of activity instance \(i\). \\
+\hline
+
+Case Count where start activity is A (group of cases granularity) & \dquality & \ggroup & \(\indcstartac(g, \utacta)\) &
+\(\displaystyle \sum_{c \in g}
+\begin{cases}
+1 & \text{if } \exists i \in \fnstartinstance(c)[\fnact(i) = \utacta] \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fnstartinstance(c)\) returns the set of first activity instances in case \(c\).
+\newline \(\fnact(i)\) returns the activity of activity instance \(i\). \\
+\hline
+
+Case Count with Rework (group of cases granularity) & \dquality & \ggroup & \(\indcrewc(g)\) &
+\(\displaystyle \sum_{c \in g}
+\begin{cases}
+1 & \text{if } \indrewc(c) > 0 \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\indrewc(c)\) returns the rework count for case \(c\). \\
+\hline
+
+Case Percentage where Activity after Time Frame (group of cases granularity) & \dquality & \ggroup & \(\indcaaftfp(g, \utacta, \utetime)\) & \(\frac{\indcaaftfc(g, \utacta, \utetime)}{\indc(g)}\)
+\newline \(\indcaaftfc(g, \utacta, \utetime)\) returns the case count where activity \(\utacta\) starts after time frame \(\utetime\) in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Case Percentage where Activity before Time Frame (group of cases granularity) & \dquality & \ggroup & \(\indcabetfp(g, \utacta, \utstime)\) & \(\frac{\indcabetfc(g, \utacta, \utstime)}{\indc(g)}\)
+\newline \(\indcabetfc(g, \utacta, \utstime)\) returns the case count where activity \(\utacta\) starts before time frame \(\utstime\) in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Case Percentage where Activity during Time Frame (group of cases granularity) & \dquality & \ggroup & \(\indcaintfp(g, \utacta, \utstime, \utetime)\) & \(\frac{\indcaintfc(g, \utacta, \utstime, \utetime)}{\indc(g)}\)
+\newline \(\indcaintfc(g, \utacta, \utstime, \utetime)\) returns the case count where activity \(\utacta\) starts during the time frame in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Case Percentage where End Activity is A (group of cases granularity) & \dquality & \ggroup & \(\indcendap(g, \utacta)\) & \(\frac{\indcendac(g, \utacta)}{\indc(g)}\)
+\newline \(\indcendac(g, \utacta)\) returns the case count where the end activity is \(\utacta\) in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Case Percentage where Start Activity is A (group of cases granularity) & \dquality & \ggroup & \(\indcstartap(g, \utacta)\) & \(\frac{\indcstartac(g, \utacta)}{\indc(g)}\)
+\newline \(\indcstartac(g, \utacta)\) returns the case count where the start activity is \(\utacta\) in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Case Percentage with Missed Deadline (group of cases granularity) & \dquality & \ggroup & \(\indcmdp(g, \utval)\) &
+\(\displaystyle \frac{
+\sum_{c \in g}
+\begin{cases}
+1 & \text{if } \fnendtime(c) > \utval \\
+0 & \text{otherwise}
+\end{cases}
+}{\indc(g)}\)
+\newline \(\fnendtime(c)\) returns the completion timestamp of case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Case Percentage with Rework (group of cases granularity) & \dquality & \ggroup & \(\indcrewp(g)\) & \(\frac{\indcrewc(g)}{\indc(g)}\)
+\newline \(\indcrewc(g)\) returns the case count with rework in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Client count and Total Cost Ratio (activity granularity) & \dquality & \gact & \(\indclitcr(a)\) & \(\frac{\indcli(a)}{\indtc(a)}\)
+\newline \(\indcli(a)\) returns the number of distinct clients involved in activity \(a\).
+\newline \(\indtc(a)\) returns the total cost of activity \(a\). \\
+\hline
+
+Client count and Total Cost Ratio (group of cases granularity) & \dquality & \ggroup & \(\indclitcr(g)\) & \(\frac{\indcli(g)}{\indtc(g)}\)
+\newline \(\indcli(g)\) returns the number of distinct clients associated with group \(g\).
+\newline \(\indtc(g)\) returns the total cost of case group \(g\). \\
+\hline
+
+Expected Client count and Total Cost Ratio & \dquality & \ggroup & \(\utexpected\indclitcr(g)\) & \(\frac{\indcli(g)}{\indtc(g)}\)
+\newline \(\indcli(g)\) returns the number of distinct clients associated with group \(g\).
+\newline \(\indtc(g)\) returns the total cost of case group \(g\). \\
+\hline
+
+Desired Activity count (case granularity) & \dquality & \gcase & \(\inddac(c)\) & \(\fncount(\lsdesl \cap \fnact(c))\)
+\newline \(\lsdesl\) returns the set of desired activities.
+\newline \(\fnact(c)\) returns the set of activities that occurred in case \(c\). \\
+\hline
+
+Desired Activity count (group of cases granularity) & \dquality & \ggroup & \(\inddac(g)\) & \(\fncount(\lsdesl \cap (\cup_{c \in g} \fnact(c)))\)
+\newline \(\lsdesl\) returns the set of desired activities.
+\newline \(\fnact(c)\) returns the set of activities that occurred in case \(c\). \\
+\hline
+
+Expected Desired Activity count & \dquality & \ggroup & \(\utexpected\inddac(g)\) & \(\frac{\sum _{c \in g} \inddac(c)}{\indc(g)}\)
+\newline \(\inddac(c)\) returns the desired activity count for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Human Resource count (activity granularity) & \dquality & \gact & \(\indhr(a)\) & \(\fncount(\fnhres(a))\)
+\newline $\fnhres(a)$ returns the set of human resources that perform activity $a$ in the event log. \\
+\hline
+
+Human Resource count (case granularity) & \dquality & \gcase & \(\indhr(c)\) & \(\fncount(\fnhres(c))\)
+\newline $\fnhres(c)$ returns the set of human resources that work in case $c$. \\
+\hline
+
+Human Resource count (group of cases granularity) & \dquality & \ggroup & \(\indhr(g)\) & \(\fncount(\fnhres(g))\)
+\newline $\fnhres(g)$ returns the set of human resources that work in group of cases $g$. \\
+\hline
+
+Expected Human Resource count & \dquality & \ggroup & $e$\(\indhr(g)\) & \(\frac{\sum _{c \in \fncases(g)} \indhr(c)}{\indc(g)}\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\indhr(c)$ returns the human resource count of case $c$.
+\newline $\indc(g)$ returns the case count of group of cases $g$. \\
+\hline
+
+Non-Automated Activity count (case granularity) & \dquality & \gcase & \(\indnauta(c)\) &
+\(\displaystyle \sum_{a \in \fnact(c)}
+\begin{cases}
+1 & \text{if } a \notin \lsautl \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fnact(c)\) returns the set of activities that occurred in case \(c\).
+\newline \(\lsautl\) returns the set of automated activities. \\
+\hline
+
+Non-Automated Activity count (group of cases granularity) & \dquality & \ggroup & \(\indnauta(g)\) &
+\(\displaystyle \sum_{a \in (\cup _{c \in g} \fnact(c))}
+\begin{cases}
+1 & \text{if } a \notin \lsautl \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fnact(c)\) returns the set of activities that occurred in case \(c\).
+\newline \(\lsautl\) returns the set of automated activities. \\
+\hline
+
+Expected Non-Automated Activity count (group of cases granularity) & \dquality & \ggroup & \(\indnauta(g)\) & \(\frac{\sum _{c \in g} \indnauta(c)}{\indc(g)}\)
+\newline \(\indnauta(c)\) returns the non-automated activity count for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Non-Automated activity Instance count (case granularity) & \dquality & \gcase & \(\indnauti(c)\) &
+\(\displaystyle \sum_{i \in \fninst(c)}
+\begin{cases}
+1 & \text{if } \fnact(i) \notin \lsautl \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\fnact(i)\) returns the activity of activity instance \(i\).
+\newline \(\lsautl\) returns the set of automated activities. \\
+\hline
+
+Non-Automated activity Instance count (group of cases granularity) & \dquality & \ggroup & \(\indnauti(g)\) & \(\sum _{c \in g} \indnauti(c)\)
+\newline \(\indnauti(c)\) returns the non-automated activity instance count for case \(c\). \\
+\hline
+
+Expected Non-Automated activity Instance count & \dquality & \ggroup & \(\utexpected\indnauti(g)\) & \(\frac{\indnauti(g)}{\indc(g)}\)
+\newline \(\indnauti(g)\) returns the total non-automated activity instance count for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+outcome Unit count considering single events of activity instances (activity instance granularity) & \dquality & \ginst & \(\indu\utsingle(i)\) & \(\begin{cases}
+\attribute{\atunit}(\fnicomplete(i)) & \utif \attribute{\atunit}(\fnicomplete(i)) \neq undefined \\
+\attribute{\atunit}(\fnistart(i)) & \utif \attribute{\atunit}(\fnicomplete(i)) = undefined \land \attribute{\atunit}(\fnistart(i)) \neq undefined \\
+undefined & \utif \attribute{\atunit}(\fnicomplete(i)) = undefined \land \attribute{\atunit}(\fnistart(i)) = undefined \\
+\end{cases}\)
+\newline \(\attribute{\atunit}\) returns the outcome unit count associated with an event.
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\).
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\). \\
+\hline
+
+outcome Unit count considering the sum of all events of activity instances (activity instance granularity) & \dquality & \ginst & \(\indu\utsummation(i)\) & \(\begin{cases}
+\attribute{\atunit}(\fnistart(i)) + \attribute{\atunit}(\fnicomplete(i)) & \utif \attribute{\atunit}(\fnicomplete(i)) \neq undefined \land \\ & \attribute{\atunit}(\fnistart(i)) \neq undefined \\
+undefined & \utif \attribute{\atunit}(\ \fnicomplete(i)) = undefined \lor \attribute{\atunit}(\fnistart(i)) = undefined \\
+\end{cases}\)
+\newline \(\attribute{\atunit}\) returns the outcome unit count associated with an event.
+\newline \(\fnistart(i)\) returns the start event of activity instance \(i\).
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\). \\
+\hline
+
+outcome Unit count (activity granularity) & \dquality & \gact & \(\indu(a)\) & \(\sum _{i \in \fninst(a)} \indu(i)\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\indu(i)\) returns the outcome unit count of activity instance \(i\). \\
+\hline
+
+outcome Unit count (case granularity) & \dquality & \gcase & \(\indu(c)\) & \(\sum _{i \in \fninst(c)} \indu(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\indu(i)\) returns the outcome unit count of activity instance \(i\). \\
+\hline
+
+outcome Unit count (group of cases granularity) & \dquality & \ggroup & \(\indu(g)\) & \(\sum _{c \in g} \indu(c)\)
+\newline \(\indu(c)\) returns the outcome unit count of case \(c\). \\
+\hline
+
+Expected outcome Unit count & \dquality & \ggroup & \(\utexpected\indu(g)\) & \(\frac{\indu(g)}{\indc(g)}\)
+\newline \(\indu(g)\) returns the total outcome unit count for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Overall Quality (case granularity) & \dquality & \gcase & \(\indoq(c)\) & \(\attribute{\atqual}(c)\)
+\newline \(\attribute{\atqual}\) returns the overall quality associated with case \(c\). \\
+\hline
+
+Expected Overall Quality & \dquality & \ggroup & \(\utexpected\indoq(g)\) & \(\frac{\sum _{c \in g} \indoq(c)}{\indc(g)}\)
+\newline \(\indoq(c)\) returns the overall quality associated with case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Repeatability (case granularity) & \dquality & \gcase & \(\indrep(c)\) & \(1 - \frac{\inda(c)}{\indi(c)}\)
+\newline \(\inda(c)\) returns the number of unique activities in case \(c\).
+\newline \(\indi(c)\) returns the total number of activity instances in case \(c\). \\
+\hline
+
+Repeatability (group of cases granularity) & \dquality & \ggroup & \(\indrep(g)\) & \(1 - \frac{\inda(g)}{\indi(g)}\)
+\newline \(\inda(g)\) returns the number of unique activities in group \(g\).
+\newline \(\indi(g)\) returns the total number of activity instances in group \(g\). \\
+\hline
+
+Expected Repeatability & \dquality & \ggroup & \(\utexpected\indrep(g)\) & \(1 - \frac{\sum _{c \in g} \inda(c)}{\indi(g)}\)
+\newline \(\inda(c)\) returns the number of unique activities in case \(c\).
+\newline \(\indi(g)\) returns the total number of activity instances in group \(g\). \\
+\hline
+
+Rework Count (activity granularity) & \dquality & \gact & \(\indrewc(a)\) & \(\sum _{c \in C} \fnmax(0, \fncount(c, a) - 1)\)
+\newline \(\fncount(c, a)\) returns the number of instances of activity \(a\) in case \(c\). \\
+\hline
+
+Rework Count (case granularity) & \dquality & \gcase & \(\indrewc(c)\) & \(\sum _{a \in A} \fnmax(0, \fncount(c, a) - 1)\)
+\newline \(\fncount(c, a)\) returns the number of instances of activity \(a\) in case \(c\). \\
+\hline
+
+Rework Count (group of cases granularity) & \dquality & \ggroup & \(\indrewc(g)\) & \(\sum _{c \in g} \indrewc(c)\)
+\newline \(\indrewc(c)\) returns the rework count for case \(c\). \\
+\hline
+
+Expected Rework Count & \dquality & \ggroup & \(\utexpected\indrewc(g)\) & \(\frac{\indrewc(g)}{\indc(g)}\)
+\newline \(\indrewc(g)\) returns the total rework count for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Rework Count by Value (activity granularity) & \dquality & \gact & \(\indrewcv(a, \utval)\) & \(\sum _{c \in C} \fnmax(0, \fncount(c, a) - \utval)\)
+\newline \(\fncount(c, a)\) returns the number of instances of activity \(a\) in case \(c\). \\
+\hline
+
+Rework Count by Value (case granularity) & \dquality & \gcase & \(\indrewcv(c, \utval)\) & \(\sum _{a \in A} \fnmax(0, \fncount(c, a) - \utval)\)
+\newline \(\fncount(c, a)\) returns the number of instances of activity \(a\) in case \(c\). \\
+\hline
+
+Rework Count by Value (group of cases granularity) & \dquality & \ggroup & \(\indrewcv(g, \utval)\) & \(\sum _{c \in g} \indrewcv(c, \utval)\)
+\newline \(\indrewcv(c, \utval)\) returns the rework count by value \(\utval\) for case \(c\). \\
+\hline
+
+Expected Rework Count by Value & \dquality & \ggroup & \(\utexpected\indrewcv(g, \utval)\) & \(\frac{\indrewcv(g, \utval)}{\indc(g)}\)
+\newline \(\indrewcv(g, \utval)\) returns the total rework count by value \(\utval\) for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Rework of activities Subset (case granularity) & \dquality & \gcase & \(\indrewsub(c, \utsubset)\) & \(\sum _{a \in \utsubset} \fnmax(0, \fncount(c, a) - 1)\)
+\newline \(\fncount(c, a)\) returns the number of instances of activity \(a\) in case \(c\). \\
+\hline
+
+Rework of activities Subset (group of cases granularity) & \dquality & \ggroup & \(\indrewsub(g, \utsubset)\) & \(\sum _{c \in g} \indrewsub(c, \utsubset)\)
+\newline \(\indrewsub(c, \utsubset)\) returns the rework count for subset \(\utsubset\) in case \(c\). \\
+\hline
+
+Expected Rework of activities Subset & \dquality & \ggroup & \(\utexpected\indrewsub(g, \utsubset)\) & \(\frac{\indrewsub(g, \utsubset)}{\indc(g)}\)
+\newline \(\indrewsub(g, \utsubset)\) returns the total rework count for subset \(\utsubset\) in group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Rework Percentage (activity granularity) & \dquality & \gact & \(\indrewp(a)\) & \(\frac{\indrewc(a)}{\indi(a)}\)
+\newline \(\indrewc(a)\) returns the rework count for activity \(a\).
+\newline \(\indi(a)\) returns the total number of instances of activity \(a\). \\
+\hline
+
+Rework Percentage (case granularity) & \dquality & \gcase & \(\indrewp(c)\) & \(\frac{\indrewc(c)}{\indi(c)}\)
+\newline \(\indrewc(c)\) returns the rework count for case \(c\).
+\newline \(\indi(c)\) returns the total number of activity instances in case \(c\). \\
+\hline
+
+Rework Percentage (group of cases granularity) & \dquality & \ggroup & \(\indrewp(g)\) & \(\frac{\indrewc(g)}{\indi(g)}\)
+\newline \(\indrewc(g)\) returns the total rework count for group \(g\).
+\newline \(\indi(g)\) returns the total number of activity instances in group \(g\). \\
+\hline
+
+Expected Rework Percentage & \dquality & \ggroup & \(\utexpected\indrewp(g)\) & \(\frac{\sum _{c \in g} \indrewp(c)}{\indc(g)}\)
+\newline \(\indrewp(c)\) returns the rework percentage for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Rework Percentage by Value (activity granularity) & \dquality & \gact & \(\indrewpv(a, \utval)\) & \(\frac{\indrewcv(a, \utval)}{\indi(a)}\)
+\newline \(\indrewcv(a, \utval)\) returns the rework count by value \(\utval\) for activity \(a\).
+\newline \(\indi(a)\) returns the total number of instances of activity \(a\). \\
+\hline
+
+Rework Percentage by Value (case granularity) & \dquality & \gcase & \(\indrewpv(c, \utval)\) & \(\frac{\indrewcv(c, \utval)}{\indi(c)}\)
+\newline \(\indrewcv(c, \utval)\) returns the rework count by value \(\utval\) for case \(c\).
+\newline \(\indi(c)\) returns the total number of activity instances in case \(c\). \\
+\hline
+
+Rework Percentage by Value (group of cases granularity) & \dquality & \ggroup & \(\indrewpv(g, \utval)\) & \(\frac{\indrewcv(g, \utval)}{\indi(g)}\)
+\newline \(\indrewcv(g, \utval)\) returns the rework count by value \(\utval\) for group \(g\).
+\newline \(\indi(g)\) returns the total number of activity instances in group \(g\). \\
+\hline
+
+Expected Rework Percentage by Value & \dquality & \ggroup & \(\utexpected\indrewpv(g)\) & \(\frac{\sum _{c \in g} \indrewpv(c, \utval)}{\indc(g)}\)
+\newline \(\indrewpv(c, \utval)\) returns the rework percentage by value \(\utval\) for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Rework Time (activity granularity) & \dquality & \gact & \(\indrt(a)\) & \(\indlt(a) - \sum _{c \in C} \fnfirstinstlt(c, a)\)
+\newline \(\indlt(a)\) returns the total lead time of activity \(a\).
+\newline \(\fnfirstinstlt(c, a)\) returns the lead time of the first instance of activity \(a\) in case \(c\). \\
+\hline
+
+Rework Time (case granularity) & \dquality & \gcase & \(\indrt(c)\) & \(\indlt(c) - \sum _{a \in A} \fnfirstinstlt(c, a)\)
+\newline \(\indlt(c)\) returns the total lead time of case \(c\).
+\newline \(\fnfirstinstlt(c, a)\) returns the lead time of the first instance of activity \(a\) in case \(c\). \\
+\hline
+
+Rework Time (group of cases granularity) & \dquality & \ggroup & \(\indrt(g)\) & \(\sum _{c \in g} \indrt(c)\)
+\newline \(\indrt(c)\) returns the rework time for case \(c\). \\
+\hline
+
+Expected Rework Time & \dquality & \ggroup & \(\utexpected\indrt(g)\) & \(\frac{\indrt(g)}{\indc(g)}\)
+\newline \(\indrt(g)\) returns the total rework time for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Successful outcome Unit Count (activity instance granularity) & \dquality & \ginst & \(\indsuc(i)\) & \(\begin{cases}
+\indu(i) - \attribute{\atunsunit}(\fnicomplete(i)) & \utif \attribute{\atunsunit}(\fnicomplete(i)) \neq undefined \\
+\indu(i) & \utif \attribute{\atunsunit}(\fnicomplete(i)) = undefined \\
+\end{cases}\)
+\newline \(\indu(i)\) returns the outcome unit count of activity instance \(i\).
+\newline \(\attribute{\atunsunit}\) returns the unsuccessful outcome unit count associated with an event.
+\newline \(\fnicomplete(i)\) returns the completion event of activity instance \(i\). \\
+\hline
+
+Successful outcome Unit Count (activity granularity) & \dquality & \gact & \(\indsuc(a)\) & \(\sum _{i \in \fninst(a)} \indsuc(i)\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\indsuc(i)\) returns the successful outcome unit count of activity instance \(i\). \\
+\hline
+
+Successful outcome Unit Count (case granularity) & \dquality & \gcase & \(\indsuc(c)\) & \(\sum _{i \in \fninst(c)} \indsuc(i)\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\indsuc(i)\) returns the successful outcome unit count of activity instance \(i\). \\
+\hline
+
+Successful outcome Unit Count (group of cases granularity) & \dquality & \ggroup & \(\indsuc(g)\) & \(\sum _{c \in G} \indsuc(c)\)
+\newline \(\indsuc(c)\) returns the successful outcome unit count for case \(c\). \\
+\hline
+
+Expected Successful outcome Unit Count & \dquality & \ggroup & \(\utexpected\indsuc(g)\) & \(\frac{\indsuc(g)}{\indc(g)}\)
+\newline \(\indsuc(g)\) returns the total successful outcome unit count for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Successful outcome Unit Percentage (activity instance granularity) & \dquality & \ginst & \(\indsup(i)\) & \(\frac{\indsuc(i)}{\indu(i)}\)
+\newline \(\indsuc(i)\) returns the successful outcome unit count of activity instance \(i\).
+\newline \(\indu(i)\) returns the outcome unit count of activity instance \(i\). \\
+\hline
+
+Successful outcome Unit Percentage (activity granularity) & \dquality & \gact & \(\indsup(a)\) & \(\frac{\indsuc(a)}{\indu(a)}\)
+\newline \(\indsuc(a)\) returns the successful outcome unit count of activity \(a\).
+\newline \(\indu(a)\) returns the total outcome unit count of activity \(a\). \\
+\hline
+
+Successful outcome Unit Percentage (case granularity) & \dquality & \gcase & \(\indsup(c)\) & \(\frac{\indsuc(c)}{\indu(c)}\)
+\newline \(\indsuc(c)\) returns the successful outcome unit count of case \(c\).
+\newline \(\indu(c)\) returns the total outcome unit count of case \(c\). \\
+\hline
+
+Successful outcome Unit Percentage (group of cases granularity) & \dquality & \ggroup & \(\indsup(g)\) & \(\frac{\indsuc(g)}{\indu(g)}\)
+\newline \(\indsuc(g)\) returns the total successful outcome unit count of case group \(g\).
+\newline \(\indu(g)\) returns the total outcome unit count of case group \(g\). \\
+\hline
+
+Expected Successful outcome Unit Percentage & \dquality & \ggroup & \(\utexpected\indsup(g)\) & \(\frac{\sum _{c \in g} \indsup(c)}{\indc(g)}\)
+\newline \(\indsup(c)\) returns the successful outcome unit percentage of case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Total Cost and Client count Ratio (activity granularity) & \dquality & \gact & \(\indtcclir(a)\) & \(\frac{\indtc(a)}{\indcli(a)}\)
+\newline \(\indtc(a)\) returns the total cost of activity \(a\).
+\newline \(\indcli(a)\) returns the number of distinct clients involved in activity \(a\). \\
+\hline
+
+Total Cost and Client count Ratio (group of cases granularity) & \dquality & \ggroup & \(\indtcclir(g)\) & \(\frac{\indtc(g)}{\indcli(g)}\)
+\newline \(\indtc(g)\) returns the total cost of case group \(g\).
+\newline \(\indcli(g)\) returns the number of distinct clients associated with group \(g\). \\
+\hline
+
+Expected Total Cost and Client count Ratio & \dquality & \ggroup & \(\utexpected\indtcclir(g)\) & \(\frac{\indtc(g)}{\indcli(g)}\)
+\newline \(\indtc(g)\) returns the total cost of case group \(g\).
+\newline \(\indcli(g)\) returns the number of distinct clients associated with group \(g\). \\
+\hline
+
+Unwanted Activity count (case granularity) & \dquality & \gcase & \(\induac(c)\) &
+\(\displaystyle \sum_{a \in \fnact(c)}
+\begin{cases}
+1 & \text{if } a \in \lsunwl \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\lsunwl\) returns the set of unwanted activities.
+\newline \(\fnact(c)\) returns the set of activities that occurred in case \(c\). \\
+\hline
+
+Unwanted Activity count (group of cases granularity) & \dquality & \ggroup & \(\induac(g)\) &
+\(\displaystyle \sum_{a \in (\cup_{c \in g} \fnact(c))}
+\begin{cases}
+1 & \text{if } a \in \lsunwl \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\lsunwl\) returns the set of unwanted activities.
+\newline \(\fnact(c)\) returns the set of activities that occurred in case \(c\). \\
+\hline
+
+Expected Unwanted Activity count & \dquality & \ggroup & \(\induac(g)\) & \(\frac{\sum _{c \in g} \induac(c)}{\indc(g)}\)
+\newline \(\induac(c)\) returns the unwanted activity count for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Unwanted Activity Percentage (case granularity) & \dquality & \gcase & \(\induap(c)\) & \(\frac{\induac(c)}{\inda(c)}\)
+\newline \(\induac(c)\) returns the unwanted activity count for case \(c\).
+\newline \(\inda(c)\) returns the number of unique activities in case \(c\). \\
+\hline
+
+Unwanted Activity Percentage (group of cases granularity) & \dquality & \ggroup & \(\induap(g)\) & \(\frac{\induac(g)}{\inda(g)}\)
+\newline \(\induac(g)\) returns the unwanted activity count for group \(g\).
+\newline \(\inda(g)\) returns the number of unique activities in group \(g\). \\
+\hline
+
+Expected Unwanted Activity Percentage & \dquality & \ggroup & \(\utexpected\induap(g)\) & \(\frac{\sum _{c \in g} \induap(c)}{\indc(g)}\)
+\newline \(\induap(c)\) returns the unwanted activity percentage for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Unwanted activity Instance count (case granularity) & \dquality & \gcase & \(\induic(c)\) &
+\(\displaystyle \sum_{i \in \fninst(c)}
+\begin{cases}
+1 & \text{if } \fnact(i) \in \lsunwl \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fninst(c)\) returns the set of all activity instances in case \(c\).
+\newline \(\fnact(i)\) returns the activity of activity instance \(i\).
+\newline \(\lsunwl\) returns the set of unwanted activities. \\
+\hline
+
+Unwanted activity Instance count (group of cases granularity) & \dquality & \ggroup & \(\induic(g)\) & \(\sum _{c \in g} \induic(c)\)
+\newline \(\induic(c)\) returns the unwanted activity instance count for case \(c\). \\
+\hline
+
+Expected Unwanted activity Instance count & \dquality & \ggroup & \(\utexpected\induic(g)\) & \(\frac{\induic(g)}{\indc(g)}\)
+\newline \(\induic(g)\) returns the total unwanted activity instance count for group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Unwanted activity Instance Percentage (case granularity) & \dquality & \gcase & \(\induip(c)\) & \(\frac{\induic(c)}{\indi(c)}\)
+\newline \(\induic(c)\) returns the unwanted activity instance count for case \(c\).
+\newline \(\indi(c)\) returns the total number of activity instances in case \(c\). \\
+\hline
+
+Unwanted activity Instance Percentage (group of cases granularity) & \dquality & \ggroup & \(\induip(g)\) & \(\frac{\induic(g)}{\indi(g)}\)
+\newline \(\induic(g)\) returns the unwanted activity instance count for group \(g\).
+\newline \(\indi(g)\) returns the total number of activity instances in group \(g\). \\
+\hline
+
+Expected Unwanted activity Instance Percentage & \dquality & \ggroup & \(\utexpected\induip(g)\) & \(\frac{\sum _{c \in g} \induip(c)}{\indc(g)}\)
+\newline \(\induip(c)\) returns the unwanted activity instance percentage for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+\end{longtable}
+
+\begin{longtable}{|>{\hspace{0pt}}m{0.165\linewidth}|>{\hspace{0pt}}m{0.025\linewidth}|>{\hspace{0pt}}m{0.025\linewidth}|>{\hspace{0pt}}m{0.18\linewidth}|>{\hspace{0pt}}m{0.55\linewidth}|}
+\caption{Flexibility dimension PPIs}
+\label{PPIFlexibility} \\
+\hline
+Activity and Role count Ratio (case granularity) & \dflexibility & \gcase & \(\indaroler(c)\) & \(\frac{\inda(c)}{\indrole(c)}\)
+\newline \(\inda(c)\) returns the number of unique activities in case \(c\).
+\newline \(\indrole(c)\) returns the number of unique roles involved in case \(c\). \\
+\hline
+
+Activity and Role count Ratio (group of cases granularity) & \dflexibility & \ggroup & \(\indaroler(g)\) & \(\frac{\inda(g)}{\indrole(g)}\)
+\newline \(\inda(g)\) returns the number of unique activities in group \(g\).
+\newline \(\indrole(g)\) returns the number of unique roles involved in group \(g\). \\
+\hline
+
+Expected Activity and Role count Ratio & \dflexibility & \ggroup & \(\utexpected\indaroler(g)\) & \(\frac{\sum _{c \in g} \inda(c)}{\sum _{c \in g} \indrole(c)}\)
+\newline \(\inda(c)\) returns the number of unique activities in case \(c\).
+\newline \(\indrole(c)\) returns the number of unique roles involved in case \(c\). \\
+\hline
+
+activity Instance and Human Resource count Ratio (activity granularity) & \dflexibility & \gact & \(\indihrr(a)\) & \(\frac{\indi(a)}{\indhr(a)}\)
+\newline \(\indi(a)\) returns the total number of instances of activity \(a\).
+\newline \(\indhr(a)\) returns the number of unique human resources that performed activity \(a\). \\
+\hline
+
+activity Instance and Human Resource count Ratio (case granularity) & \dflexibility & \gcase & \(\indihrr(c)\) & \(\frac{\indi(c)}{\indhr(c)}\)
+\newline \(\indi(c)\) returns the total number of activity instances in case \(c\).
+\newline \(\indhr(c)\) returns the number of unique human resources involved in case \(c\). \\
+\hline
+
+activity Instance and Human Resource count Ratio (group of cases granularity) & \dflexibility & \ggroup & \(\indihrr(g)\) & \(\frac{\indi(g)}{\indhr(g)}\)
+\newline \(\indi(g)\) returns the total number of activity instances in group \(g\).
+\newline \(\indhr(g)\) returns the number of unique human resources involved in group \(g\). \\
+\hline
+
+Expected activity Instance and Human Resource count Ratio & \dflexibility & \ggroup & \(\utexpected\indihrr(g)\) & \(\frac{\indi(g)}{\sum _{c \in g} \indhr(c)}\)
+\newline \(\indi(g)\) returns the total number of activity instances in group \(g\).
+\newline \(\indhr(c)\) returns the number of unique human resources involved in case \(c\). \\
+\hline
+
+
+Client count (activity granularity) & \dflexibility & \gact & \(\indcli(a)\) & \(\fncount(\indcli(a))\)
+\newline \(\indcli(a)\) returns the set of distinct client identifiers associated with activity $a$. \\
+\hline
+
+Client count (group of cases granularity) & \dflexibility & \ggroup & \(\indcli(g)\) & \(\fncount(\indcli(g))\)
+\newline \(\indcli(g)\) returns the set of distinct client identifiers associated with case group $g$. \\
+\hline
+
+Expected Client count & \dflexibility & \ggroup & \(\utexpected\indcli(g)\) & \(\frac{\indcli(g)}{\indc(g)}\)
+\newline \(\indcli(g)\) returns the number of distinct clients associated with group \(g\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Directly-Follows Relations and Activity count Ratio (case granularity) & \dflexibility & \gcase & \(\inddfrar(c)\) & \(\frac{\inddfr(c)}{\inda(c)}\)
+\newline \(\inddfr(c)\) returns the number of unique Directly-Follows Relations (DFR) in case \(c\).
+\newline \(\inda(c)\) returns the number of unique activities in case \(c\). \\
+\hline
+
+Directly-Follows Relations and Activity count Ratio (group of cases granularity) & \dflexibility & \ggroup & \(\inddfrar(g)\) & \(\frac{\inddfr(g)}{\inda(g)}\)
+\newline \(\inddfr(g)\) returns the number of unique Directly-Follows Relations (DFR) in group \(g\).
+\newline \(\inda(g)\) returns the number of unique activities in group \(g\). \\
+\hline
+
+Expected Directly-Follows Relations and Activity count Ratio & \dflexibility & \ggroup & \(\utexpected\inddfrar(g)\) & \(\frac{\sum _{c \in g} \inddfr(c)}{\sum _{c \in g} \inda(c)}\)
+\newline \(\inddfr(c)\) returns the number of unique Directly-Follows Relations (DFR) in case \(c\).
+\newline \(\inda(c)\) returns the number of unique activities in case \(c\). \\
+\hline
+Directly-Follows Relations count (case granularity) & \dflexibility & \gcase & \(\inddfr(c)\) & \(\fncount(\fndfr(c))\)
+\newline \(\fndfr(c)\) returns the set of unique Directly-Follows Relations (DFR) in case \(c\). \\
+\hline
+
+Directly-Follows Relations count (group of cases granularity) & \dflexibility & \ggroup & \(\inddfr(g)\) &
+\(\displaystyle \sum_{r \in (\cup_{c \in g} \fndfr(c))} 1\)
+\newline \(\fndfr(c)\) returns the set of unique Directly-Follows Relations (DFR) in case \(c\). \\
+\hline
+
+Expected Directly-Follows Relations count & \dflexibility & \ggroup & \(\utexpected\inddfr(g)\) & \(\frac{\sum _{c \in g} \inddfr(c)}{\indc(g)}\)
+\newline \(\inddfr(c)\) returns the number of unique Directly-Follows Relations (DFR) in case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Human Resource count (activity granularity) & \dflexibility & \gact & \(\indhr(a)\) & \(\fncount(\fnhres(a))\)
+\newline $\fnhres(a)$ returns the set of human resources that perform activity $a$ in the event log. \\
+\hline
+
+Human Resource count (case granularity) & \dflexibility & \gcase & \(\indhr(c)\) & \(\fncount(\fnhres(c))\)
+\newline $\fnhres(c)$ returns the set of human resources that work in case $c$. \\
+\hline
+
+Human Resource count (group of cases granularity) & \dflexibility & \ggroup & \(\indhr(g)\) & \(\fncount(\fnhres(g))\)
+\newline $\fnhres(g)$ returns the set of human resources that work in group of cases $g$. \\
+\hline
+
+Expected Human Resource count & \dflexibility & \ggroup & $e$\(\indhr(g)\) & \(\frac{\sum _{c \in \fncases(g)} \indhr(c)}{\indc(g)}\)
+\newline $\fncases(g)$ returns the set of cases in group of cases $g$.
+\newline $\indhr(c)$ returns the human resource count of case $c$.
+\newline $\indc(g)$ returns the case count of group of cases $g$. \\
+\hline
+
+%% se puede aplicar case when?
+Optional Activity count (case granularity) & \dflexibility & \gcase & \(\indopta(c)\) &
+\(\displaystyle \sum_{a \in \fnact(c)}
+\begin{cases}
+1 & \text{if } a \in \fnopt(C) \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fnact(c)\) returns the set of activities that occurred in case \(c\).
+\newline \(\fnopt(C)\) returns the set of optional activities in the event log \(C\). \\
+\hline
+
+Optional Activity count (group of cases granularity) & \dflexibility & \ggroup & \(\indopta(g)\) &
+\(\displaystyle \sum_{a \in \fnact(g)}
+\begin{cases}
+1 & \text{if } a \in \fnopt(C) \\
+0 & \text{otherwise}
+\end{cases}
+\)
+\newline \(\fnact(c)\) returns the set of activities that occurred in case \(c\).
+\newline \(\fnopt(C)\) returns the set of optional activities in the event log \(C\). \\
+\hline
+
+Expected Optional Activity count & \dflexibility & \ggroup & \(\utexpected\indopta(g)\) & \(\frac{\sum _{c \in g} \indopta(c)}{\indc(g)}\)
+\newline \(\indopta(c)\) returns the optional activity count for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Optionality (case granularity) & \dflexibility & \gcase & \(\indopt(c)\) & \(\frac{\indopta(c)}{\inda(c)}\)
+\newline \(\indopta(c)\) returns the optional activity count for case \(c\).
+\newline \(\inda(c)\) returns the number of unique activities in case \(c\). \\
+\hline
+
+Optionality (group of cases granularity) & \dflexibility & \ggroup & \(\indopt(g)\) & \(\frac{\indopta(g)}{\inda(g)}\)
+\newline \(\indopta(g)\) returns the optional activity count for group \(g\).
+\newline \(\inda(g)\) returns the number of unique activities in group \(g\). \\
+\hline
+
+Expected Optionality & \dflexibility & \ggroup & \(\utexpected\indopt(g)\) & \(\frac{\sum _{c \in g} \indopta(c)}{\sum _{c \in g} \inda(c)}\)
+\newline \(\indopta(c)\) returns the optional activity count for case \(c\).
+\newline \(\inda(c)\) returns the number of unique activities in case \(c\). \\
+\hline
+
+Role and Variant count Ratio (group of cases granularity) & \dflexibility & \ggroup & \(\indrolevr(g)\) & \(\frac{\indrole(g)}{\indv(g)}\)
+\newline \(\indrole(g)\) returns the number of unique roles involved in group \(g\).
+\newline \(\indv(g)\) returns the number of unique variants in group \(g\). \\
+\hline
+
+Role count (case granularity) & \dflexibility & \gcase & \(\indrole(c)\) & \(\fncount(\fnrole(c))\)
+\newline \(\fnrole(c)\) returns the set of unique roles involved in case \(c\). \\
+\hline
+
+Role count (group of cases granularity) & \dflexibility & \ggroup & \(\indrole(g)\) & \(\fncount(\cup_{c \in g} \fnrole(c))\)
+\newline \(\fnrole(c)\) returns the set of unique roles involved in case \(c\). \\
+\hline
+
+Expected Role count & \dflexibility & \ggroup & \(\utexpected\indrole(g)\) & \(\frac{\sum _{c \in g} \indrole(c)}{\indc(g)}\)
+\newline \(\indrole(c)\) returns the role count for case \(c\).
+\newline \(\indc(g)\) returns the number of cases in group \(g\). \\
+\hline
+
+Variant Case Coverage (case granularity) & \dflexibility & \gcase & \(\indvcc(c)\) &
+\(\frac{
+\sum_{c' \in C}
+\begin{cases}
+1 & \text{if } \exists tr \in \fntrace(c) \land tr' \in \fntrace(c') [tr = tr'] \\
+0 & \text{otherwise}
+\end{cases}
+}{\fncount(C)}\)
+\newline $\fntrace(c')$ returns the trace (sequence of activities) of case $c'$.
+\newline $\fntrace(c)$ returns the trace (sequence of activities) of case $c$.
+\newline $\fncount(C)$ returns the total number of cases in the event log. \\
+\hline
+
+Variant Case Coverage (group of cases granularity) & \dflexibility & \ggroup & \(\indvcc(g)\) &
+\(\frac{
+\sum_{c \in C}
+\begin{cases}
+1 & \text{if } \exists tr \in \fntrace(c) [tr \in \fnvariants(g)] \\
+0 & \text{otherwise}
+\end{cases}
+}{\fncount(C)}\)
+\newline $\fntrace(c)$ returns the trace (sequence of activities) of case $c$.
+\newline $\fnvariants(g)$ returns the set of unique traces (variants) present in group $g$.
+\newline $\fncount(C)$ returns the total number of cases in the event log. \\
+\hline
+
+Variant count (group of cases granularity) & \dflexibility & \ggroup & \(\indv(g)\) & \(\fncount(\fnvariants(g))\)
+\newline \(\fnvariants(g)\) returns the set of unique traces (variants) present in group \(g\). \\
+\hline
+
+Directly-Follows Relations count (activity granularity) & \dflexibility & \gact & \(\inddfr(a)\) & \(\sum_{a \in \fnact(a)} \fndfr(a)\)
+\newline \(\fninst(a)\) returns the set of all instances of activity \(a\).
+\newline \(\fndfr(a)\) returns the set of activities that directly follow activity \(a\) in any case. \\
+\hline
+
+
+\end{longtable}
+\normalsize
+
+
+
+
+
+
+%\bibliographystyle{plain}
+%\bibliography{ref}
+
+\end{document}

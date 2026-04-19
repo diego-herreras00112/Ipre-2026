@@ -1,0 +1,22 @@
+id_attribute,name,description
+1,act,Event attribute: activity
+2,actinst,Event attribute: activity instance
+3,case,Event attribute: case id
+4,cli,Case attribute: client
+5,fc,Event attribute: fixed cost
+6,hres,Event attribute: human resource
+7,ic,Event attribute: inventory cost
+8,lc,Event attribute: labor cost
+9,mainc,Case attribute: maintenance cost
+10,mdc,Case attribute: missed deadline cost
+11,qual,Case attribute: quality indicator
+12,res,Event attribute: resource
+13,role,Event attribute: role
+14,tc,Event attribute: total cost
+15,time,Event attribute: timestamp
+16,transc,Case attribute: transportation cost
+17,type,Event attribute: lifecycle type
+18,uns,Event attribute: unsuccessful outcome units
+19,unt,Event attribute: outcome units
+20,vc,Event attribute: variable cost
+21,warec,Case attribute: warehousing cost

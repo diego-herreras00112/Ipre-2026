@@ -1,0 +1,13 @@
+id_extra_input,id_parameter,input_type,description
+1,1,set,List of automated activities
+2,2,set,List of direct cost activities
+3,3,set,List of desirable activities
+4,4,set,List of unwanted activities
+5,5,activity,the considered activity
+6,6,activity,the second specific activity
+7,8,timestamp,the end timestamp of the time frame
+8,10,resource,the specific human resource
+9,12,role,the specific role
+10,13,timestamp,the start timestamp of the time frame
+11,14,set,Subset of activities to consider
+12,15,value,A timestamp indicating the deadline that should not be exceeded

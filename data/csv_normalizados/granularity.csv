@@ -1,0 +1,5 @@
+id_granularity,code,name
+1,A,Activity
+2,C,Case
+3,G,Group of cases
+4,I,Activity instance

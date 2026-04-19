@@ -1,0 +1,139 @@
+// ═══════════════════════════════════════════════════════════════════
+//  DIAGRAMA E/R — PPIs (versión post-reunión 2026-04-07)
+// ═══════════════════════════════════════════════════════════════════
+
+// ─── Tablas de Catálogo ───────────────────────────────────────────
+
+Table Dimension {
+  id_dimension int [pk, increment]
+  code         varchar(1)  [not null, note: 'T, C, Q, F, G']
+  name         varchar(50) [not null, note: 'Time, Cost, Quality, Flexibility, General']
+}
+
+Table Granularity {
+  id_granularity int [pk, increment]
+  code           varchar(2)  [not null, note: 'I, A, C, G']
+  name           varchar(50) [not null, note: 'Activity instance, Activity, Case, Group of cases']
+}
+
+// ─── Tabla de Traducción de Comandos LaTeX ────────────────────────
+// Almacena cada \newcommand del .tex para renderizar fórmulas en la web
+// Ej: command="\fnmin"  →  latex_expansion="\mathit{min}"
+// Ej: command="\attime" →  latex_expansion="\mathit{time}"
+// Ej: command="\indlt"  →  latex_expansion="\mathit{LT}"
+
+Table Translation {
+  id_translation   int [pk, increment]
+  command          varchar(100) [unique, not null, note: 'Ej: \\fnmin, \\attime, \\indlt']
+  latex_expansion  varchar(255) [not null, note: 'Ej: \\mathit{min}']
+  category         varchar(20)  [note: 'attribute | function | indicator | dimension | granularity | utility | other']
+  description      text
+}
+
+// ─── Tabla Principal ─────────────────────────────────────────────
+
+Table Indicator {
+  id_indicator           int    [pk, increment]
+  id_parent_indicator int [ref: > Indicator.id_indicator, null, note: 'Para agrupar variaciones (v2) a su métrica original']
+  slug                   varchar(150) [unique, not null, note: 'Ej: lead-time-t-c']
+  name                   varchar(255) [not null]
+  id_dimension           int    [ref: > Dimension.id_dimension]
+  id_granularity         int    [ref: > Granularity.id_granularity]
+  explanation            text   [note: 'Descripción funcional']
+  potential_use          text   [note: 'Uso potencial o de negocio']
+  assumptions            text   [note: 'Supuestos matemáticos o de datos']
+  desired_value varchar(10) [note: 'minimize | maximize']
+  function_name          varchar(100) [note: 'Ej: LT(c), LTAB(c,a,b)']
+  formalization_latex    text   [note: 'Fórmula formal desde Definitions.tex']
+  formalization_fp       text   [note: 'Fórmula simplificada desde for Engineers.tex']
+  description_fp         text   [note: 'Explicación para ingenieros']
+  // references → se sacó, ahora es tabla aparte
+  // parameters → se sacó, ahora son 3 tablas
+}
+
+// ─── Tabla de Referencias Bibliográficas ─────────────────────────
+
+Table Reference {
+  id_reference  int [pk, increment]
+  citation_key  varchar(100) [unique, not null, note: 'Ej: longo2005, vandenIngh2016']
+  authors       text [not null, note: 'Ej: Longo and Motta']
+  title         text
+  year          int
+  source        text [note: 'Journal, conference, book, etc.']
+}
+
+// ─── Tabla de Atributos del Event Log (Required Attributes) ──────
+// Son las COLUMNAS del event log que el PPI necesita leer
+// Ej: tc, hres, time, actinst, act, res, role, qual, fc, vc, ...
+
+Table Attribute {
+  id_attribute  int [pk, increment]
+  name          varchar(50) [unique, not null, note: 'Ej: tc, hres, time, actinst']
+  description   text [note: 'Qué columna del event log representa']
+}
+
+// ─── Tabla de Parámetros Formales ────────────────────────────────
+// Son TODOS los parámetros de la firma de la función
+// En LT(c, a, b):  c, a, b son los 3 parámetros
+// Cada parámetro tiene un tipo: required_attribute o extra_input
+// 
+// required_attribute: viene del event log (c ∈ C, i ∈ I, a ∈ A, g ⊆ C)
+// extra_input:        lo provee el usuario en runtime (a ∈ A actividad específica, val ∈ ℝ)
+
+Table Parameter {
+  id_parameter    int [pk, increment]
+  symbol          varchar(50)  [not null, note: 'Ej: c, i, a, g, val, hr, rl, sub']
+  name            varchar(100) [note: 'Nombre descriptivo: case, activity instance, ...']
+  domain          varchar(100) [note: 'Dominio formal: C, I, A, ℝ, ⊆C, etc.']
+  constraint      text         [note: 'Restricciones: g ≠ ∅, a ≠ b, etc.']
+  parameter_type  varchar(20)  [not null, note: 'required_attribute | extra_input']
+  description     text
+}
+
+// ─── Tabla de Extra Inputs ───────────────────────────────────────
+// Detalle adicional de los parámetros que son extra_input
+// Ej: en LTAB(c, a, b) → a y b son actividades que elige el usuario
+// Ej: en CLTVALC(g, val) → val es un número real que define el usuario
+
+Table ExtraInput {
+  id_extra_input  int [pk, increment]
+  id_parameter    int [ref: - Parameter.id_parameter, note: 'El parámetro al que extiende']
+  input_type      varchar(50) [note: 'activity, resource, role, value, set, time, ...']
+  description     text [note: 'Qué debe proveer el usuario en runtime']
+}
+
+
+// ═══════════════════════════════════════════════════════════════════
+//  TABLAS INTERMEDIAS (N:M)
+// ═══════════════════════════════════════════════════════════════════
+
+// Qué atributos del event log necesita este PPI
+Table Indicator_Attribute {
+  id_indicator  int [ref: > Indicator.id_indicator]
+  id_attribute  int [ref: > Attribute.id_attribute]
+
+  indexes {
+    (id_indicator, id_attribute) [pk]
+  }
+}
+
+// Qué parámetros formales tiene la firma de este PPI (y en qué orden)
+Table Indicator_Parameter {
+  id_indicator  int [ref: > Indicator.id_indicator]
+  id_parameter  int [ref: > Parameter.id_parameter]
+  position      int [note: 'Orden en la firma: 1, 2, 3...']
+
+  indexes {
+    (id_indicator, id_parameter) [pk]
+  }
+}
+
+// Qué referencias bibliográficas citan este PPI
+Table Indicator_Reference {
+  id_indicator  int [ref: > Indicator.id_indicator]
+  id_reference  int [ref: > Reference.id_reference]
+
+  indexes {
+    (id_indicator, id_reference) [pk]
+  }
+}

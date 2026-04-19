@@ -1,0 +1,4 @@
+﻿Name;Explanation;Formalization_latex;Formalization_fp
+Case Count where Lead Time Over value (group of cases granularity);Number of cases belonging to a group of cases whose lead time is greater than a given value.;\(|\{c \in g \mid \mathit{LT(c) > \mathit{val\}|\);
+Case Percentage where Lead Time Over value (group of cases granularity);Percentage of cases belonging to a group of cases whose lead time is greater than a given value.;\(\frac{\mathit{CLTOC(g, \mathit{val)}{\mathit{C(g)}\);
+Case count and Lead Time Ratio (group of cases granularity);Ratio between the number of cases belonging to a group of cases and the lead time of a group of cases.;\(\frac{\mathit{C(g)}{\mathit{LT(g)}\);
