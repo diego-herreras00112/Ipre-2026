@@ -1,47 +1,46 @@
 # Ipre-2026
 
-PPI Data Extraction Script
-==========================
+nose porque mi computador no encuentra el path de psql debe usar psqlf
 
-DESCRIPTION:
-This script extracts Process Performance Indicator (PPI) data from 3 LaTeX files
-and merges them into comprehensive CSV files with automatic command expansion.
 
-FILES:
-- script.py: Main extraction and merging script
+## Preparar archivos
 
-INPUT FILES (in docs/ subfolder):
-- PPI Definitions.tex: ~305 indicators with formal definitions
-- PPI Descriptions.tex: ~305 indicators with explanations
-- PPI for Engineers.tex: ~309 indicators with formulas for engineers
+0. Tener los archivos correctos en los lugares correctos
 
-OUTPUT FILES (in data/ subfolder):
-- definitions_extracted.csv: Extracted data from Definitions file
-- descriptions_extracted.csv: Extracted data from Descriptions file
-- engineers_extracted.csv: Extracted data from Engineers file
-- final_all_data.csv: All unique indicators merged (322 total)
-- final_data.csv: Complete indicators only (272 clean rows)
-  * Includes only rows with non-empty: Formalization_latex, Explanation, Formalization_fp
+1. correr script.py
 
-FEATURES:
-- Auto-extracts LaTeX \newcommand definitions from preambles
-- Expands commands in table data (dimensions, granularities, attributes, functions)
-- Handles complex multi-line rows with \newline and \begin{cases}...\end{cases}
-- Respects different table formats (uses \hline for Engineers, \\\\ for others)
-- Generates slugs: indicator-name-D-G (D=dimension, G=granularity)
-- Cleans attribute lists: removes \bm{}, converts \newline to semicolons
-- Merges data from 3 sources with outer join (no indicator lost)
+2. correr add_references.py
 
-USAGE:
-python3 script.py
 
-The script will create the data/ directory if needed and write all output files.
+## Poblar la base de datos
+0. Ir a la carpeta del proyecto:
+```powershell
+cd "C:\Users\Lenovo\Desktop\Universidad 5to año\9no semestre\ipre\Ipre-2026\sql"
+```
 
-CSV FORMAT:
-- Delimiter: TAB (\t)
-- Encoding: UTF-8
-- All LaTeX math notation preserved for analysis
+1. Crear la base de datos:
+```powershell
+psql -U postgres -c "CREATE DATABASE ppi_bdd;"
+```
 
-DATA MAPPING:
-- Dimensions: T (time), C (cost), Q (quality), F (flexibility), G (general)
-- Granularities: I (activity-instance), A (activity), C (case), G (group-of-cases)
+2. Generar los CSV normalizados:
+```powershell
+python normalizar_csv.py
+```
+
+3. Crear las tablas:
+```powershell
+psql -U postgres -d ppi_bdd -f crear_base_datos.sql
+```
+
+4. Poblar la base de datos:
+```powershell
+psql -U postgres -d ppi_bdd -f poblar_base_datos.sql
+```
+
+5. Verificar los datos:
+```powershell
+psql -U postgres -d ppi_bdd -f verificar_base_datos.sql
+```
+
+
