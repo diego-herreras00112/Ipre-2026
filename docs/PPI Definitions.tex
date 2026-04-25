@@ -888,7 +888,7 @@ Expected Client count & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newl
 Directly-Follows Relations and Activity count Ratio (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\inddfrar(c)\) & \(\frac{\inddfr(c)}{\inda(c)}\) \\
 Directly-Follows Relations and Activity count Ratio (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\inddfrar(g)\) & \(\frac{\inddfr(g)}{\inda(g)}\) \\
 Expected Directly-Follows Relations and Activity count Ratio & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\inddfrar(g)\) & \(\frac{\sum _{c \in g} \inddfr(c)}{\sum _{c \in g} \inda(c)}\) \\
-Directly-Follows Relations count (activity granularity) & \dflexibility & \gact & \(a \in A\) & \(\inddfr(a)\) & \(\cup_{i \in \fninst(a)} \{\fnact(i') \utst i' \in \fnnext(i))\}|\) \\
+Directly-Follows Relations count (activity granularity) & \dflexibility & \gact & \(a \in A\) & \(\inddfr(a)\) & \(|\cup_{i \in \fninst(a)} \{\fnact(i') \utst i' \in \fnnext(i)\}|\) \\
 Directly-Follows Relations count (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\inddfr(c)\) & \(|\fndfr(c)|\) \\
 Directly-Follows Relations count (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\inddfr(g)\) & \(|\cup_{c \in g} \fndfr(c)|\) \\
 Expected Directly-Follows Relations count & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\inddfr(g)\) & \(\frac{\sum _{c \in g} \inddfr(c)}{\indc(g)}\) \\
@@ -907,7 +907,7 @@ Role count (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\indrol
 Role count (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indrole(g)\) & \(|\cup_{c \in g} \fnrole(c)|\) \\
 Expected Role count & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\utexpected\indrole(g)\) & \(\frac{\sum _{c \in g} \indrole(c)}{\indc(g)}\) \\
 Variant Case Coverage (case granularity) & \dflexibility & \gcase & \(c \in C\) & \(\indvcc(c)\) & \(\frac{|\{c' \in C \utst \exists tr \in \fntrace(c')[tr \in \fntrace(c)]\}|}{|C|}\) \\
-Variant Case Coverage (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indvcc(g)\) & \(\frac{|\{c \in C \utst \exists tr \in \fntrace(c)[tr \in \fnvariants(g)]|}{|C|}\) \\
+Variant Case Coverage (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indvcc(g)\) & \(\frac{|\{c \in C \utst \exists tr \in \fntrace(c)[tr \in \fnvariants(g)]\}|}{|C|}\) \\
 Variant count (group of cases granularity) & \dflexibility & \ggroup & \(g \subseteq C \colon\) \newline \(g \neq \emptyset\) & \(\indv(g)\) & \(|\fnvariants(g)|\) \\
 \bottomrule
 \label{PPIFlexibilityDefinitions}
